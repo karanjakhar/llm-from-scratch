@@ -1,6 +1,6 @@
 # data & weights — large, regenerable
-data/
-checkpoints/
+/data/
+/checkpoints/
 *.bin
 *.pt
 *.safetensors
