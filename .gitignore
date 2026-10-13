@@ -1,0 +1,28 @@
+# data & weights — large, regenerable
+data/
+checkpoints/
+*.bin
+*.pt
+*.safetensors
+*.gguf
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# tooling
+.vscode/
+.idea/
+.DS_Store
+wandb/
+runs/
+*.log
+
+# keep result artifacts
+!results/**/*.json
+!results/**/*.png

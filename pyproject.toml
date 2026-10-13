@@ -1,0 +1,28 @@
+[project]
+name = "llm-from-scratch"
+version = "0.1.0"
+description = "Building a modern LLM from scratch, one concept at a time"
+requires-python = ">=3.12"
+dependencies = [
+    "torch>=2.10",
+    "numpy>=1.26",
+    "tqdm>=4.66",
+    "matplotlib>=3.8",
+    # reference oracles & data access only — never the solution to a stage
+    "tiktoken>=0.7",
+    "datasets>=2.19",
+    "transformers>=4.44",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+
+[tool.pytest.ini_options]
+testpaths = ["stages", "llmfs"]
+python_files = ["test_*.py"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.setuptools.packages.find]
+include = ["llmfs*"]

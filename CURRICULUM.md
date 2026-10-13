@@ -1,0 +1,359 @@
+# Curriculum: 25 Stages From Bytes to a Served Model
+
+Rules of the road:
+
+1. **Hand-roll first.** A component is only allowed from a library after it has
+   been written from scratch and matched numerically against the library version.
+2. **One concept per stage.** If a stage needs two new ideas, it is two stages.
+3. **Every stage ends with a number.** Perplexity, tokens/sec, memory in MB,
+   win rate. "It ran" is not a result.
+4. **Write the notes before the code.** `docs/NN_*.md` is written first so the
+   code is implementing an understood idea, not discovering one.
+5. **Break it on purpose.** Each stage includes an ablation: remove the thing,
+   observe the damage, record it. That is where the understanding actually lands.
+
+Legend: `[ ]` not started · `[~]` in progress · `[x]` done
+
+---
+
+## Part 0 — Foundations
+
+### `[~]` Stage 00 — Setup and the Mental Model
+**Concepts:** What a language model actually computes (a probability
+distribution over the next token). Autoregressive factorization. Tensors,
+shapes, broadcasting, autograd. The train/inference asymmetry. Where VRAM goes:
+parameters, gradients, optimizer states, activations.
+**Deliverable:** working env, `verify_env.py` passing, a hand-computed VRAM
+budget for a 50M model that matches what PyTorch actually allocates.
+**Ablation:** compute the memory budget wrong on purpose (forget optimizer
+states), then watch the OOM happen exactly where predicted.
+→ `docs/00_setup.md`
+
+### `[ ]` Stage 01 — Tokenization
+**Concepts:** Why not characters, why not words. Byte-level fallback and why
+it guarantees no UNK. Byte Pair Encoding: the merge loop, the vocab, the
+ranks. Encode/decode round-tripping. GPT-2's byte-to-unicode trick. Regex
+pre-tokenization and why it stops merges from crossing word boundaries.
+Special tokens. Compression ratio as the quality metric. Why tokenizers
+cause the "how many r's in strawberry" failure.
+**Deliverable:** BPE trainer + encoder/decoder in pure Python, trained on a
+real corpus, round-trip exact on held-out text, compression ratio compared
+against `tiktoken` gpt2.
+**Ablation:** train BPE with no regex pre-tokenization; inspect the garbage
+merges that span spaces and punctuation.
+→ `docs/01_tokenizer.md`
+
+### `[ ]` Stage 02 — The Data Pipeline
+**Concepts:** Corpus selection and why data quality dominates. Streaming vs
+downloading. Tokenize-once-to-disk as a `uint16` memmap. Document packing and
+the EOS separator. Why random offsets into a flat token array is a valid
+sampler. Train/val split without leakage. Deduplication. The `DataLoader`
+worker/pinning details that decide whether your GPU starves.
+**Deliverable:** `prepare.py` producing `train.bin`/`val.bin`, a batch
+sampler, and a measurement proving the GPU is not data-starved.
+**Ablation:** shuffle at the document level vs the token level; watch the
+loss curve change shape.
+→ `docs/02_data.md`
+
+---
+
+## Part 1 — Architecture, Built by Hand
+
+### `[ ]` Stage 03 — Embeddings and Position
+**Concepts:** Token embeddings as a lookup table = one-hot matmul. Why models
+need position information at all (attention is permutation-invariant).
+Learned absolute positions. Sinusoidal encodings. **RoPE**: rotating query/key
+pairs so that attention scores depend on *relative* distance; the complex-number
+view; why it extrapolates better. Weight tying between embedding and output head.
+**Deliverable:** all three position schemes implemented and unit-tested; a plot
+showing RoPE attention scores depend only on offset.
+**Ablation:** train an identical tiny model with no positional info; show it
+cannot learn word order.
+→ `docs/03_embeddings_position.md`
+
+### `[ ]` Stage 04 — Attention, From One Head Up
+**Concepts:** Query/Key/Value as a differentiable soft dictionary lookup. The
+`softmax(QK^T / sqrt(d)) V` formula derived, including *why* the `sqrt(d)`
+scaling exists (variance control). Causal masking with `-inf`. Multi-head
+attention as parallel subspaces, and the reshape/transpose gymnastics.
+Attention's O(n^2) cost in time and memory. Reading attention maps.
+**Deliverable:** single-head → multi-head attention from scratch, numerically
+equal to `F.scaled_dot_product_attention` within 1e-5.
+**Ablation:** drop the `sqrt(d)` scaling and watch the softmax saturate and
+gradients vanish as `d_head` grows.
+→ `docs/04_attention.md`
+
+### `[ ]` Stage 05 — The Transformer Block
+**Concepts:** Residual connections and the "information highway" view.
+LayerNorm vs **RMSNorm** (and why RMSNorm won: no mean subtraction, cheaper).
+**Pre-norm vs post-norm** and why every modern model is pre-norm (gradient
+flow at depth). The MLP/FFN and the 4x expansion. Activation functions:
+ReLU → GELU → **SwiGLU** and the gated-linear-unit idea. Dropout and why
+large pretraining runs often set it to 0.
+**Deliverable:** a `Block` module, configurable norm/activation, with a depth
+test showing pre-norm trains at 24 layers where post-norm diverges.
+**Ablation:** remove the residual connection; watch training fail.
+→ `docs/05_transformer_block.md`
+
+### `[ ]` Stage 06 — Assembling GPT
+**Concepts:** Stacking blocks, the final norm, the unembedding head. Cross-entropy
+loss on shifted labels and why the shift is the whole autoregressive trick.
+Parameter counting by hand, per-component. **Initialization**: why std=0.02,
+and the residual-scaled init (`1/sqrt(2*n_layer)`). Config objects. Loading
+and comparing against real GPT-2 weights as a correctness oracle.
+**Deliverable:** a complete `GPT` class; parameter count matches hand
+arithmetic; loads HuggingFace GPT-2 weights and reproduces its logits.
+**Ablation:** untie the embedding/output weights at small scale; compare
+param count and loss.
+→ `docs/06_gpt_model.md`
+
+### `[ ]` Stage 07 — Generation and Decoding
+**Concepts:** Autoregressive sampling loop. Greedy vs sampling. **Temperature**
+as logit scaling. **Top-k** and **top-p (nucleus)** truncation. Repetition
+penalty. Why greedy decoding is degenerate and bland. The **KV cache**: why
+recomputing all previous keys/values every step is O(n^2) wasted work, and the
+cache's memory cost. Prefill vs decode phases. Stopping criteria.
+**Deliverable:** a sampler with all knobs; KV cache giving a measured speedup
+(expect 5-20x at length 512) with *identical* outputs at a fixed seed.
+**Ablation:** sample at temperature 0.1 / 1.0 / 2.0 from the same prompt and
+catalog the failure mode at each end.
+→ `docs/07_generation.md`
+
+---
+
+## Part 2 — Training
+
+### `[ ]` Stage 08 — The Training Loop
+**Concepts:** SGD → Adam → **AdamW** and why decoupled weight decay matters.
+What the optimizer's two state tensors are doing. **LR schedules**: linear
+warmup (why: Adam's second-moment estimate is garbage at step 0) then cosine
+decay. Gradient clipping by global norm. **Gradient accumulation** to simulate
+a large batch on 8 GB. Why batch size matters at all. Overfitting a single
+batch as the mandatory first sanity check. Loss curve forensics.
+**Deliverable:** a training loop that overfits 1 batch to loss ~0, then trains
+a 10M model on TinyStories to coherent output.
+**Ablation:** no warmup; no grad clipping. Record the loss spike each causes.
+→ `docs/08_training_loop.md`
+
+### `[ ]` Stage 09 — Making It Fast
+**Concepts:** fp32 vs fp16 vs **bf16** and why bf16 needs no loss scaling.
+`torch.autocast` mechanics. **FlashAttention** / fused SDPA: the tiling trick
+that never materializes the n×n matrix. `torch.compile` and kernel fusion.
+**Activation checkpointing**: trade ~30% compute for a large activation-memory
+cut. Fused AdamW. TF32. **MFU** (model FLOPs utilization) as the honest
+efficiency metric. Profiling with the PyTorch profiler.
+**Deliverable:** a throughput table — tokens/sec and peak MB for each
+optimization, stacked one at a time on the same model. Target 3-5x total.
+**Ablation:** this stage *is* the ablation table.
+→ `docs/09_efficiency.md`
+
+### `[ ]` Stage 10 — Scaling Laws and Choosing Hyperparameters
+**Concepts:** The Kaplan and **Chinchilla** results. The ~20 tokens-per-parameter
+rule and why most small models are badly undertrained. The compute formula
+`C ≈ 6ND`. Width vs depth tradeoffs. How to pick `n_layer`, `n_head`, `d_model`
+for a target budget. The IsoFLOP curve. Why inference cost changes the optimum
+(over-train small models on purpose).
+**Deliverable:** a small IsoFLOP study — 4-5 model sizes at a fixed compute
+budget, loss plotted, the empirical optimum found and compared to Chinchilla.
+**Ablation:** the study is the ablation; also train one model 10x past
+Chinchilla-optimal and measure the diminishing return.
+→ `docs/10_scaling_laws.md`
+
+### `[ ]` Stage 11 — The Real Pretraining Run
+**Concepts:** Picking a real corpus (TinyStories → FineWeb-Edu sample).
+Checkpointing and resumption that actually works (model + optimizer + data
+position + RNG). Evaluation during training: validation perplexity, and why
+it is not enough. Logging and experiment tracking. Reading a 10-hour loss
+curve. Loss spikes and recovery. Determinism and seeds.
+**Deliverable:** a trained model (target ~50-125M params) with a full run log,
+a reproducible config, and generated samples. Optional cloud-GPU variant.
+**Ablation:** restart from a checkpoint mid-run and verify the loss curve is
+continuous — the standard way checkpoint bugs get caught.
+→ `docs/11_pretraining.md`
+
+---
+
+## Part 3 — Modern Architecture
+
+### `[ ]` Stage 12 — Architecture Upgrades (Llama-class)
+**Concepts:** **MQA and GQA** — sharing K/V heads to shrink the KV cache, and
+the quality/memory tradeoff. RoPE theta scaling and NTK-aware interpolation
+for longer context. **Sliding-window / local attention**. QK-norm. Attention
+sinks. Converting the GPT-2-style model into a Llama-style one and measuring
+what each change buys.
+**Deliverable:** a `LlamaBlock` (RMSNorm + RoPE + GQA + SwiGLU); a table of
+KV-cache bytes and quality for MHA vs GQA vs MQA at matched params.
+**Ablation:** push GQA to a single KV group (= MQA) and find where quality
+breaks.
+→ `docs/12_modern_arch.md`
+
+### `[ ]` Stage 13 — Mixture of Experts
+**Concepts:** The core idea: scale parameters without scaling FLOPs per token.
+Replacing the dense FFN with N experts plus a **router**. Top-k gating and the
+softmax-over-experts. Why routing is the hard part: **load imbalance** and
+expert collapse. The **auxiliary load-balancing loss**, derived. **Router
+z-loss** for stability. Capacity factor and token dropping. Shared/always-on
+experts (DeepSeek style). Fine-grained experts. Expert parallelism and the
+all-to-all communication pattern (concept, since we have 1 GPU). Active vs
+total parameters. Why MoE is harder to fine-tune and serve.
+**Deliverable:** an `MoEBlock` from scratch; a dense model and an
+active-param-matched MoE trained head to head; expert-utilization histogram;
+proof the aux loss fixes imbalance.
+**Ablation:** train with the aux loss off; show the router collapsing onto 1-2
+experts and the resulting quality loss.
+→ `docs/13_moe.md`
+
+### `[ ]` Stage 14 — Attention Variants and Long Context
+**Concepts:** **MLA** (multi-head latent attention, DeepSeek) — compressing KV
+into a low-rank latent. Linear attention and the kernel trick. **State-space
+models / Mamba** as a conceptual alternative, and the recurrence/parallel-scan
+duality. Hybrid stacks. Long-context evaluation (needle-in-a-haystack) and why
+perplexity hides long-range failure.
+**Deliverable:** MLA implemented and benchmarked against GQA on KV bytes; a
+needle-in-a-haystack harness.
+**Ablation:** shrink the MLA latent dimension until quality cracks.
+→ `docs/14_attention_variants.md`
+
+### `[ ]` Stage 15 — Faster Decoding (optional)
+**Concepts:** **Multi-token prediction** heads. **Speculative decoding** with a
+draft model and the rejection-sampling acceptance test that keeps the output
+distribution exact. Medusa/Eagle-style self-speculation. Acceptance rate as the
+thing that decides whether any of it pays off.
+**Deliverable:** speculative decoding with a small draft model; measured
+speedup and acceptance rate; output distribution verified unchanged.
+→ `docs/15_speculative.md`
+
+---
+
+## Part 4 — Post-Training
+
+### `[ ]` Stage 16 — Supervised Fine-Tuning
+**Concepts:** Base model vs instruct model — the behavioral difference and why
+a base model "completes" instead of answering. **Chat templates** and special
+role tokens. **Loss masking**: train on completion tokens only, never on the
+prompt. Packing vs padding, and the attention-mask correctness trap. Catastrophic
+forgetting. How much SFT data is actually needed (LIMA's answer: surprisingly
+little). Dataset quality over quantity.
+**Deliverable:** the pretrained base model SFT'd into a chat model; side-by-side
+before/after responses; the loss mask asserted correct in a test.
+**Ablation:** train on prompt tokens too; measure the degradation.
+→ `docs/16_sft.md`
+
+### `[ ]` Stage 17 — Parameter-Efficient Fine-Tuning
+**Concepts:** The low-rank hypothesis — fine-tuning updates have low intrinsic
+rank. **LoRA**: `W + BA`, the `alpha/r` scaling, which modules to target, why
+`B` starts at zero. Memory math vs full fine-tuning. **QLoRA**: 4-bit NF4 base
+weights, double quantization, paged optimizers. Merging adapters back. Serving
+many adapters on one base. DoRA/rsLoRA briefly.
+**Deliverable:** LoRA implemented from scratch (no `peft`), matched against
+`peft` numerically; a memory/quality table vs full fine-tuning; a merged
+adapter.
+**Ablation:** sweep rank r ∈ {1,4,16,64} and find where quality saturates.
+→ `docs/17_peft_lora.md`
+
+### `[ ]` Stage 18 — Reward Modeling
+**Concepts:** Why a learned reward model exists at all. Preference data
+(chosen/rejected pairs). The **Bradley-Terry** model and the pairwise logistic
+loss, derived. Swapping the LM head for a scalar value head. Reward hacking
+and over-optimization. Calibration and reward-model accuracy as a ceiling on
+everything downstream. Annotator noise.
+**Deliverable:** a reward model trained on a preference set; pairwise accuracy
+reported; reward distributions for chosen vs rejected plotted.
+**Ablation:** flip 20% of the labels and watch the accuracy ceiling collapse.
+→ `docs/18_reward_model.md`
+
+### `[ ]` Stage 19 — RLHF: PPO, DPO, GRPO
+**Concepts:** The RL framing of text generation (tokens as actions). **PPO**:
+policy/value/reward/reference models, advantages via GAE, the clipped
+objective, the KL penalty against the reference policy, and why PPO for LLMs
+is a four-model memory nightmare. **DPO**: the closed-form derivation that
+removes the reward model entirely, and the beta parameter. **GRPO**: group
+relative advantages, no value network. When each is the right tool.
+**Deliverable:** DPO implemented from scratch and run on the SFT model;
+win rate vs the SFT baseline; implicit reward margins plotted. PPO read and
+diagrammed, GRPO implemented in Stage 20.
+**Ablation:** sweep DPO beta; show the alignment/divergence tradeoff and
+find the over-optimization point.
+→ `docs/19_rlhf_dpo.md`
+
+### `[ ]` Stage 20 — Reasoning and Verifiable Rewards
+**Concepts:** Chain-of-thought as inference-time compute. **RLVR**: replacing
+a learned reward model with a programmatic verifier (math answer checking,
+unit tests). **GRPO** in full, which is what R1-style training uses. Sampling
+multiple rollouts per prompt. Reward shaping and format rewards. The "aha
+moment" / emergent long-CoT phenomenon and what is really going on. Process
+vs outcome supervision.
+**Deliverable:** GRPO from scratch on a verifiable task (arithmetic or
+GSM8K-style); accuracy and response-length curves over training.
+**Ablation:** outcome-only reward vs outcome+format reward.
+→ `docs/20_reasoning_rlvr.md`
+
+### `[ ]` Stage 21 — Distillation and Quantization
+**Concepts:** **Knowledge distillation**: KL against a teacher's full
+distribution, temperature, why soft targets carry more signal than hard labels.
+On-policy vs off-policy distillation. **Quantization**: int8, int4, NF4;
+symmetric vs asymmetric; per-tensor vs per-channel vs group-wise. Post-training
+quantization (GPTQ, AWQ) vs quantization-aware training. Outlier features and
+why they break naive int8. KV-cache quantization. The quality/size/speed
+frontier.
+**Deliverable:** a distilled small model beating the same model trained from
+scratch; an int8 and int4 quantizer written by hand; a size/perplexity/speed
+table.
+**Ablation:** per-tensor vs per-group int4 on the same weights; measure the
+perplexity gap.
+→ `docs/21_distill_quantize.md`
+
+---
+
+## Part 5 — Evaluation and Serving
+
+### `[ ]` Stage 22 — Evaluation That Means Something
+**Concepts:** Perplexity's uses and limits. Multiple-choice benchmarks
+(HellaSwag, MMLU) and the log-likelihood scoring trick, including length
+normalization. Generative benchmarks. **LLM-as-judge**, its position bias, and
+how to control for it. Pairwise win rates and Elo. **Contamination** and how to
+detect it. Why benchmark numbers in papers are often not comparable.
+**Deliverable:** an eval harness running perplexity + one multiple-choice +
+one judge-based eval across every checkpoint produced so far; one results table.
+**Ablation:** score the same benchmark with and without length normalization;
+show the ranking change.
+→ `docs/22_evaluation.md`
+
+### `[ ]` Stage 23 — Inference and Serving
+**Concepts:** Prefill (compute-bound) vs decode (memory-bandwidth-bound) and
+why that split explains all of LLM serving. Static vs **continuous batching**.
+**PagedAttention** and KV-cache fragmentation. Throughput vs latency, TTFT vs
+TPOT. Chunked prefill. Prefix caching. What vLLM/SGLang actually do.
+**Deliverable:** a minimal continuous-batching server for the trained model;
+a throughput-vs-latency curve; comparison against vLLM on the same weights.
+**Ablation:** static batching vs continuous batching under a bursty request
+load; measure p99 latency.
+→ `docs/23_serving.md`
+
+### `[ ]` Stage 24 — Capstone
+**Concepts:** Putting the whole pipeline on one page. What was learned, what
+is still fuzzy, what the next thing to learn is.
+**Deliverable:** one model taken end to end — tokenizer → pretrain → SFT →
+DPO → quantize → serve — plus a model card, a writeup, and the repo cleaned up
+for other people to read.
+→ `docs/24_capstone.md`
+
+---
+
+## Dependency order
+
+Stages 00-11 are strictly sequential. After Stage 11 you have a trained base
+model, and the graph opens up:
+
+```
+00 → 01 → 02 → 03 → 04 → 05 → 06 → 07 → 08 → 09 → 10 → 11
+                                                        │
+                        ┌───────────────┬───────────────┼───────────────┐
+                        ↓               ↓               ↓               ↓
+                    12 → 13 → 14 → 15   16 → 17 → 18 → 19 → 20         22 → 23
+                    (architecture)      (post-training)                 (eval/serve)
+                                                        ↓
+                                                       21 → 24
+```
+
+Stage 21 (distill/quantize) and 24 (capstone) want everything else done first.
