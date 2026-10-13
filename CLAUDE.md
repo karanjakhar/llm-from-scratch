@@ -75,6 +75,12 @@ speed.
 - `data/` and `checkpoints/` are gitignored. Only code, docs, configs, and
   small result artifacts (plots, JSON metrics) are committed.
 
+## Git / publishing state
+
+Local git only. **No remote configured, and none should be added without the
+owner asking.** As of 2026-10-14 the owner chose to hold off publishing until
+they decide which account it goes under. Commit every session; do not push.
+
 ## Commit convention
 
 Conventional Commits, one stage concern per commit.
