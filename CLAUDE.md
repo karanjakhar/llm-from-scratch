@@ -65,6 +65,24 @@ speed.
   individually instead of arriving as a bundle.
 - **Dense before MoE.** MoE (stage 13) is a modification of a working dense
   model, with an active-parameter-matched dense baseline for comparison.
+- **Target domain: Python code + ~15% high-quality English** (decided
+  2026-10-14). Chosen because it is the only candidate with a *machine
+  verifier*: Stage 20's RL reward is "do the unit tests pass" and Stage 22's
+  eval is HumanEval/MBPP pass@k. Unverifiable domains (stories, prose, a
+  low-resource language) turn half the curriculum into LLM-as-judge
+  guesswork, which at 125M params measures noise. Reasoning in
+  `docs/domain_choice.md`; verified corpora in `docs/datasets.md`.
+- **Two models.** A ~30-50M workhorse (2-10 h/run) to debug every stage on,
+  and one ~125M capstone run (36-60 h) at Stage 11 once the pipeline is proven.
+  Never debug on the capstone.
+- **Honest expectations.** 125M params = no world knowledge, no multi-step
+  reasoning, no general instruction following. HumanEval pass@1 will be low
+  single digits. Do not let the docs or the commit messages imply otherwise;
+  the value is that the number is objective and improves measurably per stage.
+- **TinyStories and tinyshakespeare are test fixtures, never targets.**
+  tinyshakespeare for unit tests, TinyStories for the Stage 08 training-loop
+  smoke test (10M params, ~20 min, obviously-broken output when the loop is
+  broken).
 - **Tokenizer vocab 8192** for own-trained models — small enough that the
   embedding table does not dominate a 10-50M parameter model.
 - **Complete working code, not exercises.** The owner reads, runs, and breaks
