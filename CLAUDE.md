@@ -41,7 +41,12 @@ speed.
 
 - **RTX 4060 Laptop, 8 GB VRAM.** This is the binding constraint on everything.
 - ~98 GB free disk on `/mnt/extra_ssd`.
-- Python 3.12, PyTorch 2.10 + CUDA 12.8, `uv` for environment management.
+- Python 3.12, PyTorch 2.11 + CUDA 12.8, managed by `uv`. **Always run code
+  with `uv run ...`** — never bare `python3`. The system `python3` is 3.10 with
+  no torch. A conda env that sessions 1-2 relied on disappeared between
+  sessions, and the project only kept working because `pyproject.toml` +
+  `uv.lock` define the environment. Any new dependency goes into
+  `pyproject.toml` (`uv add <pkg>`), never `pip install`.
 - Practical ceiling: ~150M params trainable locally with bf16 + grad
   accumulation + activation checkpointing. Inference up to ~1-3B quantized.
 - Prefer datasets under 10 GB. TinyStories for anything that must train in

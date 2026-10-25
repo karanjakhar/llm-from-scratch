@@ -2,12 +2,18 @@
 name = "llm-from-scratch"
 version = "0.1.0"
 description = "Building a modern LLM from scratch, one concept at a time"
-requires-python = ">=3.12"
+requires-python = ">=3.12,<3.13"
 dependencies = [
     "torch>=2.10",
     "numpy>=1.26",
     "tqdm>=4.66",
     "matplotlib>=3.8",
+    # stage 01: \p{L}/\p{N} Unicode classes in the pre-tokenization regex.
+    # stdlib `re` cannot express them, so this is a real dependency.
+    "regex>=2024.0",
+    # stage 02: reading parquet shards without pulling in all of `datasets`
+    "pyarrow>=15.0",
+    "huggingface_hub>=0.24",
     # reference oracles & data access only — never the solution to a stage
     "tiktoken>=0.7",
     "datasets>=2.19",
@@ -16,6 +22,17 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0", "ruff>=0.5"]
+
+# PyPI's default torch wheel may not match the CUDA runtime we want. Pin the
+# official CUDA 12.8 index explicitly so `uv sync` can never quietly install a
+# CPU-only build -- that failure mode is silent until training is 50x slower.
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
 
 [tool.pytest.ini_options]
 testpaths = ["stages", "llmfs"]

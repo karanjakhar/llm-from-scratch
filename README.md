@@ -32,7 +32,7 @@ that later stages import. Learning twice is the point.
 
 - NVIDIA RTX 4060 Laptop, **8 GB VRAM** (7797 MB actually addressable)
 - ~98 GB free disk
-- Python 3.12, PyTorch 2.10 + CUDA 12.8
+- Python 3.12, PyTorch 2.11 + CUDA 12.8, via `uv` (`uv.lock` pins everything)
 
 8 GB is a real constraint and it is treated as a feature, not a problem. It
 forces honest engineering: gradient accumulation, mixed precision, activation
@@ -43,7 +43,7 @@ stage rents a cloud GPU for a larger run.
 ## Quickstart
 
 ```bash
-uv sync                      # create .venv, install deps
+uv sync --extra dev          # create .venv from uv.lock (~7 GB, mostly CUDA libs)
 uv run python stages/00_setup/verify_env.py
 ```
 
@@ -57,13 +57,13 @@ Early. See `PROGRESS.md` for the live state.
 
 ```bash
 # Stage 00 — environment + VRAM budget check
-python3 stages/00_setup/verify_env.py
+uv run python stages/00_setup/verify_env.py
 
 # Stage 01 — tokenizer: tests, then the real experiment
-python3 -m pytest stages/01_tokenizer/ -q
-python3 stages/01_tokenizer/run.py --vocab 8192          # a few minutes
-python3 stages/01_tokenizer/run.py --vocab 2048 --skip-ablation   # fast
+uv run pytest stages/01_tokenizer/ -q
+uv run python stages/01_tokenizer/run.py --vocab 8192          # a few minutes
+uv run python stages/01_tokenizer/run.py --vocab 2048 --skip-ablation   # fast
 ```
 
-`uv sync` gives a clean isolated environment; the commands above also work in
-any environment that has `torch`, `regex`, `tiktoken`, and `pytest`.
+Always go through `uv run`. The environment is defined by `pyproject.toml` +
+`uv.lock`, not by whatever happens to be installed on the machine.
