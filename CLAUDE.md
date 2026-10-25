@@ -88,8 +88,13 @@ speed.
   tinyshakespeare for unit tests, TinyStories for the Stage 08 training-loop
   smoke test (10M params, ~20 min, obviously-broken output when the loop is
   broken).
-- **Tokenizer vocab 8192** for own-trained models — small enough that the
-  embedding table does not dominate a 10-50M parameter model.
+- **Production tokenizer: `data/tokenizers/split_8192.json`** (decided
+  2026-10-25 from measurement, `docs/01_tokenizer.md` §9). GPT-2 pattern with
+  every digit split individually, 8,192 learned tokens + 4 specials = **8,196
+  embedding rows** (eot = 8192). 16,384 bought only +6.1% code compression for
+  +4.2M params. Both models use this one tokenizer. Regenerate with
+  `stages/01_tokenizer/train_production.py` (~1 h). Do not switch without new
+  evidence; switching invalidates every trained checkpoint.
 - **Complete working code, not exercises.** The owner reads, runs, and breaks
   working implementations rather than filling in TODOs. Each stage ships
   `<topic>.py` (commented implementation), `test_<topic>.py` (acceptance

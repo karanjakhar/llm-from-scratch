@@ -54,6 +54,16 @@ PATTERNS = {
 PREFIX_VOCABS = (2048, 4096, 8192, 16384)
 
 
+def specials_for(n_learned: int) -> dict[str, int]:
+    """Control tokens placed directly above the learned vocab. docs/01_tokenizer.md §5.
+
+    Same layout as run.py uses. Without these, prepare.py cannot mark document
+    boundaries and refuses the tokenizer.
+    """
+    return {"<|endoftext|>": n_learned, "<|pad|>": n_learned + 1,
+            "<|im_start|>": n_learned + 2, "<|im_end|>": n_learned + 3}
+
+
 def take_bytes(docs, budget: int) -> list[str]:
     out, n = [], 0
     for d in docs:
@@ -133,6 +143,7 @@ def main():
                 "code_bpt": ratio(tok, val_code),
                 "en_bpt": ratio(tok, val_en),
             })
+            tok.register_special_tokens(specials_for(len(tok.vocab)))
             tok.save(str(OUT / f"{name}_{v}.json"))
 
     # Reference points: production tokenizers on the same held-out text.

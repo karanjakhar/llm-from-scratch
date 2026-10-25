@@ -354,6 +354,70 @@ tokenizer and the model on different data.
 - [ ] Merge list with regex vs without compared, with the difference explained.
 - [ ] Specials cannot be forged from user text in safe mode (test asserts it).
 
+## 9. The production tokenizer — measured on the real corpus
+
+Trained by `stages/01_tokenizer/train_production.py` on 36 MB of permissive
+Python + fineweb-edu English (train split only), then measured on held-out code
+and English from **validation repositories the tokenizer never saw**. Every
+variant used GPT-2's pattern with only the digit rule changed. Each was trained
+once to 16,384, with smaller vocabs read off as merge prefixes (~1 h per
+variant, 3 in parallel).
+
+**Held-out bytes per token** (higher = more text per token):
+
+| digit rule | vocab | code | English |
+|---|---|---|---|
+| grouped `\p{N}+` (GPT-2) | 2,048 | 2.762 | 2.567 |
+| | 4,096 | 3.099 | 2.942 |
+| | **8,192** | **3.381** | 3.369 |
+| | 16,384 | 3.586 | 3.796 |
+| cap3 `\p{N}{1,3}` (GPT-4, Llama 3) | 8,192 | 3.376 | 3.365 |
+| | 16,384 | 3.580 | 3.789 |
+| split `\p{N}` (Llama 1/2, Qwen2) | 8,192 | 3.337 | 3.327 |
+| | 16,384 | 3.529 | 3.734 |
+| GPT-2's tokenizer | 50,257 | **2.222** | 4.570 |
+| GPT-4's `cl100k_base` | 100,277 | 4.244 | 4.688 |
+
+### What the table says
+
+**Our 8k tokenizer beats GPT-2's 50k tokenizer on code by 52%.** GPT-2 was
+trained on web text and never learned merges for runs of spaces, so every
+space of Python indentation costs it a whole token. Vocabulary size is not
+the main thing here. The training distribution is. This is the reason Codex
+added dedicated whitespace tokens. On English, GPT-2 still wins easily, as it
+should with 6× the vocab trained on English.
+
+**Vocab returns diminish fast.** Each doubling buys less on code: +12.2%
+(2k→4k), +9.1% (4k→8k), +6.1% (8k→16k).
+
+**The digit rule is nearly free.** Splitting every digit costs 1.3% on code
+versus grouping; capping at 3 costs 0.15%.
+
+### Decision: `split_8192`
+
+- **Vocab 8,192.** Going to 16,384 buys 6.1% on code at the cost of 4.2M more
+  embedding parameters (d=512), about 17% of a 50M workhorse once the table is
+  tied to the output head. Both models must share one tokenizer, and the
+  workhorse is where every stage gets debugged.
+- **Split digits.** It costs 1.3% compression, and in exchange every digit
+  always has the same id. `range(100)` becomes `range`, `(`, `1`, `0`, `0`, so
+  the model sees the 1 and the 0s as the same tokens wherever they appear. For a
+  small model that has to learn what numeric literals *mean*, consistency is
+  worth more than 1.3%.
+- **Cheap to reverse.** Switching tokenizers means re-running
+  `stages/02_data/prepare.py` (minutes), not retraining anything. Any model
+  trained before a switch is invalidated, though. Revisit only with evidence,
+  e.g. a Stage 10 ablation.
+
+Final layout: ids 0-255 bytes, 256-8191 merges, 8192 `<|endoftext|>`,
+8193 `<|pad|>`, 8194 `<|im_start|>`, 8195 `<|im_end|>` → **8,196 embedding rows**.
+
+### Speed
+
+The fast cached encoder in `llmfs/tokenizer` runs at **8.1 MB/s on one core
+vs 0.66 MB/s** for the stage-01 encoder (12×), with a 98.2% chunk-cache hit
+rate starting cold, and produces identical ids (tested on real GitHub files).
+
 ## Further reading
 
 - Sennrich et al. 2015, "Neural Machine Translation of Rare Words with Subword
