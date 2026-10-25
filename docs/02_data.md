@@ -450,14 +450,51 @@ With the manifest and the same code, the binaries reproduce byte for byte.
 6. `llmfs/data/loader.py` — random and shuffled samplers, code/English mixing.
 7. `run.py` — leakage ablation, dedup rate, loader throughput.
 
-### Acceptance criteria
+### Acceptance criteria — results on the real corpus (2026-10-25)
 
-- [ ] No repository appears in both train and val (asserted).
-- [ ] Every document in the bins ends with exactly one `<|endoftext|>`.
-- [ ] `decode(bin slice)` reproduces source text exactly (spot-checked on
-      random documents).
-- [ ] Fast tokenizer output identical to Stage 01 on real files.
-- [ ] Bins reproducible: rerunning `prepare.py` gives identical SHA-256s.
-- [ ] Shuffled sampler covers every window exactly once per epoch.
-- [ ] Loader throughput measured and ≥ 10x the model's requirement.
-- [ ] Leakage measured for file-level vs repo-level split, logged in `PROGRESS.md`.
+- [x] No repository appears in both train and val: guaranteed by construction
+      (`split_of` hashes `repo_name`) and asserted in `test_data.py`.
+- [x] Every document ends with exactly one `<|endoftext|>`: EOT count equals
+      document count in all four bins (521,423 / 720,855 / 1,937 / 3,656), and
+      every bin ends in EOT.
+- [x] `decode(bin)` reproduces source exactly: first 200 documents of
+      `train_code`, `val_code` and `val_en` byte-identical. The first `val_en`
+      attempt "failed" at document 174, which turned out to be a verbatim copy of
+      a `train_en` article that the shared deduper had correctly removed. The
+      check was wrong, not the bin.
+- [x] Fast tokenizer identical to Stage 01 on real files (test, now unskipped).
+- [~] Reproducible bins: worker-count invariance is tested at small scale and
+      the document stream is deterministic by construction. A full second
+      `prepare.py` run comparing SHA-256s has **not** been done.
+- [x] Shuffled sampler covers every window exactly once per epoch (test).
+- [x] Loader throughput ≥ 10× the requirement: 56-140M tokens/s, i.e.
+      **700-1,750×** the workhorse's ~80k tok/s. The CPU-only row ran first
+      against a colder page cache, so the rows are not cleanly comparable with
+      each other, but all clear the bar by two orders of magnitude. No
+      multi-worker `DataLoader` needed.
+- [x] Leakage measured and logged (§5).
+
+### What came out
+
+| bin | documents | tokens | bytes/token | near-dups dropped | exact dups dropped |
+|---|---|---|---|---|---|
+| `train_code` | 521,423 | 1,330.1M | 3.267 | 205,241 | 0 |
+| `train_en` | 720,855 | 1,016.9M | 3.390 | — | 1,476 |
+| `val_code` | 1,937 | 4.9M | 3.214 | 1,264 | 0 |
+| `val_en` | 3,656 | 5.2M | 3.379 | — | 13 |
+| **total** | | **2,357M** | | | **4.4 GB on disk** |
+
+Tokenization took ~4.5 minutes at ~36 MB/s across 18 workers, about 4× below
+the workers' combined capacity. The suspected bottleneck is the single main
+process reading and JSON-parsing the gzipped shards; it has not been profiled.
+
+### Token budget
+
+- **Workhorse (~50M params, ~1B tokens at 85/15):** needs ~0.85B code tokens.
+  We have 1.33B. Covered with room to spare.
+- **Capstone (~125M params, ~2.5B tokens at 85/15):** needs ~2.1B code tokens.
+  We have 1.33B, which would mean ~1.6 epochs. Before Stage 11, download ~8 more
+  shards (~110M code tokens each after dedup; the dedup rate will rise as the
+  corpus grows), re-run `dedup.py` over all of them, and re-run `prepare.py`.
+  Not needed until then.
+

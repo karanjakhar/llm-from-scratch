@@ -1,0 +1,24 @@
+{
+ "B": 16,
+ "T": 1024,
+ "rows": [
+  {
+   "device": "cpu",
+   "pinned": false,
+   "tokens_per_s": 56477173.19493437,
+   "x_model_need": 705.9646649366796
+  },
+  {
+   "device": "cuda",
+   "pinned": false,
+   "tokens_per_s": 124586111.80553837,
+   "x_model_need": 1557.3263975692296
+  },
+  {
+   "device": "cuda",
+   "pinned": true,
+   "tokens_per_s": 140175214.0324208,
+   "x_model_need": 1752.19017540526
+  }
+ ]
+}

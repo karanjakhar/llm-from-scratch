@@ -1,0 +1,118 @@
+{
+ "sources": {
+  "code": {
+   "repo": "codeparrot/codeparrot-clean",
+   "revision": "35a59fb025bc0a102f7d96eac09d145b896d487b",
+   "files": [
+    "file-000000000001.json.gz",
+    "file-000000000002.json.gz",
+    "file-000000000003.json.gz",
+    "file-000000000004.json.gz",
+    "file-000000000005.json.gz",
+    "file-000000000006.json.gz",
+    "file-000000000007.json.gz",
+    "file-000000000008.json.gz",
+    "file-000000000009.json.gz",
+    "file-000000000010.json.gz",
+    "file-000000000011.json.gz",
+    "file-000000000012.json.gz"
+   ]
+  },
+  "en": {
+   "repo": "HuggingFaceFW/fineweb-edu",
+   "revision": "87f09149ef4734204d70ed1d046ddc9ca3f2b8f9",
+   "files": [
+    "sample/10BT/000_00000.parquet"
+   ]
+  }
+ },
+ "code_shards_used": [
+  "file-000000000001.json.gz",
+  "file-000000000002.json.gz",
+  "file-000000000003.json.gz",
+  "file-000000000004.json.gz",
+  "file-000000000005.json.gz",
+  "file-000000000006.json.gz",
+  "file-000000000007.json.gz",
+  "file-000000000008.json.gz",
+  "file-000000000009.json.gz",
+  "file-000000000010.json.gz",
+  "file-000000000011.json.gz",
+  "file-000000000012.json.gz"
+ ],
+ "en_files_used": [
+  "fineweb/sample/10BT/000_00000.parquet"
+ ],
+ "license_allowlist": [
+  "apache-2.0",
+  "bsd-2-clause",
+  "bsd-3-clause",
+  "cc0-1.0",
+  "isc",
+  "mit",
+  "unlicense"
+ ],
+ "val_per_10k": 50,
+ "near_dedup": {
+  "file": "data/dedup/near_dups.json",
+  "sha256": "39f4b9ded3d8f2e27e4681818017934314752dde21fc3038db459f583934dfc1",
+  "params": {
+   "ngram": 5,
+   "num_perm": 120,
+   "bands": 20,
+   "rows": 6,
+   "threshold": 0.7
+  },
+  "uids": 206505
+ },
+ "tokenizer": {
+  "file": "split_8192.json",
+  "sha256": "ba4e501fedf25a5deb53121e7b303b09e8c0529adef90c69d44fab60f5a26f8c",
+  "vocab_size": 8196,
+  "eot_id": 8192
+ },
+ "dtype": "uint16",
+ "limit_docs": null,
+ "bins": {
+  "train_code": {
+   "docs": 521423,
+   "bytes": 4343407255,
+   "tokens": 1330102718,
+   "seconds": 127.3,
+   "dup_docs_dropped": 0,
+   "near_dup_docs_dropped": 205241,
+   "bytes_per_token": 3.2667,
+   "sha256": "78491a1280eb72c9fff3c34f3d7b51bb458656ce06478accb82e5c10b64037a0"
+  },
+  "train_en": {
+   "docs": 720855,
+   "bytes": 3445234141,
+   "tokens": 1016883284,
+   "seconds": 49.0,
+   "dup_docs_dropped": 1476,
+   "near_dup_docs_dropped": 0,
+   "bytes_per_token": 3.3904,
+   "sha256": "dc739cf9075a129e2d20483388afdd26fca4944a87e01696a57f885c7b3e550e"
+  },
+  "val_code": {
+   "docs": 1937,
+   "bytes": 15728862,
+   "tokens": 4896039,
+   "seconds": 86.7,
+   "dup_docs_dropped": 0,
+   "near_dup_docs_dropped": 1264,
+   "bytes_per_token": 3.2138,
+   "sha256": "33f8b661bc658cde9c874c3eb3a4eb6142db9f4a56e86c7f5bd213bc16b18539"
+  },
+  "val_en": {
+   "docs": 3656,
+   "bytes": 17704746,
+   "tokens": 5243079,
+   "seconds": 9.5,
+   "dup_docs_dropped": 13,
+   "near_dup_docs_dropped": 0,
+   "bytes_per_token": 3.3791,
+   "sha256": "3390ebffc63abd30e8645315a985b761c1768b078fc38b1603f4c3f2df352981"
+  }
+ }
+}

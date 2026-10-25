@@ -38,7 +38,7 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done
 
 ## Part 0 — Foundations
 
-### `[~]` Stage 00 — Setup and the Mental Model
+### `[x]` Stage 00 — Setup and the Mental Model
 **Concepts:** What a language model actually computes (a probability
 distribution over the next token). Autoregressive factorization. Tensors,
 shapes, broadcasting, autograd. The train/inference asymmetry. Where VRAM goes:
@@ -49,7 +49,7 @@ budget for a 50M model that matches what PyTorch actually allocates.
 states), then watch the OOM happen exactly where predicted.
 → `docs/00_setup.md`
 
-### `[ ]` Stage 01 — Tokenization
+### `[x]` Stage 01 — Tokenization
 **Concepts:** Why not characters, why not words. Byte-level fallback and why
 it guarantees no UNK. Byte Pair Encoding: the merge loop, the vocab, the
 ranks. Encode/decode round-tripping. GPT-2's byte-to-unicode trick. Regex
@@ -66,7 +66,7 @@ and Qwen2 style) since generated code is full of numeric literals.
 merges that span spaces and punctuation.
 → `docs/01_tokenizer.md`
 
-### `[ ]` Stage 02 — The Data Pipeline
+### `[x]` Stage 02 — The Data Pipeline
 **Concepts:** Corpus selection and why data quality dominates. Streaming vs
 downloading. Tokenize-once-to-disk as a `uint16` memmap. Document packing and
 the EOS separator. Why random offsets into a flat token array is a valid

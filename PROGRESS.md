@@ -5,32 +5,29 @@ A new AI session reads `CLAUDE.md` then this file and knows exactly where to pic
 
 ## Current position
 
-**Stage 02 — Data pipeline** · code done, tested, near-dedup run; full tokenization pending
-**Stage 01 — production tokenizer** · training on the real corpus (3 digit-rule variants)
+**Stages 00, 01, 02 complete.** Next: **Stage 03 — Embeddings and Position.**
 
-**Next actions, in order:**
+Ready to use:
+- Tokenizer: `data/tokenizers/split_8192.json` (8,196 embedding rows, eot 8192)
+- Token files: `data/bins/split_8192/{train,val}_{code,en}.bin`, 2.36B tokens
+  (manifest copy committed at `results/02_data/manifest_split_8192.json`)
+- Loader: `llmfs.data.MixedLoader({"code": (path, 0.85), "en": (path, 0.15)}, B, T, device="cuda")`
 
-1. When `stages/01_tokenizer/train_production.py` finishes, read
-   `data/tokenizers/results.json` and pick the tokenizer (vocab 8192 vs 16384,
-   digit rule grouped / cap3 / split). Record the choice + reason in `CLAUDE.md`.
-2. Full tokenization:
-   ```bash
-   uv run python stages/02_data/prepare.py --tokenizer data/tokenizers/<chosen>.json
-   uv run python stages/02_data/run.py summary    --bins data/bins/<chosen>
-   uv run python stages/02_data/run.py throughput --bins data/bins/<chosen>
-   ```
-3. Check the token budget. Near-dedup removed 28% of train, so 12 shards may
-   now fall short of the ~2.1B code tokens the 125M capstone wants.
-   `download.py --code-shards N` + re-run `dedup.py` if so.
-4. Then Stage 03.
+**Next action:** write `docs/03_embeddings_position.md` (docs before code), then
+`stages/03_embeddings/`.
+
+Deferred, with a trigger:
+- Before Stage 11: download ~8 more code shards, re-run `dedup.py` +
+  `prepare.py` (capstone needs ~2.1B code tokens; we have 1.33B).
+- Not done: a full second `prepare.py` run to confirm byte-identical SHA-256s.
 
 ## Stage status
 
 | # | Stage | Status | Notes / result |
 |---|---|---|---|
 | 00 | Setup & mental model | `[x]` | env verified, VRAM model holds to 8.5% |
-| 01 | Tokenization | `[~]` | algorithm done (58 tests); production tokenizer training on real corpus |
-| 02 | Data pipeline | `[~]` | pipeline + near-dedup done (34 tests); full tokenization pending |
+| 01 | Tokenization | `[x]` | production tokenizer `split_8192`; beats GPT-2 on code 3.38 vs 2.22 B/tok |
+| 02 | Data pipeline | `[x]` | 2.36B tokens; leakage 34%→8%; loader 700×+ faster than needed |
 | 03 | Embeddings & position | `[ ]` | |
 | 04 | Attention | `[ ]` | |
 | 05 | Transformer block | `[ ]` | |
@@ -76,6 +73,14 @@ stay visible across months.
 | 2026-10-25 | 02 | leakage, **file** split, after near-dedup | rare val lines in train / files >50% leaked | 21.7% / 27.4% |
 | 2026-10-25 | 02 | leakage, **repo** split, after near-dedup | rare val lines in train / files >50% leaked | **8.1%** / **13.8%** |
 | 2026-10-25 | 02 | exact dedup check on real shards | exact duplicates found | 0 (confirms upstream claim) |
+| 2026-10-25 | 01 | held-out code B/tok @ 8192: grouped / cap3 / split | compression | 3.381 / 3.376 / 3.337 |
+| 2026-10-25 | 01 | held-out code B/tok @ 16384, grouped | compression | 3.586 (+6.1% over 8192) |
+| 2026-10-25 | 01 | GPT-2 (50k) / cl100k (100k) on same held-out code | compression | 2.222 / 4.244 |
+| 2026-10-25 | 01 | llmfs cached encoder vs stage-01, 1 core, real code | throughput | 8.14 vs 0.66 MB/s (12×), 98.2% cache hits |
+| 2026-10-25 | 02 | full tokenization, 18 workers | tokens / time | 2,357M / ~4.5 min (~36 MB/s) |
+| 2026-10-25 | 02 | train_code / train_en / val_code / val_en | tokens | 1,330.1M / 1,016.9M / 4.9M / 5.2M |
+| 2026-10-25 | 02 | fineweb-edu exact duplicates | dropped | 1,476 train, 13 val |
+| 2026-10-25 | 02 | MixedLoader B=16 T=1024, cpu / cuda / cuda+pinned | tokens/s | 56M / 125M / 140M (700-1750× need) |
 
 ## Open questions
 
@@ -134,7 +139,20 @@ Things noticed but not yet understood. Carried forward until answered.
   neither alone is enough.
 - Fixed a latent deadlock: worker pools forked after torch had started threads.
   Switched to `spawn`.
-- In progress at session end: production tokenizer training (3 variants to 16k).
+- **Production tokenizer chosen: `split_8192`.** 16k vocab bought only +6.1%
+  on code. Splitting digits costs 1.3% but gives stable digit ids. Our 8k
+  tokenizer beats GPT-2's 50k on code (3.38 vs 2.22 B/tok): GPT-2 has no
+  whitespace-run tokens, so indentation is ruinous for it.
+- Fixed `train_production.py` saving tokenizers without special tokens.
+- **Full corpus tokenized: 2.36B tokens, 4.4 GB, ~4.5 min.** All acceptance
+  checks pass on the real files. The val_en decode check "failed" once, but the
+  cause was a verbatim train/val duplicate article that dedup had correctly
+  removed; the check was wrong.
+- Loader is 700-1,750× faster than the model needs. No DataLoader workers.
+- Published to GitHub (personal account) after scrubbing a work-account name
+  from history. Rule recorded: no Co-Authored-By in commits.
+- Built a visual artifact of stages 00-02 with a live BPE lab, verified
+  merge-for-merge against `RegexBPE`.
 
 ### 2026-10-14 — Session 2
 - **Domain decided: Python code + ~15% high-quality English.** Written up in
