@@ -100,9 +100,17 @@ speed.
 
 ## Git / publishing state
 
-Local git only. **No remote configured, and none should be added without the
-owner asking.** As of 2026-10-14 the owner chose to hold off publishing until
-they decide which account it goes under. Commit every session; do not push.
+Public on GitHub: **https://github.com/karanjakhar/llm-from-scratch** (remote
+`origin`, branch `main`), published 2026-10-25 at the owner's request.
+
+- **Commit messages must never contain a `Co-Authored-By` trailer or any
+  mention of Claude / AI authorship.** Owner's explicit instruction. (Mentioning
+  the `CLAUDE.md` *file* by name in a message is fine — it is a filename.)
+- Commit every session. Push when the owner asks; do not push on your own
+  initiative.
+- Never force-push `main` now that it is public.
+- Before any push, check that nothing under `data/` or `checkpoints/` is
+  staged and that no credentials or account names have crept into files.
 
 ## Commit convention
 
