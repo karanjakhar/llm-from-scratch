@@ -167,12 +167,14 @@ def summary(args):
     m = json.loads((Path(args.bins) / "manifest.json").read_text())
     print(f"tokenizer {m['tokenizer']['file']}  vocab_size {m['tokenizer']['vocab_size']}")
     tot = 0
+    print(f"  {'bin':<11} {'docs':>9}  {'tokens':>10}  {'text MB':>9}  {'B/tok':>6}  "
+          f"{'near-dups':>9}  {'exact dups':>10}")
     for name, b in m["bins"].items():
         tot += b["tokens"]
-        print(f"  {name:<11} {b['docs']:>9,} docs  {b['tokens']/1e6:>9,.1f}M tokens  "
-              f"{b['bytes']/1e9:6.2f} GB text  {b['bytes_per_token']:.3f} B/tok  "
-              f"{b['dup_docs_dropped']:>6,} exact dups dropped")
-    print(f"  total {tot/1e9:.2f}B tokens = {tot*2/1e9:.1f} GB on disk")
+        print(f"  {name:<11} {b['docs']:>9,}  {b['tokens']/1e6:>9,.1f}M  "
+              f"{b['bytes']/1e6:>9,.0f}  {b['bytes_per_token']:>6.3f}  "
+              f"{b.get('near_dup_docs_dropped', 0):>9,}  {b['dup_docs_dropped']:>10,}")
+    print(f"  total {tot/1e6:,.1f}M tokens = {tot*2/1e6:,.0f} MB on disk")
 
 
 def main():
