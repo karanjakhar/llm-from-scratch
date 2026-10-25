@@ -217,6 +217,19 @@ def test_weighted_dedup_training_equals_naive():
     assert fast.merges == naive_merges
 
 
+def test_merges_are_a_prefix_sequence():
+    """Training to vocab V and truncating to v merges == training to v directly.
+
+    train_production.py depends on this to read 2k/4k/8k tokenizers off one
+    16k run. It holds because training is greedy and deterministic: merge k
+    depends only on the state after merges 1..k-1.
+    """
+    long, short = RegexBPE(), RegexBPE()
+    long.train(CORPUS, 800)
+    short.train(CORPUS, 500)
+    assert list(long.merges.items())[: 500 - 256] == list(short.merges.items())
+
+
 def test_training_is_deterministic():
     a, b = RegexBPE(), RegexBPE()
     a.train(CORPUS, 400)
