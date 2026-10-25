@@ -237,9 +237,11 @@ Note `\p{N}+` groups **all consecutive digits** into one chunk, so GPT-2 can
 produce a single token for `"2024"` and a different one for `"202"`. This is
 precisely why early LLMs were bad at arithmetic: the digit "5" has a different
 id depending on which numbers it appeared inside during training. GPT-4's
-pattern caps digit runs at 3; Llama 3 splits **every digit separately**, which
-measurably improves arithmetic. A regex choice changes the model's math
-ability. That is how deep tokenizer effects run.
+pattern, which Llama 3 also uses, caps digit runs at 3 (`\p{N}{1,3}`). Llama 1
+and 2 (SentencePiece with `split_digits`) and Qwen2 go further and split
+**every digit separately**, which makes digit tokens consistent and is reported
+to help arithmetic. A regex choice changes the model's math ability. That is
+how deep tokenizer effects run.
 
 **The ablation for this stage** is to train BPE with and without the regex and
 inspect the merge lists side by side.

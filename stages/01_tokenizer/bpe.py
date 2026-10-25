@@ -47,7 +47,8 @@ GPT2_SPLIT_PATTERN = (
 # GPT-4's pattern. Two differences worth noticing:
 #   - `\p{N}{1,3}` caps digit runs at 3, so numbers tokenize consistently
 #   - case-insensitive contractions, and no space before \s+ handling
-# Llama 3 goes further and splits every digit on its own.
+# Llama 3 reuses this \p{N}{1,3} rule. Llama 1/2 (SentencePiece split_digits)
+# and Qwen2 go further and split every digit on its own.
 GPT4_SPLIT_PATTERN = (
     r"""'(?i:[sdmt]|ll|ve|re)|[^\r\n\p{L}\p{N}]?+\p{L}+|\p{N}{1,3}"""
     r"""| ?[^\s\p{L}\p{N}]++[\r\n]*|\s*[\r\n]|\s+(?!\S)|\s+"""

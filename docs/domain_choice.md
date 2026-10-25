@@ -238,8 +238,8 @@ Decided here, consumed later:
 
 - **Stage 01** — retrain the tokenizer on the code+English mix, not Shakespeare.
   Vocab 8192 may be too small for code (identifiers and indentation eat slots);
-  measure 8192 vs 16384 on bytes/token. Consider splitting digits individually,
-  Llama-3 style, since generated code contains numeric literals.
+  measure 8192 vs 16384 on bytes/token. Consider splitting digits individually
+  (Llama 1/2 and Qwen2 style), since generated code contains numeric literals.
 - **Stage 02** — dedup is now load-bearing (GitHub duplication is severe), and
   the train/val split must be by *repository*, not by file, or held-out
   perplexity is meaningless.
