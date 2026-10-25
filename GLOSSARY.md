@@ -39,12 +39,19 @@ one forward pass. Also called block size or sequence length.
 **d_model / n_embd** — The width of the residual stream; the embedding
 dimension that every block reads from and writes to.
 
+**Document masking** — A block-diagonal attention mask that stops tokens of one
+packed document from attending to the previous document. The fix for packing's
+cross-document contamination; used in long-context training and SFT. Stage 02.
+
 **DPO (Direct Preference Optimization)** — Fine-tuning on preference pairs via a
 closed-form loss that provably optimizes the same objective as RLHF, with no
 reward model and no RL loop. Stage 19.
 
 **Embedding** — A lookup table mapping each token id to a learned vector.
 Mathematically a one-hot vector times a matrix. Stage 03.
+
+**Exact dedup** — Removing byte-identical copies by hashing content. Cheap, and
+blind to a fork that changed one character. Stage 02.
 
 **Expert** — One of several parallel FFN sub-networks in an MoE layer. Each token
 is routed to only a few of them. Stage 13.
@@ -72,9 +79,16 @@ the value network. Stage 20.
 **Head** — One attention subspace. Multi-head attention splits `d_model` into
 `n_head` heads of size `d_model / n_head`, each attending independently.
 
+**Jaccard similarity** — Overlap of two sets: `|A ∩ B| / |A ∪ B|`, from 0 (disjoint)
+to 1 (identical). Near-dedup measures it over sets of word 5-grams. Stage 02.
+
 **KV cache** — Stored keys and values from previous decoding steps, so each new
 token's attention does not recompute them. Turns O(n²) decoding work into O(n).
 Stage 07.
+
+**Leakage (data)** — Validation text that the model effectively saw during
+training, so validation loss measures memorization rather than generalization.
+For code, mostly forks and vendored copies under different repo names. Stage 02.
 
 **Logits** — The raw, unnormalized scores over the vocabulary that come out of
 the final linear layer, before softmax.
@@ -83,12 +97,31 @@ the final linear layer, before softmax.
 update `B·A` instead, cutting trainable parameters by orders of magnitude.
 Stage 17.
 
+**LSH (Locality-Sensitive Hashing)** — Splitting a MinHash signature into bands
+and bucketing documents by each band, so only documents likely to be similar are
+ever compared. Turns an O(n²) all-pairs search into roughly O(n). Stage 02.
+
+**Memmap (memory-mapped file)** — A file mapped into the address space so the OS
+loads pages only when touched. A 5 GB token array costs almost no RAM until read.
+Stage 02.
+
 **MFU (Model FLOPs Utilization)** — Achieved FLOP/s divided by the GPU's peak
 FLOP/s. The honest measure of training efficiency. Stage 09.
+
+**MinHash** — A fixed-size fingerprint of a set: for each of P hash functions,
+keep the minimum hash over the set's elements. The fraction of positions where two
+fingerprints agree is an unbiased estimate of their Jaccard similarity. Stage 02.
 
 **MoE (Mixture of Experts)** — Replacing one FFN with many, and routing each
 token to a few, so total parameters grow without per-token FLOPs growing.
 Stage 13.
+
+**Near-duplicate dedup** — Removing documents that are almost, but not exactly,
+the same (forks, reformatted copies). Done with MinHash + LSH. Stage 02.
+
+**Packing** — Concatenating documents into one stream separated by an
+end-of-text token and cutting fixed-length windows from it, instead of padding
+each document to length. No wasted compute on padding. Stage 02.
 
 **Perplexity** — `exp(cross-entropy loss)`. Intuitively, how many tokens the
 model is effectively choosing between at each step. Lower is better.
@@ -113,6 +146,9 @@ each token goes to. Stage 13.
 instruction/response pairs so it answers instead of merely continuing text.
 Stage 16.
 
+**Shingle** — An overlapping window of n consecutive words (we use n = 5). A
+document's set of shingles is what near-dedup compares. Stage 02.
+
 **Softmax** — Turns a vector of scores into a probability distribution:
 `exp(x_i) / Σ exp(x_j)`.
 
@@ -134,3 +170,4 @@ steps, because Adam's variance estimates are unreliable early. Stage 08.
 
 **Weight tying** — Sharing one matrix between the input embedding and the output
 projection. Saves `vocab × d_model` parameters. Stage 06.
+

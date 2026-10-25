@@ -1,0 +1,24 @@
+{
+ "shards": [
+  "file-000000000001.json.gz",
+  "file-000000000002.json.gz"
+ ],
+ "files": 97122,
+ "near_dedup": true,
+ "min_line_chars": 20,
+ "rare_threshold": 5,
+ "results": {
+  "file": {
+   "val_files": 505,
+   "line_leak_rate": 0.29606666872816106,
+   "rare_line_leak_rate": 0.21665146848815403,
+   "val_files_over_half_leaked": 0.27380952380952384
+  },
+  "repo": {
+   "val_files": 253,
+   "line_leak_rate": 0.15082309715067901,
+   "rare_line_leak_rate": 0.08093567251461989,
+   "val_files_over_half_leaked": 0.1383399209486166
+  }
+ }
+}

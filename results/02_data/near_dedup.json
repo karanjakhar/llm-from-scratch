@@ -1,0 +1,22 @@
+{
+ "params": {
+  "ngram": 5,
+  "num_perm": 120,
+  "bands": 20,
+  "rows": 6,
+  "threshold": 0.7
+ },
+ "docs": 729865,
+ "train_docs": 726664,
+ "val_docs": 3201,
+ "candidates": 497258,
+ "verified": 342743,
+ "clusters_with_dups": 87331,
+ "train_dropped": 205241,
+ "val_dropped": 1264,
+ "val_dropped_due_to_train_copy": 1258,
+ "train_drop_rate": 0.2824427796065307,
+ "val_drop_rate": 0.3948766010621681,
+ "seconds_signatures": 149.3,
+ "seconds_clustering": 9.6
+}

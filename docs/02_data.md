@@ -125,21 +125,59 @@ how many copies existed before). We re-hash with our own function across every
 shard we use and report the duplicate rate, because "the dataset card says it
 is deduplicated" is a claim, and claims get checked.
 
-### Near-duplicate dedup — explained, not yet implemented
+### Near-duplicate dedup — built, because the leakage number said so
 
 A fork that renamed one variable has a different hash. Exact dedup misses it.
-The standard tool is **MinHash + LSH**:
+The standard tool is **MinHash + LSH** (`llmfs/data/dedup.py`):
 
-1. Represent each file as the set of its 5-token shingles (overlapping windows).
-2. Jaccard similarity `|A ∩ B| / |A ∪ B|` between two sets measures overlap.
-3. MinHash: apply k random hash functions to every shingle, keep the minimum
-   per function. The probability two files share a minimum equals their
-   Jaccard similarity, so k minimums form a compact fingerprint.
-4. LSH: band the fingerprint so that only pairs likely above a threshold
-   (typically 0.8) ever get compared, avoiding the O(n²) all-pairs blowup.
+1. **Shingles.** Represent each file as the *set* of its word 5-grams, where a
+   "word" is a `\w+` run. Ignoring whitespace and punctuation means a fork run
+   through a formatter still matches its original.
+2. **Jaccard similarity** `|A ∩ B| / |A ∪ B|` between two shingle sets measures
+   overlap, from 0 to 1.
+3. **MinHash.** Apply P = 120 independent hash functions to every shingle and
+   keep the minimum for each. For any single function,
+   `P(min_A == min_B) = Jaccard(A, B)` exactly, so the fraction of the 120
+   positions that agree is an unbiased estimate of Jaccard, with standard
+   deviation at most `sqrt(0.25/120) ≈ 0.046`.
+4. **LSH banding.** Cut the 120 values into 20 bands of 6. Two files become
+   *candidates* if any band matches exactly. The probability of that is
+   `1 - (1 - J^6)^20`, an S-curve: ~27% at J = 0.5, ~92% at J = 0.7, ~100% at
+   J = 0.9. Each file is compared with a handful of candidates instead of all
+   700k others, which avoids the O(n²) blowup.
+5. **Verify** each candidate pair by its estimated Jaccard ≥ 0.7, **union-find**
+   the matches into clusters, and keep one file per cluster.
 
-It is not in this stage's code. The leakage measurement in §5 tells us how
-much it would matter, and that number decides whether it gets built.
+Which copy survives matters. **When a cluster spans train and val, the train
+copy is kept and every val copy is dropped.** Dropping the train copy instead
+would leave the val file in place with its near-twin gone from train. That
+looks equivalent, but it keeps a val set chosen by "which repos happened to be
+forked", so the train copy wins.
+
+Two implementation details that silently break this if missed:
+
+- **No `hash()`.** Python's built-in `hash` is salted per process. Signatures
+  are computed in 18 worker processes, so with `hash` every worker's
+  signatures would be incomparable with every other's and nothing would ever
+  match. The module uses `zlib.crc32` and a multiply-add-shift hash family; a
+  test computes signatures in spawned processes and asserts they are identical.
+- **Jaccard is over sets.** A shingle repeated 40 times counts once; the
+  `np.unique` is part of the definition, not an optimization.
+
+### What it found (12 shards, 729,865 permissive files, 149 s)
+
+| | |
+|---|---|
+| near-duplicate train files dropped | 205,241 / 726,664 (**28.2%**) |
+| val files dropped | 1,264 / 3,201 (**39.5%**) |
+| …of which had a near-copy **in train** | **1,258** |
+| clusters containing duplicates | 87,331 |
+
+More than a quarter of "deduplicated" GitHub Python is near-duplicate, and
+almost every dropped val file was a near-copy of something in train. **Without
+this step, ~40% of the code validation set would have been memorization tests.**
+
+---
 
 ---
 
@@ -180,18 +218,43 @@ For English documents (no repo), the same function hashes the document id.
 0.5% of repositories go to val. Validation loss needs only ~10M tokens to be
 stable to two decimal places, and every val token is a token not trained on.
 
-### The ablation for this stage: how much does file-level splitting leak?
+### The ablation for this stage: what do the split and the dedup each buy?
 
-Measured in `run.py`, without training anything. For a sample of val files,
-take every non-trivial line (stripped, ≥ 20 chars) and check whether it appears
-verbatim anywhere in train. Do this twice: once with a **file-level** random
-split, once with the **repo-level** split.
+Measured in `run.py leakage`, without training anything. For every val file,
+take each non-trivial line (stripped, ≥ 20 chars) and check whether it appears
+verbatim anywhere in train. Two views of that number:
 
-- Expected: file-level leaks noticeably more than repo-level. That gap is the
-  optimism file-level splitting would have baked into every val loss.
-- Also expected, and more interesting: repo-level does not reach zero. Forks
-  and vendored code live under *different* repo names, so the repo split cannot
-  catch them. The residual is the argument for near-duplicate dedup (§4).
+- **All lines.** Inflated by boilerplate (license headers, common imports) that
+  is in train under any split. That makes it a ceiling, not a clean signal.
+- **Rare lines**: lines found in ≤ 5 files across the whole corpus. Those are not
+  boilerplate. A rare line on both sides of the split is a copy.
+
+Results on shards 1-2 (~119k permissive files):
+
+| split | near-dedup | val lines in train | **rare** lines in train | val files >50% leaked |
+|---|---|---|---|---|
+| file-level | no | 56.3% | 43.9% | 48.6% |
+| repo-level | no | 47.6% | 34.4% | 43.3% |
+| file-level | yes | 29.6% | 21.7% | 27.4% |
+| **repo-level** | **yes** | **15.1%** | **8.1%** | **13.8%** |
+
+What the table shows:
+
+1. **The repo split alone was not enough.** Before near-dedup, 43% of val files
+   had most of their lines in train, mostly through forks under other repo
+   names, which a repo split cannot see.
+2. **Near-dedup alone is not enough either.** With dedup but a file-level
+   split, rare-line leakage is still 21.7%. Same-repo files share helpers and
+   copied blocks that are not near-duplicates *as whole files*.
+3. **They are complementary.** The file-vs-repo gap *grows* after dedup
+   (+9.5 → +13.6 rare-line points). Once cross-repo copies are gone,
+   within-repo sharing is the main leak, and only the repo split catches it.
+4. **The residual 8.1% is real and known.** These are probably partial copies,
+   e.g. one vendored function inside an otherwise original file, which
+   whole-file Jaccard cannot detect. Closing it would need line- or
+   function-level dedup. We note it rather than chase it: val loss will be
+   slightly optimistic, and Stage 22's HumanEval/MBPP numbers do not depend on
+   this split at all.
 
 The curriculum originally listed "document-level vs token-level shuffling" as
 this stage's ablation. That needs a training loop to observe, so it moves to
