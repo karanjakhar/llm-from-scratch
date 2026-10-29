@@ -5,7 +5,7 @@ A new AI session reads `CLAUDE.md` then this file and knows exactly where to pic
 
 ## Current position
 
-**Stages 00, 01, 02 complete.** Next: **Stage 03 — Embeddings and Position.**
+**Stages 00-03 complete.** Next: **Stage 04 — Attention, from one head up.**
 
 Ready to use:
 - Tokenizer: `data/tokenizers/split_8192.json` (8,196 embedding rows, eot 8192)
@@ -13,8 +13,12 @@ Ready to use:
   (manifest copy committed at `results/02_data/manifest_split_8192.json`)
 - Loader: `llmfs.data.MixedLoader({"code": (path, 0.85), "en": (path, 0.15)}, B, T, device="cuda")`
 
-**Next action:** write `docs/03_embeddings_position.md` (docs before code), then
-`stages/03_embeddings/`.
+Stage 03 code: `stages/03_embeddings/embeddings.py` (token table, learned /
+sinusoidal / RoPE in both layouts, tied head). Not yet promoted to `llmfs/`:
+promote RoPE when Stage 12 needs it; GPT-2 (Stage 06) uses learned positions.
+
+**Next action:** write `docs/04_attention.md` (docs before code), then
+`stages/04_attention/`.
 
 Deferred, with a trigger:
 - Before Stage 11: download ~8 more code shards, re-run `dedup.py` +
@@ -28,7 +32,7 @@ Deferred, with a trigger:
 | 00 | Setup & mental model | `[x]` | env verified, VRAM model holds to 8.5% |
 | 01 | Tokenization | `[x]` | production tokenizer `split_8192`; beats GPT-2 on code 3.38 vs 2.22 B/tok |
 | 02 | Data pipeline | `[x]` | 2.36B tokens; leakage 34%→8%; loader 700×+ faster than needed |
-| 03 | Embeddings & position | `[ ]` | |
+| 03 | Embeddings & position | `[x]` | RoPE 2.52 < sinusoidal 2.63 < learned 2.69 < none 3.35; tying helps |
 | 04 | Attention | `[ ]` | |
 | 05 | Transformer block | `[ ]` | |
 | 06 | GPT assembly | `[ ]` | |
@@ -81,6 +85,13 @@ stay visible across months.
 | 2026-10-25 | 02 | train_code / train_en / val_code / val_en | tokens | 1,330.1M / 1,016.9M / 4.9M / 5.2M |
 | 2026-10-25 | 02 | fineweb-edu exact duplicates | dropped | 1,476 train, 13 val |
 | 2026-10-25 | 02 | MixedLoader B=16 T=1024, cpu / cuda / cuda+pinned | tokens/s | 56M / 125M / 140M (700-1750× need) |
+| 2026-10-29 | 03 | tiny LM (4L, C=256, 32.8M tok, 3 seeds), **no position** | held-out code loss | 3.350 ± 0.013 |
+| 2026-10-29 | 03 | same, learned absolute positions | held-out code loss | 2.689 ± 0.012 |
+| 2026-10-29 | 03 | same, sinusoidal **without** √C token scaling | held-out code loss | 4.723 ± 0.080 (position 35× token size) |
+| 2026-10-29 | 03 | same, sinusoidal with √C token scaling | held-out code loss | 2.633 ± 0.001 |
+| 2026-10-29 | 03 | same, RoPE, tied head | held-out code loss | **2.523 ± 0.010** |
+| 2026-10-29 | 03 | same, RoPE, untied head (+2.10M params) | held-out code loss | 2.598 ± 0.009 |
+| 2026-10-29 | 03 | trained T=256, eval positions 256-511: none / sin-scaled / RoPE / RoPE-untied | loss (vs 0-255) | 3.51 (3.30) / 4.94 (2.61) / 3.29 (2.51) / 3.19 (2.58) |
 
 ## Open questions
 
@@ -110,8 +121,31 @@ Things noticed but not yet understood. Carried forward until answered.
 - `codeparrot-clean` is less well filtered than the gated `bigcode/*` corpora.
   Does that show up as measurable quality loss, or is 5 GB of lightly-filtered
   Python fine at this scale?
+- Does the untied-head penalty (2.598 vs 2.523) shrink with longer training,
+  i.e. is it slow learning of 2.1M input rows, or a lasting loss? Re-check on
+  the workhorse model (Stage 08) if cheap.
+- NoPE degrades least past the training length (+0.21) but starts 0.83 worse.
+  Does the in-range gap shrink with depth and more tokens, as the NoPE papers
+  suggest? Not worth a dedicated run; note if Stage 14 revisits it.
 
 ## Session log
+
+### 2026-10-29 — Session 5
+- Pushed the session 3-4 commits (pre-push checks: no data/, no co-author
+  lines, no credentials).
+- **Stage 03 complete.** `docs/03_embeddings_position.md` (book voice, worked
+  examples), `stages/03_embeddings/` with 22 tests: embedding = one-hot matmul
+  (outputs and gradients), permutation equivariance, sinusoid properties, RoPE
+  offset-only scores, interleaved = complex, half-split = HF Llama exactly,
+  tied head shares storage.
+- Ablation, 6 variants × 3 seeds (18 runs, ~40 min): RoPE best (2.523), no
+  position worst among working schemes (3.350). See results log.
+- **Caught a silent bug by comparison:** sinusoids without √C token scaling
+  scored 4.72, worse than no position. Position was 35× the token's size. Fixed
+  as a separate variant so both numbers stay in the record.
+- Test failure from float32 RoPE angles: test asked for more precision than
+  the input had. Fixed the test, added a `dtype` argument, documented.
+- 6 journal entries, 6 glossary terms, 3 figures (`docs/visuals/03_*.png`).
 
 ### 2026-10-29 — Session 4
 - **The project will become a book** (owner's decision). Set up the system so

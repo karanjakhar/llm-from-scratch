@@ -83,7 +83,7 @@ in book voice) · `final`
 | 2 | Choosing what to teach it | — | `docs/domain_choice.md`, `docs/datasets.md` | draft |
 | 3 | Cutting text into tokens | 01 | `docs/01_tokenizer.md` | draft |
 | 4 | The data is most of the model | 02 | `docs/02_data.md` | draft |
-| 5 | Turning ids into vectors and position | 03 | `docs/03_*` | not started |
+| 5 | Turning ids into vectors and position | 03 | `docs/03_embeddings_position.md` | draft |
 | 6 | Attention, from one head up | 04 | | not started |
 | 7 | The transformer block | 05 | | not started |
 | 8 | Assembling GPT | 06 | | not started |
@@ -129,8 +129,12 @@ HTML) and, for print, will need static versions.
 | Encoding replays merges | 3 | a new word encoded, merge by merge | same | needs static frames |
 | Three digit rules | 3 | grouped / cap3 / split on real input | same | no |
 | Compression vs GPT-2/GPT-4 | 3 | 2.22 / 3.34 / 3.38 / 3.59 / 4.24 bytes per token | same | no |
+| Sinusoidal table + similarity | 5 | the clocks; similarity depends only on p - q | `visuals/03_sinusoidal.png` | yes (PNG) |
+| RoPE score vs offset | 5 | stripes along diagonals; three curves on one line | `visuals/03_rope_offset.png` | yes (PNG) |
+| Position ablation | 5 | training curves; loss by position past the training length | `visuals/03_ablation.png` | yes (PNG) |
 
-**Wanted, not yet made:** a MinHash/LSH diagram (chapter 4), a picture of
+**Wanted, not yet made:** a one-hot × table = row diagram and a 2D RoPE
+rotation diagram (chapter 5, ASCII versions in the doc for now), a MinHash/LSH diagram (chapter 4), a picture of
 packing documents with `<|endoftext|>` (chapter 4), and the random-vs-shuffled
 sampler coverage plot showing the 37% never seen (chapter 4).
 

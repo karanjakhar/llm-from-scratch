@@ -370,3 +370,79 @@ merges as the Python `RegexBPE` on the same text.
 **Lesson:** A teaching visual should be checked against the real code. A
 lookalike teaches the wrong thing convincingly.
 **Where:** `docs/visuals/stages_00-02_build_map.html`
+
+---
+
+## Session 5 — 2026-10-29 · embeddings and position (Stage 03)
+
+### 2026-10-29 · Stage 03 · The RoPE test failed on float32, not on maths        [mistake]
+**Expected:** The score of a rotated `q` and `k` depends only on `m - n`, so
+every diagonal of the 128 × 128 score matrix is constant to 1e-5.
+**Found:** Two tests failed with a drift of **1.37e-5** on scores of size ~12.4
+(about 1e-6 relative). The test converted angles to float64, but only *after*
+`rope_angles` had already rounded them to float32.
+**Why:** The fastest RoPE pair turns 1 radian per token, so its angle *is* the
+position. float32 keeps ~7 significant digits, so at position 127 the angle is
+off by up to ~4e-6 rad, and at position 100,000 by ~4e-3.
+**Lesson:** Prove which side is wrong before fixing. The code was right, the test
+asked for more precision than the input had. Also a real effect worth knowing:
+RoPE angle precision degrades linearly with position, which matters for
+long-context models.
+**Where:** `stages/03_embeddings/embeddings.py` `rope_angles(dtype=...)`
+
+### 2026-10-29 · Stage 03 · Our RoPE matches HuggingFace Llama exactly            [result]
+**Found:** The half-split layout equals `LlamaRotaryEmbedding` +
+`apply_rotary_pos_emb` from transformers 5.20.2 to 1e-5. The interleaved layout
+equals the complex-number form. The two layouts differ only by a fixed shuffle
+of dimensions; without the shuffle they disagree.
+**Lesson:** There are two "correct" RoPEs and loading weights trained with one
+into the other fails silently. Any port of real weights has to check this.
+**Where:** `stages/03_embeddings/test_embeddings.py`
+
+### 2026-10-29 · Stage 03 · Sinusoidal positions were worse than none at all     [mistake]
+**Expected:** Sinusoids roughly match learned positions (val loss ~2.7).
+**Found:** **4.723 ± 0.080** over 3 seeds, worse than no position at all
+(3.350). Training loss fell every step, with no error or NaN.
+**Why:** A sinusoid vector has length √(C/2) = **11.3** at C = 256. Our token
+rows start with length **0.32** (std 0.02). Position outweighed the token
+**35:1**. The 2017 paper multiplies token embeddings by √C before adding; we
+had left that out. With it: **2.633 ± 0.001**, better than learned (2.689).
+**Lesson:** When two signals are added, check they are the same size. The
+failure was silent, and only the comparison against other variants exposed it.
+One line from the paper was worth 2.1 nats.
+**Where:** `docs/03_embeddings_position.md` §8, `stages/03_embeddings/tiny_lm.py` `emb_scale`
+
+### 2026-10-29 · Stage 03 · Position is worth 0.83 nats; RoPE is best             [result]
+**Found:** 4 layers, C = 256, 32.8M tokens, 3 seeds, held-out code loss:
+none 3.350, learned 2.689, sinusoidal (scaled) 2.633, **RoPE 2.523**. Seed
+noise ±0.01. RoPE wins with zero position parameters; the learned table spends
+65,536 and loses by 0.17.
+**Lesson:** A causal model without position does learn *some* order through
+the mask (it beats broken sinusoids by 1.4), but nowhere near enough. The
+curriculum's "cannot learn word order" is too strong; "learns it badly" is
+what we measured.
+**Where:** `results/03_embeddings/ablation.json`, `docs/visuals/03_ablation.png`
+
+### 2026-10-29 · Stage 03 · Untying the head: +40% params, worse loss             [surprise]
+**Expected:** A separate output head adds capacity, so equal or slightly better.
+**Found:** Untied RoPE model: 7.36M params vs 5.26M, loss **2.598 vs 2.523**,
+consistent across all 3 seeds.
+**Why (believed):** Tied, the table gets a gradient on every row every step
+from the output softmax. Untied, input rows learn only from tokens present in
+the batch, so 2.1M parameters learn slowly at 32.8M tokens of training.
+Not tested whether the gap closes with longer training.
+**Lesson:** At small scale, weight tying is free quality, not only saved memory.
+**Where:** `results/03_embeddings/ablation.json`
+
+### 2026-10-29 · Stage 03 · "RoPE extrapolates" means "no wall", not "works"     [surprise]
+**Expected:** RoPE degrades gracefully past the training length; sinusoids less so.
+**Found:** On 512-token windows after training on 256: RoPE holds for ~40
+tokens (2.23 at positions 256-271), then climbs to 3.89 at 496-511. Scaled
+sinusoids jump straight from 2.44 to 3.56 and reach 5.28. The no-position model
+degrades least (+0.21) but from a much worse base. Learned cannot run.
+**Why:** RoPE only sees distances. Just past the edge, most attention is to
+nearby tokens at distances it trained on; the share at unseen distances grows
+with position.
+**Lesson:** Test claims about long context by measuring loss by position.
+Averages hide where the cliff is.
+**Where:** `docs/03_embeddings_position.md` §8, `docs/visuals/03_ablation.png`

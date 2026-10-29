@@ -90,6 +90,10 @@ Stage 07.
 training, so validation loss measures memorization rather than generalization.
 For code, mostly forks and vendored copies under different repo names. Stage 02.
 
+**Learned absolute positions** — A lookup table with one learned vector per
+slot number (0, 1, 2, ...), added to the token vectors. GPT-2 uses 1,024 rows
+and cannot run on longer input: there is no row for position 1,024. Stage 03.
+
 **Logits** — The raw, unnormalized scores over the vocabulary that come out of
 the final linear layer, before softmax.
 
@@ -119,9 +123,25 @@ Stage 13.
 **Near-duplicate dedup** — Removing documents that are almost, but not exactly,
 the same (forks, reformatted copies). Done with MinHash + LSH. Stage 02.
 
+**NoPE (no positional encoding)** — A causal language model given no position
+information at all. It still learns some sense of order, because the causal
+mask lets token t see exactly t+1 tokens. Stage 03 measures how much it loses.
+
+**One-hot vector** — A vector of zeros with a single 1, at the index of the
+item it represents. Multiplying a one-hot by a matrix selects one row, which is
+why an embedding layer is a linear layer on one-hot inputs. Stage 03.
+
+**Output head / unembedding** — The final `C × V` matrix that turns each
+position's hidden vector into one score (logit) per vocabulary token. Often
+shares its weights with the embedding table (see weight tying). Stage 03.
+
 **Packing** — Concatenating documents into one stream separated by an
 end-of-text token and cutting fixed-length windows from it, instead of padding
 each document to length. No wasted compute on padding. Stage 02.
+
+**Permutation equivariance** — Shuffling the input shuffles the output the
+same way and changes nothing else. Attention with no mask and no position
+information has this property, so it cannot tell `a = b` from `b = a`. Stage 03.
 
 **Perplexity** — `exp(cross-entropy loss)`. Intuitively, how many tokens the
 model is effectively choosing between at each step. Lower is better.
@@ -149,6 +169,11 @@ Stage 16.
 **Shingle** — An overlapping window of n consecutive words (we use n = 5). A
 document's set of shingles is what near-dedup compares. Stage 02.
 
+**Sinusoidal positions** — Position encoded as the sines and cosines of
+`p·ω_i` at many speeds `ω_i`, like a row of clocks running at different rates.
+No parameters; moving by k positions is a fixed rotation. From the 2017
+transformer paper. Stage 03.
+
 **Softmax** — Turns a vector of scores into a probability distribution:
 `exp(x_i) / Σ exp(x_j)`.
 
@@ -169,5 +194,4 @@ sampling. Stage 07.
 steps, because Adam's variance estimates are unreliable early. Stage 08.
 
 **Weight tying** — Sharing one matrix between the input embedding and the output
-projection. Saves `vocab × d_model` parameters. Stage 06.
-
+projection. Saves `vocab × d_model` parameters. Stage 03 (measured), Stage 06.

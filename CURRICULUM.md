@@ -89,7 +89,7 @@ moved to Stage 08.)
 
 ## Part 1 — Architecture, Built by Hand
 
-### `[ ]` Stage 03 — Embeddings and Position
+### `[x]` Stage 03 — Embeddings and Position
 **Concepts:** Token embeddings as a lookup table = one-hot matmul. Why models
 need position information at all (attention is permutation-invariant).
 Learned absolute positions. Sinusoidal encodings. **RoPE**: rotating query/key
