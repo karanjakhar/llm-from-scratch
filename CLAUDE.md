@@ -28,6 +28,17 @@ speed.
 7. **Explain in comments.** Code here is read by a learner. Comment the *why*,
    not the *what*. Shapes on every tensor line: `# (B, T, C)`.
 8. **New terms go in `GLOSSARY.md`** the first time they appear.
+9. **Write findings the same session they happen. This project becomes a
+   book** (owner's decision, 2026-10-29; plan in `docs/BOOK.md`). Every
+   surprise, mistake, correction, trap, decision and measured result gets a
+   dated entry in `docs/JOURNAL.md` using its format, with real numbers,
+   before the session ends. Every stage doc ends with a **"What we found"**
+   section beside the theory. Never reconstruct findings later, and never edit
+   an old journal entry to look better; add a correction entry instead.
+10. **Docs are book drafts.** Write them in the book's voice (`docs/BOOK.md` §2):
+    plain language first, real numbers only, a picture for every mechanism.
+    The owner is a visual learner. New figures go in `docs/visuals/` and get a
+    row in `docs/BOOK.md` §4.
 
 ## Writing style for docs
 

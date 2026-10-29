@@ -418,6 +418,27 @@ The fast cached encoder in `llmfs/tokenizer` runs at **8.1 MB/s on one core
 vs 0.66 MB/s** for the stage-01 encoder (12×), with a 98.2% chunk-cache hit
 rate starting cold, and produces identical ids (tested on real GitHub files).
 
+## 10. What we found while building it
+
+Things the theory above does not tell you, found by building and testing.
+Dated entries with full detail in `docs/JOURNAL.md`.
+
+| Finding | Kind | Number |
+|---|---|---|
+| A requested vocab size is an upper bound: BPE stops when no pairs remain | mistake (test assumed otherwise) | stopped at 127 of 256 merges on a repetitive corpus |
+| All-whitespace tokens legitimately contain inner spaces; our first "no boundary-spanning tokens" test was wrong | mistake | — |
+| Counting each unique chunk once, weighted by frequency, gives identical merges far faster | result | test suite 8.8 s → 3.25 s; 20 MB of Python = 4.9M chunks, 110k unique |
+| Merge lists are prefixes: the first k merges of a long run are the k-merge tokenizer | result | one 16k run gives 2k/4k/8k/16k |
+| Pure Python is much slower than tiktoken | result | 0.53 vs 14.4 MB/s (27×) |
+| A chunk cache recovers most of it | result | 8.14 vs 0.66 MB/s (12×), 98.2% hits |
+| A tokenizer trained on English charges other languages more | surprise | `你好` = 6 raw-byte tokens on the Shakespeare tokenizer |
+| GPT-2's 50k tokenizer is worse at Python than our 8k one | surprise | 2.222 vs 3.381 bytes/token (indentation) |
+| Llama 3 does *not* split digits (an earlier draft of §4 said it did) | mistake (corrected) | uses `\p{N}{1,3}` |
+| Saved tokenizers lacked special tokens until an assert in Stage 02 caught it | mistake | — |
+
+**The habit this chapter teaches:** test the claim, then the code. Two of the
+three test failures here were wrong tests, not wrong code.
+
 ## Further reading
 
 - Sennrich et al. 2015, "Neural Machine Translation of Rare Words with Subword

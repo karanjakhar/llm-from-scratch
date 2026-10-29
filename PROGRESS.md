@@ -113,6 +113,19 @@ Things noticed but not yet understood. Carried forward until answered.
 
 ## Session log
 
+### 2026-10-29 — Session 4
+- **The project will become a book** (owner's decision). Set up the system so
+  findings are written beside the work, not reconstructed later:
+  - `docs/JOURNAL.md`: lab notebook, backfilled with 33 dated entries from
+    sessions 1-3 (results, surprises, mistakes, traps, decisions).
+  - `docs/BOOK.md`: pitch, reader, a fixed 10-part chapter arc, voice guide,
+    chapter map (26 chapters + 3 appendices), figure inventory, upkeep rules.
+  - "What we found" sections added to `docs/00`, `01`, `02`.
+  - Visual build map saved into the repo at
+    `docs/visuals/stages_00-02_build_map.html` (only copy was in a temp dir).
+  - Rules 9-10 added to `CLAUDE.md` so every session keeps the journal current.
+- No stage work this session.
+
 ### 2026-10-25 — Session 3
 - **Environment broke and was rebuilt.** The conda env sessions 1-2 used had
   vanished; system python is 3.10 with no torch. Rebuilt with `uv sync` from

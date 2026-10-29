@@ -193,6 +193,31 @@ worth chasing before Stage 01.
 - [ ] Ran `verify_env.py`; prediction matched measurement.
 - [ ] Know why `transpose` then `view` fails.
 
+## 6. What we found
+
+Measured on the RTX 4060 Laptop, 2026-10-14. Full entries in `docs/JOURNAL.md`.
+
+**The 16-bytes-per-parameter rule held to 8.5%.** A 12.58M-parameter model in
+fp32 with AdamW:
+
+| | predicted | measured |
+|---|---|---|
+| weights | 48.0 MB (4 B/param) | 48.0 MB |
+| gradients (+ activations) | 48.0 MB | 64.3 MB |
+| AdamW state | 96.0 MB (8 B/param) | 96.0 MB |
+| **total** | **192.0 MB** | **208.3 MB** |
+
+The 16 MB difference is activations held for the backward pass, which the rule
+leaves out on purpose. AdamW's two buffers are the largest slice. A budget that
+forgets them predicts 96 MB, off by more than 2×.
+
+**An "8 GB" GPU gives PyTorch 7,797 MB.** About 390 MB is reserved before any
+tensor exists. Budget against what the runtime reports.
+
+**What that means for the project.** At 16 bytes per parameter plus
+activations, ~125M parameters is the largest model this GPU can train
+comfortably. That one number sets the scale of everything that follows.
+
 ## Further reading
 
 - Karpathy, "Let's build GPT: from scratch" — the canonical video walkthrough.

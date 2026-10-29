@@ -18,6 +18,9 @@ code it?"
 | `PROGRESS.md` | What is done, what is next, session-by-session log. |
 | `CLAUDE.md` | Instructions so a fresh AI session can resume with zero context. |
 | `GLOSSARY.md` | Every term defined once, in plain language. |
+| `docs/JOURNAL.md` | Lab notebook: every surprise, mistake and result, dated, with numbers. |
+| `docs/BOOK.md` | Plan for the book this project becomes: chapters, style, figures. |
+| `docs/visuals/` | Interactive figures (open the HTML in a browser). |
 | `docs/NN_*.md` | The lesson for stage NN: theory, math, intuition, pitfalls. |
 | `stages/NN_*/` | Runnable code + experiments for stage NN. Self-contained. |
 | `llmfs/` | The library that accumulates. Stages promote their good code here. |
@@ -48,6 +51,12 @@ uv run python stages/00_setup/verify_env.py
 ```
 
 Then open `CURRICULUM.md` and start at Stage 00.
+
+## The book
+
+This repository is also the draft of a book. Each stage doc is a chapter draft
+with a "What we found" section, and `docs/JOURNAL.md` records what actually
+happened, mistakes included. See `docs/BOOK.md`.
 
 ## Status
 
