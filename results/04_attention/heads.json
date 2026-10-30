@@ -1,0 +1,152 @@
+{
+ "snippet": "def total_price(items, tax):\n    total = 0\n    for item in items:\n        total += item.price * item.qty\n    return total * (1 + tax)\n",
+ "n_tokens": 42,
+ "heads": [
+  {
+   "layer": 0,
+   "head": 0,
+   "on_previous_token": 0.087,
+   "on_self": 0.066,
+   "on_first_token": 0.006,
+   "entropy_nats": 3.371
+  },
+  {
+   "layer": 0,
+   "head": 1,
+   "on_previous_token": 0.027,
+   "on_self": 0.027,
+   "on_first_token": 0.013,
+   "entropy_nats": 4.213
+  },
+  {
+   "layer": 0,
+   "head": 2,
+   "on_previous_token": 0.024,
+   "on_self": 0.021,
+   "on_first_token": 0.014,
+   "entropy_nats": 4.149
+  },
+  {
+   "layer": 0,
+   "head": 3,
+   "on_previous_token": 0.197,
+   "on_self": 0.148,
+   "on_first_token": 0.001,
+   "entropy_nats": 2.732
+  },
+  {
+   "layer": 1,
+   "head": 0,
+   "on_previous_token": 0.084,
+   "on_self": 0.09,
+   "on_first_token": 0.001,
+   "entropy_nats": 1.423
+  },
+  {
+   "layer": 1,
+   "head": 1,
+   "on_previous_token": 0.074,
+   "on_self": 0.083,
+   "on_first_token": 0.001,
+   "entropy_nats": 2.926
+  },
+  {
+   "layer": 1,
+   "head": 2,
+   "on_previous_token": 0.018,
+   "on_self": 0.223,
+   "on_first_token": 0.009,
+   "entropy_nats": 3.434
+  },
+  {
+   "layer": 1,
+   "head": 3,
+   "on_previous_token": 0.083,
+   "on_self": 0.198,
+   "on_first_token": 0.001,
+   "entropy_nats": 3.105
+  },
+  {
+   "layer": 2,
+   "head": 0,
+   "on_previous_token": 0.051,
+   "on_self": 0.4,
+   "on_first_token": 0.003,
+   "entropy_nats": 2.297
+  },
+  {
+   "layer": 2,
+   "head": 1,
+   "on_previous_token": 0.204,
+   "on_self": 0.183,
+   "on_first_token": 0.0,
+   "entropy_nats": 1.784
+  },
+  {
+   "layer": 2,
+   "head": 2,
+   "on_previous_token": 0.677,
+   "on_self": 0.085,
+   "on_first_token": 0.0,
+   "entropy_nats": 0.943
+  },
+  {
+   "layer": 2,
+   "head": 3,
+   "on_previous_token": 0.137,
+   "on_self": 0.109,
+   "on_first_token": 0.0,
+   "entropy_nats": 1.29
+  },
+  {
+   "layer": 3,
+   "head": 0,
+   "on_previous_token": 0.014,
+   "on_self": 0.037,
+   "on_first_token": 0.235,
+   "entropy_nats": 1.977
+  },
+  {
+   "layer": 3,
+   "head": 1,
+   "on_previous_token": 0.007,
+   "on_self": 0.012,
+   "on_first_token": 0.37,
+   "entropy_nats": 1.662
+  },
+  {
+   "layer": 3,
+   "head": 2,
+   "on_previous_token": 0.025,
+   "on_self": 0.041,
+   "on_first_token": 0.017,
+   "entropy_nats": 2.976
+  },
+  {
+   "layer": 3,
+   "head": 3,
+   "on_previous_token": 0.052,
+   "on_self": 0.178,
+   "on_first_token": 0.01,
+   "entropy_nats": 2.859
+  }
+ ],
+ "shown": [
+  {
+   "layer": 2,
+   "head": 2,
+   "on_previous_token": 0.677,
+   "on_self": 0.085,
+   "on_first_token": 0.0,
+   "entropy_nats": 0.943
+  },
+  {
+   "layer": 0,
+   "head": 2,
+   "on_previous_token": 0.024,
+   "on_self": 0.021,
+   "on_first_token": 0.014,
+   "entropy_nats": 4.149
+  }
+ ]
+}

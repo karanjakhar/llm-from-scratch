@@ -1,0 +1,140 @@
+{
+ "n_keys": 256,
+ "n_queries": 512,
+ "max_entropy_nats": 5.545,
+ "rows": [
+  {
+   "d": 16,
+   "scaled": {
+    "score_std": 0.999,
+    "max_weight": 0.0456,
+    "entropy_nats": 5.049,
+    "grad_scores_median": 0.3556,
+    "grad_scores_dead_frac": 0.0,
+    "grad_q_norm": 0.3835
+   },
+   "unscaled": {
+    "score_std": 3.997,
+    "max_weight": 0.4939,
+    "entropy_nats": 1.904,
+    "grad_scores_median": 0.8286,
+    "grad_scores_dead_frac": 0.002,
+    "grad_q_norm": 3.701
+   }
+  },
+  {
+   "d": 32,
+   "scaled": {
+    "score_std": 1.0,
+    "max_weight": 0.0445,
+    "entropy_nats": 5.052,
+    "grad_scores_median": 0.5254,
+    "grad_scores_dead_frac": 0.0,
+    "grad_q_norm": 0.5589
+   },
+   "unscaled": {
+    "score_std": 5.658,
+    "max_weight": 0.6522,
+    "entropy_nats": 1.141,
+    "grad_scores_median": 1.093,
+    "grad_scores_dead_frac": 0.0059,
+    "grad_q_norm": 7.031
+   }
+  },
+  {
+   "d": 64,
+   "scaled": {
+    "score_std": 0.997,
+    "max_weight": 0.0421,
+    "entropy_nats": 5.057,
+    "grad_scores_median": 0.7438,
+    "grad_scores_dead_frac": 0.0,
+    "grad_q_norm": 0.7746
+   },
+   "unscaled": {
+    "score_std": 7.977,
+    "max_weight": 0.7402,
+    "entropy_nats": 0.775,
+    "grad_scores_median": 1.234,
+    "grad_scores_dead_frac": 0.0215,
+    "grad_q_norm": 13.25
+   }
+  },
+  {
+   "d": 128,
+   "scaled": {
+    "score_std": 0.997,
+    "max_weight": 0.0431,
+    "entropy_nats": 5.055,
+    "grad_scores_median": 1.061,
+    "grad_scores_dead_frac": 0.0,
+    "grad_q_norm": 1.114
+   },
+   "unscaled": {
+    "score_std": 11.281,
+    "max_weight": 0.8171,
+    "entropy_nats": 0.505,
+    "grad_scores_median": 0.8065,
+    "grad_scores_dead_frac": 0.0703,
+    "grad_q_norm": 20.39
+   }
+  },
+  {
+   "d": 256,
+   "scaled": {
+    "score_std": 1.002,
+    "max_weight": 0.0425,
+    "entropy_nats": 5.053,
+    "grad_scores_median": 1.502,
+    "grad_scores_dead_frac": 0.0,
+    "grad_q_norm": 1.58
+   },
+   "unscaled": {
+    "score_std": 16.027,
+    "max_weight": 0.8809,
+    "entropy_nats": 0.326,
+    "grad_scores_median": 0.328,
+    "grad_scores_dead_frac": 0.1445,
+    "grad_q_norm": 33.89
+   }
+  },
+  {
+   "d": 512,
+   "scaled": {
+    "score_std": 1.005,
+    "max_weight": 0.0432,
+    "entropy_nats": 5.049,
+    "grad_scores_median": 2.138,
+    "grad_scores_dead_frac": 0.0,
+    "grad_q_norm": 2.199
+   },
+   "unscaled": {
+    "score_std": 22.743,
+    "max_weight": 0.9097,
+    "entropy_nats": 0.229,
+    "grad_scores_median": 0.1662,
+    "grad_scores_dead_frac": 0.2422,
+    "grad_q_norm": 42.4
+   }
+  },
+  {
+   "d": 1024,
+   "scaled": {
+    "score_std": 1.001,
+    "max_weight": 0.0431,
+    "entropy_nats": 5.052,
+    "grad_scores_median": 2.989,
+    "grad_scores_dead_frac": 0.0,
+    "grad_q_norm": 3.099
+   },
+   "unscaled": {
+    "score_std": 32.04,
+    "max_weight": 0.9395,
+    "entropy_nats": 0.154,
+    "grad_scores_median": 0.02187,
+    "grad_scores_dead_frac": 0.4082,
+    "grad_q_norm": 63.13
+   }
+  }
+ ]
+}

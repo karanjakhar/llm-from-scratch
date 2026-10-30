@@ -1,0 +1,84 @@
+{
+ "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+ "B": 1,
+ "H": 8,
+ "d": 64,
+ "dtype": "bf16",
+ "measures": "forward + backward, causal",
+ "rows": [
+  {
+   "T": 256,
+   "ours": {
+    "peak_mb": 4.3,
+    "ms": 0.4
+   },
+   "sdpa": {
+    "peak_mb": 2.0,
+    "ms": 0.14
+   }
+  },
+  {
+   "T": 512,
+   "ours": {
+    "peak_mb": 16.8,
+    "ms": 0.31
+   },
+   "sdpa": {
+    "peak_mb": 4.0,
+    "ms": 0.13
+   }
+  },
+  {
+   "T": 1024,
+   "ours": {
+    "peak_mb": 66.0,
+    "ms": 1.5
+   },
+   "sdpa": {
+    "peak_mb": 8.1,
+    "ms": 0.31
+   }
+  },
+  {
+   "T": 2048,
+   "ours": {
+    "peak_mb": 262.0,
+    "ms": 8.79
+   },
+   "sdpa": {
+    "peak_mb": 16.1,
+    "ms": 0.92
+   }
+  },
+  {
+   "T": 4096,
+   "ours": {
+    "peak_mb": 1044.0,
+    "ms": 36.48
+   },
+   "sdpa": {
+    "peak_mb": 32.3,
+    "ms": 2.93
+   }
+  },
+  {
+   "T": 8192,
+   "ours": {
+    "peak_mb": 4168.0,
+    "ms": 148.03
+   },
+   "sdpa": {
+    "peak_mb": 64.5,
+    "ms": 10.7
+   }
+  },
+  {
+   "T": 16384,
+   "ours": "OOM",
+   "sdpa": {
+    "peak_mb": 129.0,
+    "ms": 41.21
+   }
+  }
+ ]
+}
