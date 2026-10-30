@@ -15,6 +15,15 @@ dominate memory at long sequence lengths.
 average of all (allowed) positions' values, with weights computed from
 query-key similarity. Stage 04.
 
+**Attention map** — The `(T, T)` matrix of attention weights for one head:
+row i shows how token i splits its attention over earlier tokens. Shows where a
+head looked, not what it used. Stage 04.
+
+**Attention sink** — A position (usually the first token) that an attention
+head dumps weight on when it has nothing useful to read, because softmax
+weights must sum to 1. The weight is large but carries little information.
+Stage 04.
+
 **Autoregressive** — Generating a sequence one token at a time, each token
 conditioned on all previous ones. Formally: `P(x) = Π P(x_t | x_<t)`.
 
@@ -120,6 +129,11 @@ fingerprints agree is an unbiased estimate of their Jaccard similarity. Stage 02
 token to a few, so total parameters grow without per-token FLOPs growing.
 Stage 13.
 
+**Multi-head attention** — Running H smaller attentions side by side, each on
+a `d = C / H` slice, then mixing their outputs with one `C × C` projection.
+Same parameter count as one big head; H attention patterns instead of one.
+Stage 04.
+
 **Near-duplicate dedup** — Removing documents that are almost, but not exactly,
 the same (forks, reformatted copies). Done with MinHash + LSH. Stage 02.
 
@@ -149,6 +163,15 @@ model is effectively choosing between at each step. Lower is better.
 **Pre-norm** — Normalizing the input to each sublayer rather than its output.
 Required for stable training at depth. Stage 05.
 
+**Previous-token head** — An attention head that puts most of its weight on
+the token just before. Shows as a bright line one step below the diagonal of
+its attention map. Stage 04.
+
+**Query, key, value** — The three vectors each token makes for attention: the
+query is what it is looking for, the key is what it matches on, the value is
+what it hands over when picked. Each is the token vector times its own learned
+matrix. Stage 04.
+
 **Residual stream** — The running sum that each block reads from and adds to.
 The "highway" that lets gradients reach early layers.
 
@@ -176,6 +199,11 @@ transformer paper. Stage 03.
 
 **Softmax** — Turns a vector of scores into a probability distribution:
 `exp(x_i) / Σ exp(x_j)`.
+
+**Softmax saturation** — When the inputs to softmax are far apart, one weight
+approaches 1 and the rest 0. Softmax's slope is then near zero everywhere, so
+almost no gradient flows back. Dividing attention scores by `√d` prevents it.
+Stage 04.
 
 **SwiGLU** — A gated feed-forward variant: `(W1·x ⊙ silu(W3·x))·W2`. Standard in
 modern models. Stage 05.

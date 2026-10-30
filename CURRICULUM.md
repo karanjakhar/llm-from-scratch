@@ -101,7 +101,7 @@ showing RoPE attention scores depend only on offset.
 cannot learn word order.
 → `docs/03_embeddings_position.md`
 
-### `[ ]` Stage 04 — Attention, From One Head Up
+### `[x]` Stage 04 — Attention, From One Head Up
 **Concepts:** Query/Key/Value as a differentiable soft dictionary lookup. The
 `softmax(QK^T / sqrt(d)) V` formula derived, including *why* the `sqrt(d)`
 scaling exists (variance control). Causal masking with `-inf`. Multi-head

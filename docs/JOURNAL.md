@@ -446,3 +446,74 @@ with position.
 **Lesson:** Test claims about long context by measuring loss by position.
 Averages hide where the cliff is.
 **Where:** `docs/03_embeddings_position.md` §8, `docs/visuals/03_ablation.png`
+
+---
+
+## Session 6 — 2026-10-30 · attention (Stage 04)
+
+### 2026-10-30 · Stage 04 · Our attention matches PyTorch, twice                  [result]
+**Found:** Outputs and gradients equal `F.scaled_dot_product_attention` to 1e-5,
+causal and not; the multi-head module equals `nn.MultiheadAttention` with copied
+weights. All 12 tests passed first run. In training, the Stage 03 model with
+our attention in place of PyTorch's scored **2.6856** vs **2.6849** (seed 0).
+**Lesson:** Check against the reference numerically, then once more in a real
+training run. The second check catches what unit tests cannot (dtype, autocast,
+masking at real sizes).
+**Where:** `stages/04_attention/test_attention.py`, `results/04_attention/ablation.json`
+
+### 2026-10-30 · Stage 04 · "Gradients vanish" depends on where you look           [surprise]
+**Expected:** Without √d, gradients shrink as `d` grows.
+**Found:** Random unit-variance q, k, v, 256 keys. Without √d, the gradient at
+the **scores** falls from 1.23 (d = 64) to **0.022** (d = 1024), with **41%** of
+queries getting < 1e-3. But the gradient at **q** grows: 13.2 → **63.1**
+(scaled: 0.78 → 3.1).
+**Why:** grad(q) = grad(scores) × k. Unscaled, k enters at full size √d. The
+softmax's vanishing slope and k's growing size partly cancel.
+**Lesson:** A claim about gradients must say *which* gradient. Measure at the
+place the mechanism acts.
+**Where:** `results/04_attention/variance.json`, `docs/04_attention.md` §9a
+
+### 2026-10-30 · Stage 04 · Dropping √d: harmless at d=64, broken at d=256        [result]
+**Found:** 4-layer C=256 model, 32.8M tokens, 3 seeds, held-out code loss:
+d=64 scaled 2.689, unscaled **2.652**; d=256 scaled 2.705, unscaled **3.655**.
+The broken model's attention: top weight 0.78, entropy 0.92 nats (≈2.5 tokens
+read per position, vs ≈16 scaled).
+**Also found:** the weight gradient ‖∇W_qkv‖ at the end was *larger* in the
+broken run (0.97 vs 0.51). The damage is real; the textbook mechanism
+(vanishing weight gradients) is not what we measured. Why saturation then
+hurts learning is still open.
+**Where:** `results/04_attention/ablation.json`, `docs/04_attention.md` §9c
+
+### 2026-10-30 · Stage 04 · √d made our small model start too flat               [surprise]
+**Expected:** Scaling never hurts.
+**Found:** At d=64, unscaled beat scaled on all 3 seeds by 0.037 (noise ~0.01).
+Score std at initialisation: **0.10** scaled, **0.81** unscaled, **1.61** at
+d=256 unscaled. With std-0.02 weights, scaled scores start so small that
+attention is nearly uniform.
+**Lesson:** √d keeps the score scale constant across head sizes; it does not
+choose a good scale. The right scale also depends on initialisation and
+training length. Real models (larger init after LayerNorm, longer training)
+grow their scores further, which is where the guard matters.
+**Where:** `docs/04_attention.md` §9c
+
+### 2026-10-30 · Stage 04 · Naive attention keeps four T×T matrices alive         [result]
+**Found:** B=1, H=8, d=64, bf16, forward+backward: ours 66 MB at T=1,024 →
+4,168 MB at 8,192 → **out of memory at 16,384** (~17 GB needed). Fused kernel:
+8.1 → 64.5 → 129 MB, and 14× faster at 8,192. One bf16 T×T matrix at T=1,024
+is 16.8 MB, so ours holds ~4 copies (scores, masked scores, weights, their
+gradient).
+**Lesson:** The doc's back-of-envelope (one copy) was 4× optimistic. Measure
+peak memory, do not count tensors in your head.
+**Where:** `results/04_attention/cost.json`, `docs/visuals/04_cost.png`
+
+### 2026-10-30 · Stage 04 · A previous-token head and two sinks, unasked          [surprise]
+**Found:** In the trained d=64 model (5.3M params, ~3 minutes of training),
+layer 2 head 2 puts **68%** of its weight on the previous token. Layer 3
+heads 0 and 1 put **24%** and **37%** on the first token of the window, which
+is an arbitrary token because windows start at random offsets.
+**Why:** The sinks are the known "attention sink" effect (Xiao et al., 2023):
+softmax weights must sum to 1, so a head with nothing to read parks weight on
+a position every token can see.
+**Lesson:** Attention maps show recognisable structure, and also show weight
+that is not used. Weight is not evidence of use.
+**Where:** `results/04_attention/heads.json`, `docs/visuals/04_attention_*.png`

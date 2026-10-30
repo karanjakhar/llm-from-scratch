@@ -84,7 +84,7 @@ in book voice) · `final`
 | 3 | Cutting text into tokens | 01 | `docs/01_tokenizer.md` | draft |
 | 4 | The data is most of the model | 02 | `docs/02_data.md` | draft |
 | 5 | Turning ids into vectors and position | 03 | `docs/03_embeddings_position.md` | draft |
-| 6 | Attention, from one head up | 04 | | not started |
+| 6 | Attention, from one head up | 04 | `docs/04_attention.md` | draft |
 | 7 | The transformer block | 05 | | not started |
 | 8 | Assembling GPT | 06 | | not started |
 | 9 | Making it talk: generation and decoding | 07 | | not started |
@@ -132,6 +132,10 @@ HTML) and, for print, will need static versions.
 | Sinusoidal table + similarity | 5 | the clocks; similarity depends only on p - q | `visuals/03_sinusoidal.png` | yes (PNG) |
 | RoPE score vs offset | 5 | stripes along diagonals; three curves on one line | `visuals/03_rope_offset.png` | yes (PNG) |
 | Position ablation | 5 | training curves; loss by position past the training length | `visuals/03_ablation.png` | yes (PNG) |
+| √d saturation | 6 | score size, top weight, score gradient vs head size | `visuals/04_sqrt_d.png` | yes (PNG) |
+| Cost of T × T | 6 | memory and time, naive vs fused, up to OOM | `visuals/04_cost.png` | yes (PNG) |
+| All 16 heads | 6 | attention maps of every head on one snippet | `visuals/04_attention_maps.png` | yes (PNG) |
+| Two heads, labelled | 6 | previous-token head vs a diffuse head, with tokens | `visuals/04_attention_heads.png` | yes (PNG) |
 
 **Wanted, not yet made:** a one-hot × table = row diagram and a 2D RoPE
 rotation diagram (chapter 5, ASCII versions in the doc for now), a MinHash/LSH diagram (chapter 4), a picture of

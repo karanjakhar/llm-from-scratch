@@ -5,7 +5,7 @@ A new AI session reads `CLAUDE.md` then this file and knows exactly where to pic
 
 ## Current position
 
-**Stages 00-03 complete.** Next: **Stage 04 — Attention, from one head up.**
+**Stages 00-04 complete.** Next: **Stage 05 — The Transformer Block.**
 
 Ready to use:
 - Tokenizer: `data/tokenizers/split_8192.json` (8,196 embedding rows, eot 8192)
@@ -17,8 +17,12 @@ Stage 03 code: `stages/03_embeddings/embeddings.py` (token table, learned /
 sinusoidal / RoPE in both layouts, tied head). Not yet promoted to `llmfs/`:
 promote RoPE when Stage 12 needs it; GPT-2 (Stage 06) uses learned positions.
 
-**Next action:** write `docs/04_attention.md` (docs before code), then
-`stages/04_attention/`.
+Stage 04 code: `stages/04_attention/attention.py` (`attention()`,
+`MultiHeadAttention`), checked against SDPA and `nn.MultiheadAttention`.
+A trained d=64 checkpoint for maps: `checkpoints/04_attention/d64_seed0.pt`.
+
+**Next action:** write `docs/05_transformer_block.md` (docs before code), then
+`stages/05_block/`.
 
 Deferred, with a trigger:
 - Before Stage 11: download ~8 more code shards, re-run `dedup.py` +
@@ -33,7 +37,7 @@ Deferred, with a trigger:
 | 01 | Tokenization | `[x]` | production tokenizer `split_8192`; beats GPT-2 on code 3.38 vs 2.22 B/tok |
 | 02 | Data pipeline | `[x]` | 2.36B tokens; leakage 34%→8%; loader 700×+ faster than needed |
 | 03 | Embeddings & position | `[x]` | RoPE 2.52 < sinusoidal 2.63 < learned 2.69 < none 3.35; tying helps |
-| 04 | Attention | `[ ]` | |
+| 04 | Attention | `[x]` | = SDPA to 1e-5; no √d: −0.04 at d=64, +0.95 at d=256; naive OOM at T=16k |
 | 05 | Transformer block | `[ ]` | |
 | 06 | GPT assembly | `[ ]` | |
 | 07 | Generation & decoding | `[ ]` | |
@@ -92,6 +96,14 @@ stay visible across months.
 | 2026-10-29 | 03 | same, RoPE, tied head | held-out code loss | **2.523 ± 0.010** |
 | 2026-10-29 | 03 | same, RoPE, untied head (+2.10M params) | held-out code loss | 2.598 ± 0.009 |
 | 2026-10-29 | 03 | trained T=256, eval positions 256-511: none / sin-scaled / RoPE / RoPE-untied | loss (vs 0-255) | 3.51 (3.30) / 4.94 (2.61) / 3.29 (2.51) / 3.19 (2.58) |
+| 2026-10-30 | 04 | random q,k,v, 256 keys, no √d, d=64 / 1024 | score-gradient median; queries with ~none | 1.23 / 0.022; 2% / 41% |
+| 2026-10-30 | 04 | same, gradient at q, scaled vs unscaled, d=1024 | norm | 3.1 vs 63.1 (grows, not vanishes) |
+| 2026-10-30 | 04 | naive vs fused attention, B=1 H=8 d=64 bf16 fwd+bwd, T=8192 | peak MB / ms | 4,168 / 148 vs 64.5 / 10.7; naive OOM at 16,384 |
+| 2026-10-30 | 04 | tiny LM with our attention (= Stage 03 `learned`), seed 0 | held-out code loss | 2.6856 (Stage 03 with SDPA: 2.6849) |
+| 2026-10-30 | 04 | 4 heads × 64, scaled / unscaled, 3 seeds | held-out code loss | 2.689 ± 0.012 / **2.652 ± 0.006** |
+| 2026-10-30 | 04 | 1 head × 256, scaled / unscaled, 3 seeds | held-out code loss | 2.705 ± 0.003 / **3.655 ± 0.018** |
+| 2026-10-30 | 04 | same, attention entropy / top weight | nats / weight | 2.78 / 0.29 vs 0.92 / 0.78 |
+| 2026-10-30 | 04 | trained d=64 model, head statistics | prev-token head; sinks | L2H2 68%; L3H0 24%, L3H1 37% on first token |
 
 ## Open questions
 
@@ -127,8 +139,28 @@ Things noticed but not yet understood. Carried forward until answered.
 - NoPE degrades least past the training length (+0.21) but starts 0.83 worse.
   Does the in-range gap shrink with depth and more tokens, as the NoPE papers
   suggest? Not worth a dedicated run; note if Stage 14 revisits it.
+- Without √d at d=256, attention saturated and loss rose 0.95, yet the
+  gradient reaching W_qkv was *larger*, not smaller. What exactly makes a
+  saturated model learn worse? Candidates: gradient concentrated on few
+  queries, effective learning rate too high for the scores. Unproven.
+- At d=64 the √d-scaled model started with score std 0.10 (near-uniform
+  attention) and lost to unscaled by 0.04. Would a larger q/k init close it?
+  Worth a check when Stage 05 revisits initialisation.
 
 ## Session log
+
+### 2026-10-30 — Session 6
+- **Stage 04 complete.** `docs/04_attention.md`; `stages/04_attention/` with 12
+  tests (SDPA outputs + gradients to 1e-5, `nn.MultiheadAttention`, causality,
+  the wrong-reshape trap, the NaN-row trap, score variance).
+- Experiments: √d saturation on random vectors; naive vs fused memory/time up
+  to T=16,384; √d training ablation (4 variants × 3 seeds); attention maps.
+- **Two corrections to the textbook story**, both measured: the gradient at q
+  grows without √d (only the score gradient vanishes), and at d=64 dropping
+  √d slightly *helped* because small init made scaled scores start flat.
+- At d=256 dropping √d broke the model (+0.95), as the curriculum predicted.
+- 6 journal entries, 6 glossary terms, 4 figures (`docs/visuals/04_*.png`).
+- Not pushed (owner pushes on request).
 
 ### 2026-10-29 — Session 5
 - Pushed the session 3-4 commits (pre-push checks: no data/, no co-author
