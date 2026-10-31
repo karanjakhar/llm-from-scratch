@@ -361,11 +361,15 @@ columns are dimensions. The left columns (fast clocks) flicker, the right ones
 (slow clocks) barely change. Beside it, the dot product `PE[p] · PE[q]` as a
 heatmap: constant along every diagonal, because it depends only on `p - q`.
 
+![Sinusoidal position table (left) and the similarity of every pair of positions (right).](visuals/03_sinusoidal.png)
+
 **RoPE scores** (`docs/visuals/03_rope_offset.png`): one fixed random `q` and
 `k` (head size 64), placed at every pair of positions `(m, n)` from 0 to 127.
 The score heatmap has stripes along the diagonals. Beside it, score against
 offset `m - n` for three different starting positions. The three curves lie
 exactly on top of each other.
+
+![RoPE attention score for every pair of positions (left) and against offset from three starting positions (right).](visuals/03_rope_offset.png)
 
 ---
 
@@ -422,6 +426,8 @@ correct next token, on average, probability e^-2.52 ≈ 8%; uniform guessing ove
 Source: `results/03_embeddings/ablation.json`. Figure:
 `docs/visuals/03_ablation.png` (training curves, and loss at every position of
 a 512-token window).
+
+![Training curves for each position scheme (left) and loss at every position of a 512-token window, twice the training length (right).](visuals/03_ablation.png)
 
 **Seed noise is about ±0.01.** Every gap discussed below is at least 5× that
 (the smallest, scaled sinusoids vs learned, is 0.056).

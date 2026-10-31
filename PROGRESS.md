@@ -149,6 +149,17 @@ Things noticed but not yet understood. Carried forward until answered.
 
 ## Session log
 
+### 2026-10-31 — Session 7
+- **Web edition of the book**: `book/build_web.py` turns the drafted docs
+  (chapter map read from `docs/BOOK.md` §3) into one page plus figures.
+  Built into the personal site at `public/book/`, served at
+  karanjakhar.dev/book/ once that site is deployed. Project page links to it.
+- Figures are now embedded in `docs/03_*.md` and `docs/04_*.md`, not only
+  named by path.
+- `markdown-it-py` added as a direct dependency (was only transitive via rich).
+- Quarto considered for PDF/EPUB; install not approved, dropped for now.
+- Stage 05 not started.
+
 ### 2026-10-30 — Session 6
 - **Stage 04 complete.** `docs/04_attention.md`; `stages/04_attention/` with 12
   tests (SDPA outputs + gradients to 1e-5, `nn.MultiheadAttention`, causality,

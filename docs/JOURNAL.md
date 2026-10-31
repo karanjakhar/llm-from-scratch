@@ -517,3 +517,26 @@ a position every token can see.
 **Lesson:** Attention maps show recognisable structure, and also show weight
 that is not used. Weight is not evidence of use.
 **Where:** `results/04_attention/heads.json`, `docs/visuals/04_attention_*.png`
+
+---
+
+## Session 7 — 2026-10-31 · the book gets a web edition
+
+### 2026-10-31 · Book · A web edition, built from the stage docs in place        [decision]
+**Expected:** Use a book toolchain (Quarto: one source to web, PDF and EPUB).
+**Found:** A first preview, stitched straight from `docs/*.md` into one
+reading page, was what the owner wanted on karanjakhar.dev. Quarto was not
+installed and its install was not approved this session, so it was dropped
+before anything was rendered with it. The web edition is now
+`book/build_web.py`: 8 of 30 planned parts drafted, 21,740 words, 7 figures.
+The chapter list comes from the `docs/BOOK.md` §3 table, so a chapter appears
+on the site as soon as its status there says `draft`.
+**Why:** The drafts already are the book. A builder that reads them unchanged
+means there is no second copy to keep in sync.
+**Lesson:** Building the preview showed a gap no review had: the stage docs
+named their figures by path (`docs/visuals/04_cost.png`) but never embedded
+them. A reader saw text about a chart and no chart. Seeing the whole thing
+laid out end to end catches what reading one file at a time does not.
+**Where:** `book/build_web.py`, `book/template.html`, `docs/book_intro.md`;
+figure embeds added to `docs/03_embeddings_position.md` §7-8 and
+`docs/04_attention.md` §9

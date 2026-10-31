@@ -26,3 +26,6 @@ runs/
 # keep result artifacts
 !results/**/*.json
 !results/**/*.png
+
+# book web build output (uv run book/build_web.py)
+/book/_site/

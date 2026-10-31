@@ -318,6 +318,8 @@ softmax's slope lives) and at the **query**. 512 queries per row.
 "~no gradient" = score-gradient norm below 1e-3. Source:
 `results/04_attention/variance.json`, figure `docs/visuals/04_sqrt_d.png`.
 
+![Score size, top attention weight and score gradient against head size, with and without dividing by √d.](visuals/04_sqrt_d.png)
+
 What it shows:
 - **Scaled scores have std 1.00 at every `d`.** The fix does exactly what §3
   says. Unscaled std is `√d`: 4, 8, 16, 32.
@@ -351,6 +353,8 @@ forward + backward, on the RTX 4060 Laptop: peak memory and time per call as
 | 16,384 | **out of memory** | — | 129 | 41 |
 
 Source: `results/04_attention/cost.json`, figure `docs/visuals/04_cost.png`.
+
+![Peak memory and time per attention call as T grows: our attention against PyTorch's fused kernel, up to out of memory.](visuals/04_cost.png)
 
 - **Ours grows 4× per doubling of `T`** (262 → 1,044 → 4,168 MB): the `T²` from
   §6, measured. The fused kernel grows 2× per doubling: linear in `T`.
@@ -432,6 +436,10 @@ The trained `d64` model (seed 0) on a hand-written Python snippet
 held-out windows. Figures: `docs/visuals/04_attention_maps.png` (all 16
 heads), `docs/visuals/04_attention_heads.png` (two heads, labelled). Source:
 `results/04_attention/heads.json`.
+
+![Attention maps of all 16 heads (4 layers × 4 heads) on one Python snippet.](visuals/04_attention_maps.png)
+
+![Two heads with the tokens labelled: the previous-token head (layer 2, head 2) and a diffuse head.](visuals/04_attention_heads.png)
 
 What we found among the 16 heads:
 

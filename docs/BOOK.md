@@ -142,6 +142,9 @@ rotation diagram (chapter 5, ASCII versions in the doc for now), a MinHash/LSH d
 packing documents with `<|endoftext|>` (chapter 4), and the random-vs-shuffled
 sampler coverage plot showing the 37% never seen (chapter 4).
 
+Every figure is embedded in its chapter with `![caption](visuals/name.png)`,
+not only named by path, so it shows on GitHub and in the web edition.
+
 **For print:** the interactive pages will need exporting to static SVG/PNG
 before typesetting. Keep interactive versions as the book's companion website.
 
@@ -162,7 +165,24 @@ before typesetting. Keep interactive versions as the book's companion website.
 
 ---
 
-## 6. Open questions for the book
+## 6. Building the web edition
+
+```
+uv run book/build_web.py                                   # preview: book/_site/index.html
+uv run book/build_web.py --out ../personal_website/public/book
+```
+
+One page with every drafted chapter, a contents rail listing all planned
+chapters (unwritten ones greyed), and the figures copied beside it. It is read
+straight from the docs listed in §3, so updating a doc and its status row is
+all a new chapter needs. `docs/book_intro.md` is the opening "About this
+draft" note. The page is served at https://karanjakhar.dev/book/ from the
+owner's personal-site repo (`public/book/`, deployed with that site).
+
+No PDF or EPUB yet. A book toolchain (Quarto) was considered for those and not
+installed (journal, 2026-10-31).
+
+## 7. Open questions for the book
 
 - Final title, and whether the book follows stage order strictly or groups
   some stages (e.g. 14 and 15) into one chapter.

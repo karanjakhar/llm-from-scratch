@@ -1,0 +1,152 @@
+<!doctype html>
+<!-- built by book/build_web.py -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>From Bytes to Code · Karan Jakhar</title>
+<meta name="description" content="A book in progress: building a language model from scratch on one laptop GPU. Every part built by hand, measured, and broken on purpose.">
+<meta name="author" content="Karan Jakhar">
+<link rel="canonical" href="{{URL}}">
+<meta property="og:type" content="book">
+<meta property="og:title" content="From Bytes to Code">
+<meta property="og:description" content="Building a language model from scratch on one laptop GPU. A book in progress.">
+<meta property="og:url" content="{{URL}}">
+<meta property="og:image" content="https://karanjakhar.dev/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Schibsted+Grotesk:wght@500;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<script>
+  // Same stored theme choice as the rest of karanjakhar.dev.
+  try { const t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<style>
+/* Layout: book reading column with a sticky contents rail listing every planned chapter; unwritten ones greyed. */
+:root {
+  --paper: #f6f7f8; --sheet: #ffffff; --ink: #1b2330; --muted: #5d6878; --rule: #dde2e8;
+  --accent: #2847a8; --accent-soft: #e6ebf8; --code-bg: #eef1f5; --draft: #1f7a52; --draft-bg: #e3f3eb;
+  --k: #8a2a8f; --s: #1f6f43; --c: #7a8494; --n: #a3510f; --f: #2847a8;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #11151b; --sheet: #161b22; --ink: #e3e7ee; --muted: #98a2b2; --rule: #2a313c;
+  --accent: #8fa8ff; --accent-soft: #1f2a46; --code-bg: #1c222c; --draft: #6fd3a2; --draft-bg: #183528;
+  --k: #e29bf0; --s: #8fd6a8; --c: #7e8899; --n: #f0b27a; --f: #8fa8ff; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #11151b; --sheet: #161b22; --ink: #e3e7ee; --muted: #98a2b2; --rule: #2a313c;
+  --accent: #8fa8ff; --accent-soft: #1f2a46; --code-bg: #1c222c; --draft: #6fd3a2; --draft-bg: #183528;
+  --k: #e29bf0; --s: #8fd6a8; --c: #7e8899; --n: #f0b27a; --f: #8fa8ff; color-scheme: dark }
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 18px/1.65 var(--serif);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+img { max-width: 100%; }
+.wrap { display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 48px; max-width: 1180px; margin: 0 auto; padding-block: 24px 96px; }
+
+/* Contents rail */
+nav { position: sticky; top: 24px; align-self: start; max-height: calc(100vh - 48px); overflow-y: auto; font-family: var(--sans); }
+.home { display: inline-block; font: 600 .78rem var(--mono); color: var(--muted); text-decoration: none; margin-bottom: 20px; }
+.home:hover, .home:focus-visible { color: var(--accent); }
+.cover h2 { font: 800 1.55rem/1.1 var(--sans); letter-spacing: -0.02em; margin: 0 0 8px; text-wrap: balance; }
+.cover p { font-size: .82rem; color: var(--muted); margin: 0 0 6px; line-height: 1.45; }
+.progress { display: flex; gap: 2px; margin: 14px 0 6px; }
+.progress i { flex: 1; height: 6px; background: var(--rule); border-radius: 1px; }
+.progress i.on { background: var(--draft); }
+.cover .count { font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+nav ol { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 1px; font-size: .84rem; line-height: 1.3; }
+nav li a, nav li.pending { display: flex; gap: 10px; padding: 5px 8px; border-radius: 4px; color: var(--ink); text-decoration: none; }
+nav li a:hover, nav li a:focus-visible { background: var(--accent-soft); outline: none; }
+nav li.pending { color: var(--muted); opacity: .62; }
+.n { flex: 0 0 3.2em; font-variant-numeric: tabular-nums; color: var(--muted); }
+nav li.draft .n { color: var(--draft); font-weight: 700; }
+
+/* Reading column */
+main { min-width: 0; }
+.chapter { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 56px clamp(20px, 6vw, 72px) 64px; margin-bottom: 40px; }
+.chapter > :not(figure, .scroll, pre, header) { max-width: 68ch; }
+.ch-head { border-bottom: 1px solid var(--rule); padding-bottom: 24px; margin-bottom: 32px; }
+.eyebrow { font: 700 .78rem var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 0 0 8px; }
+.ch-head h1 { font: 800 clamp(1.9rem, 4vw, 2.7rem)/1.08 var(--sans); letter-spacing: -0.025em; margin: 0 0 16px; text-wrap: balance; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; font: .8rem var(--sans); color: var(--muted); margin: 0; }
+.meta a { color: var(--muted); }
+.pill { font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .7rem; padding: 3px 8px; border-radius: 3px; background: var(--draft-bg); color: var(--draft); }
+.chapter h2 { font: 700 1.45rem/1.25 var(--sans); letter-spacing: -0.01em; margin: 2.2em 0 .6em; text-wrap: balance; }
+.chapter h3 { font: 700 1.12rem/1.3 var(--sans); margin: 1.8em 0 .5em; text-wrap: balance; }
+.chapter h4 { font: 700 1rem var(--sans); margin: 1.5em 0 .4em; }
+hr.part { border: 0; border-top: 3px double var(--rule); margin: 56px 0; max-width: none !important; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5em 0; }
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+a code { color: var(--accent); }
+blockquote { margin: 1.4em 0; padding: 2px 0 2px 20px; border-left: 3px solid var(--accent); color: var(--muted); font-style: italic; }
+ul, ol { padding-left: 1.4em; }
+li + li { margin-top: .25em; }
+
+code { font: .84em var(--mono); background: var(--code-bg); padding: .1em .35em; border-radius: 3px; overflow-wrap: anywhere; }
+pre { background: var(--code-bg); border-radius: 5px; padding: 16px 18px; overflow-x: auto; font-size: .86rem; line-height: 1.55; margin: 1.4em 0; }
+pre code { background: none; padding: 0; font-size: inherit; overflow-wrap: normal; }
+.hljs-keyword, .hljs-built_in, .hljs-literal { color: var(--k); }
+.hljs-string { color: var(--s); }
+.hljs-comment { color: var(--c); font-style: italic; }
+.hljs-number { color: var(--n); }
+.hljs-title, .hljs-title.function_ { color: var(--f); }
+
+.scroll { overflow-x: auto; margin: 1.6em 0; }
+table { border-collapse: collapse; font: .84rem/1.45 var(--sans); font-variant-numeric: tabular-nums; min-width: 60%; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 700; border-bottom: 2px solid var(--ink); white-space: nowrap; }
+td code { font-size: .92em; }
+
+figure { margin: 2em 0; }
+/* Plots are drawn on white; keep them on white in dark mode too. */
+figure img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 4px; background: #fff; }
+figcaption { font: .82rem/1.45 var(--sans); color: var(--muted); margin-top: 8px; max-width: 68ch; }
+
+@media (max-width: 900px) {
+  body { font-size: 17px; }
+  .wrap { grid-template-columns: 1fr; gap: 24px; padding-block: 20px 64px; }
+  nav { position: static; max-height: none; }
+  .chapter { padding: 32px 20px 40px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav aria-label="Contents">
+    <a class="home" href="/">karanjakhar.dev</a>
+    <div class="cover">
+      <h2>From Bytes to Code</h2>
+      <p>Building a language model from scratch on one laptop GPU. A book in progress; working title.</p>
+      <div class="progress" id="bar" aria-hidden="true"></div>
+      <p class="count">{{DRAFTED}} of {{TOTAL}} parts drafted · {{WORDS}} words</p>
+    </div>
+    <ol>
+{{TOC}}
+    </ol>
+  </nav>
+  <main id="main">
+{{BODY}}
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+  // Progress bar: one tick per planned part of the book (the intro is not one), filled where drafted.
+  const bar = document.getElementById("bar");
+  document.querySelectorAll("nav ol li").forEach((li, i) => {
+    if (i === 0) return;
+    const tick = document.createElement("i");
+    if (li.classList.contains("draft")) tick.className = "on";
+    bar.appendChild(tick);
+  });
+  if (window.hljs) document.querySelectorAll("pre code").forEach(el => hljs.highlightElement(el));
+</script>
+</body>
+</html>
