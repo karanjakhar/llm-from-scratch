@@ -84,7 +84,33 @@ class ShuffledSampler:
         self._perm = self._make_perm(self.epoch)
 
 
-SAMPLERS = {"random": RandomSampler, "shuffled": ShuffledSampler}
+class SequentialSampler:
+    """Non-overlapping windows in FILE order, no shuffling (Stage 08 §8e baseline).
+
+    Documents from the same source/repository sit next to each other in the
+    binary, so consecutive batches are correlated. Exists to measure what
+    shuffling buys; never used for real training.
+    """
+
+    def __init__(self, n_tokens: int, T: int, seed: int = 0):
+        self.T = T
+        self.n_windows = (n_tokens - 1) // T
+        # seed picks the starting window, so seeds differ but order does not
+        self.pos = int(np.random.default_rng(seed).integers(0, self.n_windows))
+
+    def next(self) -> int:
+        w = self.pos % self.n_windows
+        self.pos += 1
+        return w * self.T
+
+    def state_dict(self):
+        return {"pos": self.pos}
+
+    def load_state_dict(self, s):
+        self.pos = s["pos"]
+
+
+SAMPLERS = {"random": RandomSampler, "shuffled": ShuffledSampler, "sequential": SequentialSampler}
 
 
 class MixedLoader:

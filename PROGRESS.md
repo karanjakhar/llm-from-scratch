@@ -49,7 +49,7 @@ Deferred, with a trigger:
 | 05 | Transformer block | `[x]` | = HF GPT2Block; post-norm 2.69 @4L / 6.70 @24L; no residual = unigram 6.86; SwiGLU −0.038 |
 | 06 | GPT assembly | `[x]` | = HF GPT-2 (fp64 2e-11); 124,439,808 by hand; untied penalty 0.076→0.003 with 3× steps |
 | 07 | Generation & decoding | `[x]` | cache exact in 36/36; speedup @512 1.3× (5M) / 3.3× (30M) / 4.5× (92M): overhead-bound |
-| 08 | Training loop | `[ ]` | |
+| 08 | Training loop | `[x]` | `llmfs/train/trainer.py`; TinyStories 10M → coherent in 11.5 min; no warmup @3e-3 +1.84; sequential order +1.25 |
 | 09 | Efficiency | `[ ]` | |
 | 10 | Scaling laws | `[ ]` | |
 | 11 | Pretraining run | `[ ]` | |
@@ -135,6 +135,12 @@ stay visible across months.
 | 2026-11-06 | 07 | KV cache vs naive, batch 1, fp32, length 512 / 1024 | speedup 5M / 30M / 92M | 1.27 / 3.32 / 4.47 ; 2.28 / 5.51 / 7.23 |
 | 2026-11-06 | 07 | cached vs naive tokens, 36 settings | identical | 36/36 (greedy and sampled) |
 | 2026-11-06 | 07 | Stage 06 model, greedy / τ0.7 / τ1.0 / τ2.0 | distinct-2 ; mean log-prob | 0.07/0.32/0.79/1.00 ; −0.24/−0.95/−3.19/−9.51 |
+| 2026-11-06 | 08 | hand AdamW vs torch, 25 steps, fp32 / fp64 | max weight diff | 2.3e-4 / 4.2e-13 |
+| 2026-11-06 | 08 | 4L, 1.5k steps: SGD / +momentum / Adam / AdamW / Adam+L2 (0.1) | held-out code loss | 5.615 / 4.310 / 3.609 / 3.614 / 6.695 |
+| 2026-11-06 | 08 | overfit one batch (8×256) | steps to loss < 1 / 0.1 / 0.01 | 72 / 96 / 129 (spike ×1,600 at step 259) |
+| 2026-11-06 | 08 | TinyStories 10.1M, 49M tokens | val loss / minutes | 1.510 / 11.5 |
+| 2026-11-06 | 08 | 6L/384 lr 3e-3: base / no clip / no warmup / neither | held-out code loss | 2.946 / 3.028 / 4.781 / 5.057 |
+| 2026-11-06 | 08 | 4L 4k steps: sequential / random / shuffled windows | held-out code loss | 3.937 / 2.695 / 2.683 |
 
 ## Open questions
 

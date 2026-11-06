@@ -816,3 +816,66 @@ uniform (−9.01).
 **Lesson:** "Parses" rewards repetition. Any cheap proxy for code quality
 needs a second number that catches degenerate output.
 **Where:** `results/07_generation/temps.json`, `docs/07_generation.md` §8c
+
+### 2026-11-06 · Stage 08 · Our AdamW drifts from PyTorch's in float32             [trap]
+**Expected:** Hand-written AdamW equals `torch.optim.AdamW` to 1e-5 after 25 steps.
+**Found:** 2.3e-4 in float32; 4.2e-13 in float64.
+**Why:** Same arithmetic, different order; Adam divides by `√v`, so weights
+with near-zero gradients take `±lr` steps decided by rounding noise, and
+training compounds it.
+**Lesson:** Compare optimizers in float64. A float32 tolerance loose enough to
+pass hides real bugs too.
+**Where:** `stages/08_training/test_training.py::test_adamw_matches_torch`
+
+### 2026-11-06 · Stage 08 · L2-in-the-loss with Adam crushed the model           [result]
+**Expected:** Adam + L2 (0.1) vs AdamW (0.1): a small difference.
+**Found:** 1,500 steps, 4L: AdamW val 3.614, weight norm 98.7; Adam + L2 val
+**6.695** (unigram level), weight norm **1.41**. SGD 5.615, SGD+momentum 4.310,
+Adam without decay 3.609.
+**Why:** The L2 gradient `0.1·θ` keeps the same sign step after step, and
+Adam's normalisation turns any consistent gradient into a step of ~lr. Every
+weight marches to zero.
+**Lesson:** With adaptive optimizers, "weight decay" and "L2 penalty" are
+different algorithms. The same coefficient means wildly different strength.
+**Where:** `results/08_training/optimizers.json`, `docs/08_training_loop.md` §8a
+
+### 2026-11-06 · Stage 08 · A loss spike from memorising one batch                [surprise]
+**Expected:** The one-batch overfit test decreases monotonically to ~0.
+**Found:** < 0.01 by step 129; then at step 259, 0.00036 → 0.579 in two steps
+(1,600×), recovered by step ~290. Same batch every step.
+**Why:** Near-zero, noisy gradients make Adam's `v` tiny, so `m/√v` steps
+are ±lr in noise-chosen directions. Constant lr, no clipping.
+**Lesson:** Spikes do not need bad data. Adam can produce them when gradients
+vanish; schedules and clipping are what damp them.
+**Where:** `results/08_training/overfit.json`, `docs/08_training_loop.md` §8b
+
+### 2026-11-06 · Stage 08 · No warmup stalls at the unigram plateau, it does not spike   [surprise]
+**Expected:** (curriculum) "record the loss spike" from removing warmup.
+**Found:** 6L/384 at lr 3e-3, 2,000 steps: warmup+clip 2.946, no clip 3.028,
+no warmup **4.781**, neither 5.057. Without warmup the loss fell to 7.0 by step
+10 and sat there ~40 steps (unigram ≈ 6.86); grad norm > 1 on 67% of steps
+afterwards (7% with warmup).
+**Lesson:** At small scale, the cost of skipping warmup is getting stuck, not
+blowing up. Test safety rails at a learning rate where they carry load:
+at lr 1e-3 both looked unnecessary.
+**Where:** `results/08_training/ablate.json`, `docs/08_training_loop.md` §8d
+
+### 2026-11-06 · Stage 08 · File-order batches cost 1.25 nats                      [result]
+**Expected:** Shuffling matters; random vs shuffled differ slightly.
+**Found:** 4L, 4k steps: sequential 3.937, random 2.695, shuffled 2.683. Train
+loss std over the last 1k steps: 0.74 sequential vs 0.16.
+**Why:** Sequential batches are 32 consecutive windows, i.e. one or two files;
+each update chases one repository. Random vs shuffled cannot differ at 2.5% of
+an epoch: both are effectively fresh data.
+**Lesson:** Stage 02's 37%-unseen argument for shuffled windows only bites
+near one epoch. Order within an epoch matters far more than coverage early on.
+**Where:** `results/08_training/sampling.json`, `docs/08_training_loop.md` §8e
+
+### 2026-11-06 · Stage 08 · TinyStories smoke test passes in 11.5 minutes         [result]
+**Expected:** A 10M model writes coherent short stories in ~20 minutes.
+**Found:** 10,103,040 params (6L, C=320), 49M tokens, 691 s, val 1.510.
+Step 200: broken grammar; step 1000: grammatical, no tracking of who is
+who; step 6000: named character carried across sentences, quoted dialogue.
+**Lesson:** The loop is correct end to end. Samples at fixed steps make a
+cheap, readable progress check for every later run.
+**Where:** `results/08_training/tinystories.json`, `docs/08_training_loop.md` §8c
