@@ -157,6 +157,10 @@ def train(c: TrainConfig, on_step=None) -> dict:
         start, hist = ck["step"], ck["hist"]
         print(f"[{c.name}] resumed at step {start}", flush=True)
     if c.compile:
+        # Each run in a multi-run script compiles a new model through the same
+        # forward code; dynamo's per-function cache (8 entries) would fill up
+        # and silently fall back to eager. Start every run clean.
+        torch._dynamo.reset()
         model = torch.compile(model)
     val = make_val(c.val, c.T, c.eval_windows)
     amp = torch.bfloat16 if c.dtype == "bf16" else torch.float32

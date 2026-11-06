@@ -29,6 +29,7 @@ class GPTConfig:
     flash: bool = True            # SDPA; equal to the hand-written path to 1e-5 (Stage 06 test)
     bias: bool = True
     dropout: float = 0.0
+    qk_norm: bool = False         # RMS-normalise q and k per head (Stage 10 §8f: attention-logit growth)
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -77,6 +78,19 @@ class CausalSelfAttention(nn.Module):
         self.c_proj = nn.Linear(cfg.n_embd, cfg.n_embd, bias=cfg.bias)
         self.c_proj.writes_residual = True
         self.dropout = cfg.dropout
+        self.qk_norm = cfg.qk_norm
+        if cfg.qk_norm:
+            d = cfg.n_embd // cfg.n_head
+            self.q_gain = nn.Parameter(torch.ones(d))
+            self.k_gain = nn.Parameter(torch.ones(d))
+
+    def _qk(self, q, k):
+        """Bound q·k: each head's q and k get rms 1 times a learned gain."""
+        if not self.qk_norm:
+            return q, k
+        q = F.rms_norm(q, (q.shape[-1],), self.q_gain, 1e-6)
+        k = F.rms_norm(k, (k.shape[-1],), self.k_gain, 1e-6)
+        return q, k
 
     def forward(self, x, cache: KVCache | None = None):
         B, T, C = x.shape
@@ -85,6 +99,7 @@ class CausalSelfAttention(nn.Module):
         q = q.view(B, T, H, C // H).transpose(1, 2)              # (B, H, T, d)
         k = k.view(B, T, H, C // H).transpose(1, 2)
         v = v.view(B, T, H, C // H).transpose(1, 2)
+        q, k = self._qk(q, k)
         if cache is not None:
             # Write this step's k, v after the ones already cached, then attend
             # over everything so far. New queries sit at positions p0..p0+T-1.

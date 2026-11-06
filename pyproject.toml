@@ -19,6 +19,8 @@ dependencies = [
     "datasets>=2.19",
     "transformers>=4.44",
     "markdown-it-py>=4.2.0",
+    # stage 17: numerical oracle for our hand-written LoRA only
+    "peft>=0.12",
 ]
 
 [project.optional-dependencies]

@@ -37,6 +37,7 @@ Ready to use:
 Deferred, with a trigger:
 - Before Stage 11 (original note): download ~8 more code shards. Decided
   against: disk is at 26 GB free; 1.8B tokens at 85/15 = 1.15 code epochs.
+- Not done: a full second `prepare.py` run to confirm byte-identical SHA-256s.
 
 ## Stage status
 

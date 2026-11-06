@@ -74,5 +74,23 @@ uv run python stages/01_tokenizer/run.py --vocab 8192          # a few minutes
 uv run python stages/01_tokenizer/run.py --vocab 2048 --skip-ablation   # fast
 ```
 
+Every stage from 02 on follows the same pattern: `uv run pytest stages/NN_*/`
+for the acceptance tests, then `stages/NN_*/run.py <experiment>` for the
+numbers in its doc. Each `run.py` lists its experiments and their cost in its
+docstring. The ones that matter most:
+
+```bash
+uv run python stages/06_gpt/run.py oracle              # load OpenAI GPT-2 into our GPT, compare with HF
+uv run python stages/08_training/run.py tinystories    # 10M smoke test, ~12 min
+uv run python stages/09_efficiency/bench.py stack      # the speed table
+uv run python stages/11_pretrain/run.py workhorse      # ~30M base model, ~2.5 h, resumable
+uv run python stages/11_pretrain/run.py capstone       # ~92M base model, ~20 h, resumable
+uv run python stages/16_sft/run.py --base checkpoints/11_pretrain/capstone/final.pt --tag capstone
+uv run python stages/22_evaluation/run.py table        # HumanEval / MBPP / loss for every checkpoint
+```
+
+Stages 12-23 default to the workhorse checkpoint; pass `--tag capstone` (and
+the capstone path) to run them on the capstone.
+
 Always go through `uv run`. The environment is defined by `pyproject.toml` +
 `uv.lock`, not by whatever happens to be installed on the machine.
