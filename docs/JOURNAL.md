@@ -915,3 +915,36 @@ B=16 + checkpointing 21.8k.
 micro-batch already fills a 4060 at these sizes. Use checkpointing to fit,
 not to speed up.
 **Where:** `results/09_efficiency/{stack,shapes}.json`
+
+### 2026-11-06 · Stage 10 · The IsoFLOP runs diverged: attention logits reached 2 million   [surprise]
+**Expected:** Small GPT-2-style models at lr 1e-3 (stable through Stages
+04-08) train cleanly in the IsoFLOP sweep (T=512, B=16, up to 58k steps).
+**Found:** The 4-layer, C=256 model failed every long run: grad norm rose
+from ~1.5 to 30-3,500 after ~6k steps, val loss rose from 2.45 to 2.61
+(3e15), and the 100% code / 85-15 mix runs ended at 3.52 / 2.61. A probe
+on one fixed batch found the cause: the largest attention score q·k/√d in
+block 1 went 35 (step 1k) → 218 (6k) → 14,206 (7k) → 2.0 million (12k).
+The largest gradient sat in that block's LayerNorm. Compiled and eager runs
+were identical to 4 decimals, so not a compiler bug. 6-10 layer models kept
+grad norm near 1.
+**Why:** Attention-logit growth (Dehghani et al. 2023; Wortsman et al. 2023,
+"small-scale proxies for large-scale instabilities"): nothing bounds q·k,
+the softmax saturates to one-hot, and its gradient becomes huge and erratic.
+Earlier stages' runs were 3-4× shorter.
+**Lesson:** "It trained fine at 4k steps" says little about 40k steps. Log
+the attention-score maximum along with the loss; it moved 6,000 steps before
+the loss did.
+**Where:** `stages/10_scaling/diagnose.py`, `results/10_scaling/diagnose.json`
+
+### 2026-11-06 · Stage 10 · QK-norm goes into our GPT, from measurement           [decision]
+**Expected:** Fix the divergence by lowering the learning rate.
+**Found:** Same 4L recipe, 13k steps, one change each: lr 1e-3 as before
+2.656 (diverged, attention max 2.2M); lr 5e-4 **2.431** (max 117); QK-norm at
+lr 1e-3 **2.280** (max 37); B32×T256 at lr 1e-3 2.476 (max 78, not
+comparable windows). QK-norm both removes the instability and keeps the
+higher learning rate, which is worth 0.15 nats here.
+**Decision:** Stage 10 is rerun with `qk_norm=True`, and the Stage 11
+workhorse and capstone use it. This is a departure from pure GPT-2,
+borrowed from Stage 12's list on evidence; `from_pretrained("gpt2")` keeps it
+off. The diverged v1 sweep is kept in `results/10_scaling/v1_no_qknorm/`.
+**Where:** `llmfs/model/gpt.py` (`qk_norm`), `results/10_scaling/diagnose.json`

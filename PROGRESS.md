@@ -5,37 +5,38 @@ A new AI session reads `CLAUDE.md` then this file and knows exactly where to pic
 
 ## Current position
 
-**Stages 00-05 complete.** Next: **Stage 06 — Assembling GPT.**
+**Stages 00-09 complete. Stage 10 rerunning (with QK-norm) — see below.**
+Goal set 2026-11-06: finish all stages in one long session.
+
+Built and tested ahead of their experiments (docs drafted, code + tests
+passing, results pending): Stages 10-23 (`docs/10_*.md` … `docs/23_*.md`,
+`stages/10_scaling` … `stages/23_serving`, `llmfs/model/{llama,moe}.py`,
+`llmfs/post/{lora,dpo,grpo,quant,prefs}.py`, `llmfs/eval/`, `llmfs/serve/`).
+Stage 24: `docs/24_capstone.md` skeleton, `stages/24_capstone/assemble.py`.
+
+Run order (GPU is the bottleneck; scratchpad chain scripts):
+1. Stage 10 sweep with `qk_norm=True` (v1 without it diverged: attention
+   scores reached 2M; `results/10_scaling/v1_no_qknorm/`, `diagnose.json`).
+2. Stage 11: resume test, workhorse (8L/512, 590M tokens, ~2.4 h).
+3. Stages 12-14 experiments (6L/384 Llama variants, MoE, MLA, needles).
+4. Stages 15-23 on the workhorse.
+5. Capstone (12L/768 + QK-norm, 1.8B tokens, ~20 h), then 16/19/20/21/22/23
+   on it, then Stage 24.
 
 Ready to use:
 - Tokenizer: `data/tokenizers/split_8192.json` (8,196 embedding rows, eot 8192)
 - Token files: `data/bins/split_8192/{train,val}_{code,en}.bin`, 2.36B tokens
-  (manifest copy committed at `results/02_data/manifest_split_8192.json`)
-- Loader: `llmfs.data.MixedLoader({"code": (path, 0.85), "en": (path, 0.15)}, B, T, device="cuda")`
-
-Stage 03 code: `stages/03_embeddings/embeddings.py` (token table, learned /
-sinusoidal / RoPE in both layouts, tied head). Not yet promoted to `llmfs/`:
-promote RoPE when Stage 12 needs it; GPT-2 (Stage 06) uses learned positions.
-
-Stage 04 code: `stages/04_attention/attention.py` (`attention()`,
-`MultiHeadAttention`), checked against SDPA and `nn.MultiheadAttention`.
-A trained d=64 checkpoint for maps: `checkpoints/04_attention/d64_seed0.pt`.
-
-Stage 05 code: `stages/05_block/block.py` (`LayerNorm`, `RMSNorm`, GELU
-exact/tanh, `MLP`, `SwiGLU`, `Block` with norm / act / pre-post / residual /
-dropout switches), checked against HF `GPT2Block` and `LlamaMLP`.
-`stages/05_block/model.py` is the tiny LM on that block (`emb_scale` option
-for the 2017 √C embedding multiplier). Not yet promoted to `llmfs/`; Stage 06
-builds the GPT class and is the natural point to promote the block.
-
-**Next action:** write `docs/06_gpt_model.md` (docs before code), then
-`stages/06_gpt/`. Stage 06 should pick up the init questions Stage 05 raised
-(embedding scale, `1/√(2·n_layer)` residual init; see open questions).
+- TinyStories bins (Stage 08 fixture): `data/bins/tinystories/`
+- Eval data: `data/raw/{humaneval,mbpp,codesearchnet}` (harness verified: 164/164 references pass)
+- Models: `llmfs.model.gpt.GPT` (GPT-2 names, loads OpenAI weights, KV cache,
+  optional QK-norm), `llmfs.model.llama.Llama` (RMSNorm/RoPE/GQA/SwiGLU/
+  QK-norm/window/MoE/MLA switches; equals HF Llama). `llmfs.model.load_model`
+  rebuilds either from a checkpoint.
+- Trainer: `llmfs.train.trainer.train(TrainConfig(...))`.
 
 Deferred, with a trigger:
-- Before Stage 11: download ~8 more code shards, re-run `dedup.py` +
-  `prepare.py` (capstone needs ~2.1B code tokens; we have 1.33B).
-- Not done: a full second `prepare.py` run to confirm byte-identical SHA-256s.
+- Before Stage 11 (original note): download ~8 more code shards. Decided
+  against: disk is at 26 GB free; 1.8B tokens at 85/15 = 1.15 code epochs.
 
 ## Stage status
 
