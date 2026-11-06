@@ -56,7 +56,7 @@ Deferred, with a trigger:
 | 10 | Scaling laws | `[x]` | optimum 4.2M @3e15 / 8.6M @1e16 = 22-28 tok/param (Chinchilla ±15%); QK-norm needed (v1 diverged) |
 | 11 | Pretraining run | `[ ]` | |
 | 12 | Modern architecture | `[x]` | GPT-2→Llama 2.518→2.274; RoPE −0.230; MQA +0.03; window64 +0.24; NTK s=4 recovers 2.56→2.19 |
-| 13 | Mixture of Experts | `[ ]` | |
+| 13 | Mixture of Experts | `[x]` | MoE ≈ dense at 33M tokens (2.325 vs 2.320), 16×top-4 2.303; no aux → 4/8 experts dead, loss unchanged |
 | 14 | Attention variants | `[ ]` | |
 | 15 | Speculative decoding | `[ ]` | optional |
 | 16 | SFT | `[ ]` | |
@@ -160,6 +160,8 @@ stay visible across months.
 | 2026-11-07 | 12 | kv heads 8 / 4 / 2 / 1 / 1+MLP | val code | 2.306 / 2.305 / 2.315 / 2.335 / 2.328 |
 | 2026-11-07 | 12 | window full / 128 / 64 / 16 | val code | 2.314 / 2.424 / 2.559 / 3.141 |
 | 2026-11-07 | 12 | trained @512, eval @2048, NTK s=1 / 2 / 4 | loss at pos 1024-2048 | 2.557 / 2.232 / 2.187 |
+| 2026-11-07 | 13 | dense / MoE 8×top2 / no aux / 7+1 shared top1 / 16×top4 / dense same total | val code | 2.320 / 2.325 / 2.326 / 2.369 / 2.303 / 2.354 |
+| 2026-11-07 | 13 | busiest expert share of top-2 assignments, with / without aux | fraction (balanced 0.125) | 0.23 / 0.41 (4 of 8 dead mid-layer) |
 
 ## Open questions
 

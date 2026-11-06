@@ -1002,3 +1002,24 @@ QK-norm model: no head puts more than 5.8% of attention on token 0.
 **Lesson:** A window trades long-range loss for a small short-range gain;
 the average hides both. Stacked layers did not recover what the window cut.
 **Where:** `results/12_modern_arch/{window,rope_scale,sinks}.json`
+
+### 2026-11-07 · Stage 13 · Without the aux loss half the experts died, and the loss did not notice   [surprise]
+**Expected:** Aux loss off → router collapse → visible quality loss.
+**Found:** 6L/384, 33M tokens. Collapse: yes. Busiest expert 0.41-0.43 of
+top-2 assignments from step 100 (balanced 0.125; with aux 0.23), aux value
+2.46 vs 1.09; 4 of 8 experts get zero first-choice tokens in the middle
+layer. Quality: 2.326 vs 2.325. MoE vs dense at equal active params: 2.325
+vs 2.320; fine-grained 16×top-4 2.303; same-total-params dense 2.354.
+**Why:** At 33M tokens, each of 8 experts sees too little data to be worth
+more than two well-trained ones. The collapse wastes capacity that this
+budget could not use anyway.
+**Lesson:** Collapse is a capacity problem first and a loss problem later.
+Watch the utilisation histogram; the loss curve will not warn you.
+**Where:** `results/13_moe/{train,analyse}.json`, `docs/visuals/13_moe.png`
+
+### 2026-11-07 · Stage 13 · The router learned "English vs code" on its own       [result]
+**Found:** Middle MoE layer, first-choice expert: expert 0 gets 96% English
+tokens, expert 7 83%; experts 2 and 4 are 99% code (`(`, ` =`, `,`,
+indentation); expert 3 takes identifiers and digits.
+**Lesson:** Experts specialise by surface token type, not by topic.
+**Where:** `results/13_moe/analyse.json`
