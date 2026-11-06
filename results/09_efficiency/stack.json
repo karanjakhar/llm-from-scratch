@@ -1,0 +1,161 @@
+[
+ {
+  "name": "fp32 baseline",
+  "opts": {},
+  "B": 8,
+  "tokens_per_s": 14271,
+  "step_ms": 287.0,
+  "peak_mb": 3204,
+  "warmup_s": 3.0,
+  "loss_last": 6.623,
+  "tflops": 2.88,
+  "mfu_vs_measured_bf16": 0.122,
+  "speedup": 1.0
+ },
+ {
+  "name": "+ TF32 matmuls",
+  "opts": {
+   "tf32": true
+  },
+  "B": 8,
+  "tokens_per_s": 18536,
+  "step_ms": 221.0,
+  "peak_mb": 3204,
+  "warmup_s": 2.2,
+  "loss_last": 6.6143,
+  "tflops": 3.74,
+  "mfu_vs_measured_bf16": 0.158,
+  "speedup": 1.3
+ },
+ {
+  "name": "+ bf16 autocast",
+  "opts": {
+   "tf32": true,
+   "bf16": true
+  },
+  "B": 8,
+  "tokens_per_s": 23142,
+  "step_ms": 177.0,
+  "peak_mb": 2995,
+  "warmup_s": 1.9,
+  "loss_last": 6.6402,
+  "tflops": 4.67,
+  "mfu_vs_measured_bf16": 0.198,
+  "speedup": 1.62
+ },
+ {
+  "name": "+ fused attention",
+  "opts": {
+   "tf32": true,
+   "bf16": true,
+   "flash": true
+  },
+  "B": 8,
+  "tokens_per_s": 34490,
+  "step_ms": 118.8,
+  "peak_mb": 2228,
+  "warmup_s": 1.2,
+  "loss_last": 6.6073,
+  "tflops": 6.96,
+  "mfu_vs_measured_bf16": 0.295,
+  "speedup": 2.42
+ },
+ {
+  "name": "+ fused AdamW",
+  "opts": {
+   "tf32": true,
+   "bf16": true,
+   "flash": true,
+   "fused_opt": true
+  },
+  "B": 8,
+  "tokens_per_s": 35098,
+  "step_ms": 116.7,
+  "peak_mb": 2228,
+  "warmup_s": 1.2,
+  "loss_last": 6.636,
+  "tflops": 7.08,
+  "mfu_vs_measured_bf16": 0.3,
+  "speedup": 2.46
+ },
+ {
+  "name": "+ torch.compile",
+  "opts": {
+   "tf32": true,
+   "bf16": true,
+   "flash": true,
+   "fused_opt": true,
+   "compile": true
+  },
+  "B": 8,
+  "tokens_per_s": 73656,
+  "step_ms": 55.6,
+  "peak_mb": 1221,
+  "warmup_s": 10.6,
+  "loss_last": 6.6303,
+  "tflops": 14.85,
+  "mfu_vs_measured_bf16": 0.628,
+  "speedup": 5.16
+ },
+ {
+  "name": "+ act. checkpointing",
+  "opts": {
+   "tf32": true,
+   "bf16": true,
+   "flash": true,
+   "fused_opt": true,
+   "compile": true,
+   "ckpt": true
+  },
+  "B": 8,
+  "tokens_per_s": 60955,
+  "step_ms": 67.2,
+  "peak_mb": 718,
+  "warmup_s": 10.3,
+  "loss_last": 6.6158,
+  "tflops": 12.29,
+  "mfu_vs_measured_bf16": 0.52,
+  "speedup": 4.27
+ },
+ {
+  "name": "+ batch 8 -> 32",
+  "opts": {
+   "tf32": true,
+   "bf16": true,
+   "flash": true,
+   "fused_opt": true,
+   "compile": true,
+   "ckpt": true,
+   "B": 32
+  },
+  "B": 32,
+  "tokens_per_s": 60846,
+  "step_ms": 269.3,
+  "peak_mb": 1641,
+  "warmup_s": 13.8,
+  "loss_last": 6.3623,
+  "tflops": 12.27,
+  "mfu_vs_measured_bf16": 0.519,
+  "speedup": 4.26
+ },
+ {
+  "name": "compile, no ckpt, B=16",
+  "opts": {
+   "tf32": true,
+   "bf16": true,
+   "flash": true,
+   "fused_opt": true,
+   "compile": true,
+   "B": 16
+  },
+  "B": 16,
+  "tokens_per_s": 70579,
+  "step_ms": 116.1,
+  "peak_mb": 2006,
+  "warmup_s": 9.5,
+  "loss_last": 6.6478,
+  "tflops": 14.23,
+  "mfu_vs_measured_bf16": 0.602,
+  "speedup": 4.95
+ }
+]

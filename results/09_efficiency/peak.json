@@ -1,0 +1,7 @@
+{
+ "fp32": 5.48,
+ "tf32": 10.43,
+ "bf16": 23.63,
+ "fp16": 24.76,
+ "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU"
+}

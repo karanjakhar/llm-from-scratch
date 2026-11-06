@@ -1,0 +1,130 @@
+{
+ "baseline": {
+  "share": {
+   "matmul": 0.547,
+   "other elementwise": 0.36,
+   "softmax": 0.056,
+   "dtype casts / copies": 0.018,
+   "layernorm": 0.01,
+   "reductions": 0.009
+  },
+  "top": [
+   {
+    "name": "ampere_sgemm_64x64_nn",
+    "pct": 0.15,
+    "kind": "matmul"
+   },
+   {
+    "name": "ampere_sgemm_128x64_tn",
+    "pct": 0.148,
+    "kind": "matmul"
+   },
+   {
+    "name": "void at::native::vectorized_elementwise_kernel<4, at::native::BinaryFunctor<float, float, ",
+    "pct": 0.077,
+    "kind": "other elementwise"
+   },
+   {
+    "name": "void cutlass::Kernel2<cutlass_80_simt_sgemm_128x128_8x4_nt_align1>(cutlass_80_simt_sgemm_1",
+    "pct": 0.073,
+    "kind": "matmul"
+   },
+   {
+    "name": "ampere_sgemm_64x64_nt",
+    "pct": 0.066,
+    "kind": "matmul"
+   },
+   {
+    "name": "void at::native::vectorized_elementwise_kernel<4, at::native::AUnaryFunctor<float, float, ",
+    "pct": 0.066,
+    "kind": "other elementwise"
+   },
+   {
+    "name": "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctor_add<float>, std:",
+    "pct": 0.046,
+    "kind": "other elementwise"
+   },
+   {
+    "name": "ampere_sgemm_128x128_nt",
+    "pct": 0.04,
+    "kind": "matmul"
+   },
+   {
+    "name": "void at::native::vectorized_elementwise_kernel<4, at::native::BUnaryFunctor<float, float, ",
+    "pct": 0.037,
+    "kind": "other elementwise"
+   },
+   {
+    "name": "ampere_sgemm_128x128_tn",
+    "pct": 0.037,
+    "kind": "matmul"
+   }
+  ],
+  "kernels": 56
+ },
+ "bf16+flash+fused": {
+  "share": {
+   "other elementwise": 0.448,
+   "matmul": 0.294,
+   "dtype casts / copies": 0.138,
+   "fused attention": 0.039,
+   "optimizer": 0.034,
+   "softmax": 0.025,
+   "layernorm": 0.018,
+   "reductions": 0.005
+  },
+  "top": [
+   {
+    "name": "void at::native::vectorized_elementwise_kernel<4, at::native::AUnaryFunctor<float, float, ",
+    "pct": 0.105,
+    "kind": "other elementwise"
+   },
+   {
+    "name": "ampere_bf16_s1688gemm_bf16_128x128_ldg8_f2f_stages_32x1_nn",
+    "pct": 0.091,
+    "kind": "matmul"
+   },
+   {
+    "name": "void at::native::vectorized_elementwise_kernel<4, at::native::bfloat16_copy_kernel_cuda(at",
+    "pct": 0.08,
+    "kind": "dtype casts / copies"
+   },
+   {
+    "name": "ampere_bf16_s1688gemm_bf16_128x128_ldg8_f2f_stages_32x1_nt",
+    "pct": 0.079,
+    "kind": "matmul"
+   },
+   {
+    "name": "void at::native::vectorized_elementwise_kernel<4, at::native::BinaryFunctor<float, float, ",
+    "pct": 0.061,
+    "kind": "other elementwise"
+   },
+   {
+    "name": "void at::native::unrolled_elementwise_kernel<at::native::BinaryFunctor<float, float, float",
+    "pct": 0.056,
+    "kind": "other elementwise"
+   },
+   {
+    "name": "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::Tenso",
+    "pct": 0.054,
+    "kind": "dtype casts / copies"
+   },
+   {
+    "name": "ampere_bf16_s1688gemm_bf16_128x128_ldg8_relu_f2f_tn",
+    "pct": 0.045,
+    "kind": "matmul"
+   },
+   {
+    "name": "void at::native::vectorized_elementwise_kernel<4, at::native::tanh_backward_kernel_cuda(at",
+    "pct": 0.038,
+    "kind": "other elementwise"
+   },
+   {
+    "name": "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, std::arra",
+    "pct": 0.037,
+    "kind": "other elementwise"
+   }
+  ],
+  "kernels": 56
+ }
+}

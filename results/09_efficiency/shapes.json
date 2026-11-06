@@ -1,0 +1,43 @@
+[
+ {
+  "name": "workhorse 8L/512",
+  "T": 1024,
+  "B": 16,
+  "tokens_per_s": 70200,
+  "step_ms": 233.4,
+  "peak_mb": 3569,
+  "warmup_s": 11.1,
+  "loss_last": 6.8197,
+  "tflops": 15.92,
+  "mfu_vs_measured_bf16": 0.674
+ },
+ {
+  "name": "capstone 12L/768",
+  "T": 1024,
+  "B": 8,
+  "tokens_per_s": 25389,
+  "step_ms": 322.7,
+  "peak_mb": 4298,
+  "warmup_s": 14.5,
+  "loss_last": 7.2609,
+  "tflops": 16.79,
+  "mfu_vs_measured_bf16": 0.711
+ },
+ {
+  "name": "capstone 12L/768",
+  "T": 1024,
+  "error": "OutOfMemoryError"
+ },
+ {
+  "name": "capstone 12L/768 + ckpt",
+  "T": 1024,
+  "B": 16,
+  "tokens_per_s": 21780,
+  "step_ms": 752.3,
+  "peak_mb": 2828,
+  "warmup_s": 18.8,
+  "loss_last": 6.8754,
+  "tflops": 14.4,
+  "mfu_vs_measured_bf16": 0.609
+ }
+]

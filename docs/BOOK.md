@@ -89,7 +89,7 @@ in book voice) · `final`
 | 8 | Assembling GPT | 06 | `docs/06_gpt_model.md` | draft |
 | 9 | Making it talk: generation and decoding | 07 | `docs/07_generation.md` | draft |
 | 10 | The training loop | 08 | `docs/08_training_loop.md` | draft |
-| 11 | Making it fast on 8 GB | 09 | | not started |
+| 11 | Making it fast on 8 GB | 09 | `docs/09_efficiency.md` | draft |
 | 12 | How big, how long: scaling laws | 10 | | not started |
 | 13 | The real pretraining run | 11 | | not started |
 | 14 | Modern architecture: from GPT-2 to Llama | 12 | | not started |
@@ -144,6 +144,7 @@ HTML) and, for print, will need static versions.
 | Shift and tying | 8 | no-shift loss → 0; tied vs untied at 4k / 12k steps | `visuals/06_shift_tie.png` | yes (PNG) |
 | KV cache and temperature | 9 | speedup vs length for 3 sizes; distinct-2 and log-prob vs τ | `visuals/07_generation.png` | yes (PNG) |
 | The training loop | 10 | optimizers; overfit spike; warmup/clip at lr 3e-3; sampler order | `visuals/08_training.png` | yes (PNG) |
+| The speed stack | 11 | tokens/s, MFU and memory for each optimisation in turn | `visuals/09_stack.png` | yes (PNG) |
 
 **Wanted, not yet made:** a one-hot × table = row diagram and a 2D RoPE
 rotation diagram (chapter 5, ASCII versions in the doc for now), a MinHash/LSH diagram (chapter 4), a picture of

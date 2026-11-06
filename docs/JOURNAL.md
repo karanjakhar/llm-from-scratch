@@ -879,3 +879,39 @@ who; step 6000: named character carried across sentences, quoted dialogue.
 **Lesson:** The loop is correct end to end. Samples at fixed steps make a
 cheap, readable progress check for every later run.
 **Where:** `results/08_training/tinystories.json`, `docs/08_training_loop.md` §8c
+
+### 2026-11-06 · Stage 09 · torch.compile doubled speed because matmuls stopped mattering   [result]
+**Expected:** (curriculum) 3-5× total from stacking mixed precision, fused
+attention, fused AdamW, compile and checkpointing; most of it from bf16.
+**Found:** 8L/512, T=512, B=8: fp32 14.3k tok/s → TF32 18.5k → bf16 23.1k →
+SDPA 34.5k → fused AdamW 35.1k → compile **73.7k** (5.16×, MFU 12% → 63% of
+our measured 23.6 TFLOP/s bf16 peak). bf16 alone gave only 1.25× against a
+4.3× peak ratio. Profiler before compile: matmul 29%, other elementwise 45%,
+dtype casts 14%, fused attention 4%.
+**Why:** Once matmuls are fast, the memory-bound work dominates: our
+hand-written tanh-GELU (7-8 kernels) and autocast's per-step weight casts.
+Fusion removes exactly that.
+**Lesson:** The FLOP count tells you what the GPU *should* spend time on; the
+profiler tells you what it *does*. They diverged by 2× here.
+**Where:** `results/09_efficiency/{peak,stack,profile}.json`, `docs/09_efficiency.md` §9
+
+### 2026-11-06 · Stage 09 · A profiler bucket hid the attention kernels           [mistake]
+**Expected:** The kernel-kind breakdown shows fused attention's share.
+**Found:** First version: no "fused attention" bucket at all. The matmul test
+(`"cutlass" in name`) ran before the attention test, and the fused attention
+kernels are cutlass kernels. Reordered: fused attention is 4% of step time.
+**Lesson:** When categorising by name, test the most specific category
+first, and print the top kernels with their assigned category so a misfile
+is visible.
+**Where:** `stages/09_efficiency/bench.py::cmd_profile`
+
+### 2026-11-06 · Stage 09 · Activation checkpointing buys memory, not speed, here   [result]
+**Expected:** Checkpointing (+33% compute) pays for itself by allowing a
+bigger batch.
+**Found:** −17% throughput, −41% memory (1,221 → 718 MB). With 4× the batch:
+same 60.8k tok/s. Capstone 12L/768 at T=1024: B=8 25.4k tok/s, B=16 OOM,
+B=16 + checkpointing 21.8k.
+**Lesson:** Bigger batches only help until the GPU is full; 4,096 tokens per
+micro-batch already fills a 4060 at these sizes. Use checkpointing to fit,
+not to speed up.
+**Where:** `results/09_efficiency/{stack,shapes}.json`

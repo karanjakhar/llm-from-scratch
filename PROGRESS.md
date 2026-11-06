@@ -50,7 +50,7 @@ Deferred, with a trigger:
 | 06 | GPT assembly | `[x]` | = HF GPT-2 (fp64 2e-11); 124,439,808 by hand; untied penalty 0.076→0.003 with 3× steps |
 | 07 | Generation & decoding | `[x]` | cache exact in 36/36; speedup @512 1.3× (5M) / 3.3× (30M) / 4.5× (92M): overhead-bound |
 | 08 | Training loop | `[x]` | `llmfs/train/trainer.py`; TinyStories 10M → coherent in 11.5 min; no warmup @3e-3 +1.84; sequential order +1.25 |
-| 09 | Efficiency | `[ ]` | |
+| 09 | Efficiency | `[x]` | 5.16× (14.3k → 73.7k tok/s, MFU 63%); compile 2.1× alone; capstone 25.4k tok/s |
 | 10 | Scaling laws | `[ ]` | |
 | 11 | Pretraining run | `[ ]` | |
 | 12 | Modern architecture | `[ ]` | |
@@ -141,6 +141,10 @@ stay visible across months.
 | 2026-11-06 | 08 | TinyStories 10.1M, 49M tokens | val loss / minutes | 1.510 / 11.5 |
 | 2026-11-06 | 08 | 6L/384 lr 3e-3: base / no clip / no warmup / neither | held-out code loss | 2.946 / 3.028 / 4.781 / 5.057 |
 | 2026-11-06 | 08 | 4L 4k steps: sequential / random / shuffled windows | held-out code loss | 3.937 / 2.695 / 2.683 |
+| 2026-11-06 | 09 | 4096² matmul fp32 / TF32 / bf16 / fp16 | TFLOP/s | 5.48 / 10.43 / 23.63 / 24.76 |
+| 2026-11-06 | 09 | 8L/512 T=512 B=8: fp32 → TF32 → bf16 → SDPA → fused Adam → compile | tokens/s | 14,271 → 18,536 → 23,142 → 34,490 → 35,098 → 73,656 (5.16×, MFU 63%) |
+| 2026-11-06 | 09 | + activation checkpointing | tokens/s / peak MB | 60,955 / 718 (from 1,221) |
+| 2026-11-06 | 09 | T=1024 full stack: workhorse B16 / capstone B8 | tokens/s (MFU) | 70,200 (67%) / 25,389 (71%) |
 
 ## Open questions
 
