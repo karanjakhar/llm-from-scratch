@@ -1023,3 +1023,21 @@ tokens, expert 7 83%; experts 2 and 4 are 99% code (`(`, ` =`, `,`,
 indentation); expert 3 takes identifiers and digits.
 **Lesson:** Experts specialise by surface token type, not by topic.
 **Where:** `results/13_moe/analyse.json`
+
+### 2026-11-07 · Stage 14 · MLA lost to GQA at our scale                          [surprise]
+**Expected:** (DeepSeek-V2) MLA matches or beats MHA with a much smaller cache.
+**Found:** 6L/384, 33M tokens. MLA r=128 (1,728 B/token) 2.414; r=64 2.476;
+r=32 2.765; r=16 2.801; r=4 3.198. GQA-2 (2,304 B) 2.315, MQA (1,152 B)
+2.335, MHA 2.306.
+**Lesson:** A low-rank cache needs a model with redundancy to compress and
+enough data to learn the up-projections. At 12M parameters and 33M tokens,
+neither holds. Reported as measured, untuned.
+**Where:** `results/14_attention_variants/mla.json`
+
+### 2026-11-07 · Stage 14 · A 0.11-nat loss gap hid 0% retrieval                 [result]
+**Found:** Needle (5 digits, 30 cases per cell): full attention 51% mean;
+window-128 0% in every cell with the needle beyond 128 tokens, 50-67% inside;
+window-64 9% mean; MLA-64 58% with worse loss than GQA; MLA-16 4%.
+**Lesson:** Average loss and long-range retrieval measure different things;
+they can disagree in either direction.
+**Where:** `results/14_attention_variants/needle.json`, `docs/visuals/14_attention_variants.png`

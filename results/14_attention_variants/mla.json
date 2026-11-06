@@ -1,0 +1,77 @@
+[
+ {
+  "name": "mla_r128",
+  "kw": {
+   "attn": "mla",
+   "kv_latent": 128,
+   "rope_dim": 16
+  },
+  "val": {
+   "code": 2.4135,
+   "en": 4.221
+  },
+  "params": 13216896,
+  "seconds": 267.4,
+  "kv_bytes_per_token_bf16": 1728
+ },
+ {
+  "name": "mla_r64",
+  "kw": {
+   "attn": "mla",
+   "kv_latent": 64,
+   "rope_dim": 16
+  },
+  "val": {
+   "code": 2.4758,
+   "en": 4.2546
+  },
+  "params": 12774144,
+  "seconds": 260.1,
+  "kv_bytes_per_token_bf16": 960
+ },
+ {
+  "name": "mla_r32",
+  "kw": {
+   "attn": "mla",
+   "kv_latent": 32,
+   "rope_dim": 16
+  },
+  "val": {
+   "code": 2.7646,
+   "en": 4.4252
+  },
+  "params": 12552768,
+  "seconds": 259.1,
+  "kv_bytes_per_token_bf16": 576
+ },
+ {
+  "name": "mla_r16",
+  "kw": {
+   "attn": "mla",
+   "kv_latent": 16,
+   "rope_dim": 16
+  },
+  "val": {
+   "code": 2.8007,
+   "en": 4.4479
+  },
+  "params": 12442080,
+  "seconds": 258.6,
+  "kv_bytes_per_token_bf16": 384
+ },
+ {
+  "name": "mla_r4",
+  "kw": {
+   "attn": "mla",
+   "kv_latent": 4,
+   "rope_dim": 16
+  },
+  "val": {
+   "code": 3.1977,
+   "en": 4.5674
+  },
+  "params": 12359064,
+  "seconds": 260.4,
+  "kv_bytes_per_token_bf16": 240
+ }
+]

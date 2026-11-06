@@ -57,7 +57,7 @@ Deferred, with a trigger:
 | 11 | Pretraining run | `[ ]` | |
 | 12 | Modern architecture | `[x]` | GPT-2→Llama 2.518→2.274; RoPE −0.230; MQA +0.03; window64 +0.24; NTK s=4 recovers 2.56→2.19 |
 | 13 | Mixture of Experts | `[x]` | MoE ≈ dense at 33M tokens (2.325 vs 2.320), 16×top-4 2.303; no aux → 4/8 experts dead, loss unchanged |
-| 14 | Attention variants | `[ ]` | |
+| 14 | Attention variants | `[x]` | MLA r128 2.414 vs GQA-2 2.315 (MLA loses at this scale); window-128 0% needles beyond window at +0.11 loss |
 | 15 | Speculative decoding | `[ ]` | optional |
 | 16 | SFT | `[ ]` | |
 | 17 | LoRA / QLoRA | `[ ]` | |
@@ -162,6 +162,8 @@ stay visible across months.
 | 2026-11-07 | 12 | trained @512, eval @2048, NTK s=1 / 2 / 4 | loss at pos 1024-2048 | 2.557 / 2.232 / 2.187 |
 | 2026-11-07 | 13 | dense / MoE 8×top2 / no aux / 7+1 shared top1 / 16×top4 / dense same total | val code | 2.320 / 2.325 / 2.326 / 2.369 / 2.303 / 2.354 |
 | 2026-11-07 | 13 | busiest expert share of top-2 assignments, with / without aux | fraction (balanced 0.125) | 0.23 / 0.41 (4 of 8 dead mid-layer) |
+| 2026-11-07 | 14 | MLA r=128 / 64 / 32 / 16 / 4 | val code (cache B/token) | 2.414 (1728) / 2.476 (960) / 2.765 (576) / 2.801 (384) / 3.198 (240) |
+| 2026-11-07 | 14 | needle mean retrieval: full / win128 / win64 / MLA64 / MLA16 | fraction | 0.51 / 0.31 / 0.09 / 0.58 / 0.04 |
 
 ## Open questions
 
