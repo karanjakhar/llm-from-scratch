@@ -48,7 +48,7 @@ Deferred, with a trigger:
 | 04 | Attention | `[x]` | = SDPA to 1e-5; no √d: −0.04 at d=64, +0.95 at d=256; naive OOM at T=16k |
 | 05 | Transformer block | `[x]` | = HF GPT2Block; post-norm 2.69 @4L / 6.70 @24L; no residual = unigram 6.86; SwiGLU −0.038 |
 | 06 | GPT assembly | `[x]` | = HF GPT-2 (fp64 2e-11); 124,439,808 by hand; untied penalty 0.076→0.003 with 3× steps |
-| 07 | Generation & decoding | `[ ]` | |
+| 07 | Generation & decoding | `[x]` | cache exact in 36/36; speedup @512 1.3× (5M) / 3.3× (30M) / 4.5× (92M): overhead-bound |
 | 08 | Training loop | `[ ]` | |
 | 09 | Efficiency | `[ ]` | |
 | 10 | Scaling laws | `[ ]` | |
@@ -132,6 +132,9 @@ stay visible across months.
 | 2026-11-06 | 06 | 12L, 4k steps, 2 seeds: plain vs scaled residual init | held-out code loss | 2.581 vs 2.568 (tie) |
 | 2026-11-06 | 06 | no shift (target = input), 1k steps | train / next-token val | 0.0001 / 21.86 (shift: 4.09) |
 | 2026-11-06 | 06 | tied vs untied, 4L, 4k / 12k steps | held-out code loss | 2.6814 vs 2.7576 / 2.3577 vs 2.3608 |
+| 2026-11-06 | 07 | KV cache vs naive, batch 1, fp32, length 512 / 1024 | speedup 5M / 30M / 92M | 1.27 / 3.32 / 4.47 ; 2.28 / 5.51 / 7.23 |
+| 2026-11-06 | 07 | cached vs naive tokens, 36 settings | identical | 36/36 (greedy and sampled) |
+| 2026-11-06 | 07 | Stage 06 model, greedy / τ0.7 / τ1.0 / τ2.0 | distinct-2 ; mean log-prob | 0.07/0.32/0.79/1.00 ; −0.24/−0.95/−3.19/−9.51 |
 
 ## Open questions
 

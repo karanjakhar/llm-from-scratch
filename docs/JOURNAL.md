@@ -791,3 +791,28 @@ drawn from this code distribution.
 **Lesson:** Compare across tokenizers in bits per byte, and remember that an
 in-domain loss win says nothing about general knowledge.
 **Where:** `results/06_gpt/bpb.json`, `docs/06_gpt_model.md` §8d
+
+### 2026-11-06 · Stage 07 · The KV cache was exact, and barely faster for small models  [surprise]
+**Expected:** (curriculum) 5-20× speedup at length 512, identical outputs.
+**Found:** Identical tokens in all 36 settings (greedy and sampled). Speedup
+at 512: **1.27×** (4L, 5M), 3.32× (8L, 30M), 4.47× (12L, 92M); at 1,024:
+2.28× / 5.51× / 7.23×. The 4L model's cached decoding runs at ~1,420
+tokens/s at every length: a fixed ~0.7 ms per step.
+**Why:** At batch 1 and this size, a decode step costs kernel launches and
+Python, not arithmetic. Recomputing 512 positions of a 5M model is almost free
+on an otherwise idle GPU, so the cache removes work that was barely costing
+anything.
+**Lesson:** FLOP counts predict speedups only when FLOPs are the bottleneck.
+Measure the per-step time across lengths: if it is flat, the step is
+overhead-bound.
+**Where:** `results/07_generation/speed.json`, `docs/07_generation.md` §8a
+
+### 2026-11-06 · Stage 07 · The greedy loop is the most "valid" Python             [surprise]
+**Expected:** Lower temperature, more syntactically valid code.
+**Found:** Greedy output parses 25% of the time, τ=0.7 5%, τ≥1.0 never. But
+greedy's distinct-2 is 0.07: it is `def is_prime(n): return n` repeated.
+At τ=2.0 the model's mean log-prob of its own text is −9.51, worse than
+uniform (−9.01).
+**Lesson:** "Parses" rewards repetition. Any cheap proxy for code quality
+needs a second number that catches degenerate output.
+**Where:** `results/07_generation/temps.json`, `docs/07_generation.md` §8c

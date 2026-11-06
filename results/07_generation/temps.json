@@ -1,0 +1,1638 @@
+{
+ "greedy": {
+  "knobs": {
+   "temperature": 0.0
+  },
+  "mean": {
+   "distinct2": 0.07,
+   "mean_logprob": -0.237,
+   "parses": 0.25
+  },
+  "samples": [
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 0,
+    "text": "def is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_pri",
+    "distinct2": 0.074,
+    "mean_logprob": -0.253,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 0,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tif sys.version_info[0] == 'win32':\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32",
+    "distinct2": 0.133,
+    "mean_logprob": -0.221,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 0,
+    "text": "class Stack:\n    def __init__(self):\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name",
+    "distinct2": 0.037,
+    "mean_logprob": -0.247,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "The",
+    "seed": 0,
+    "text": "The\n        # the first element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the",
+    "distinct2": 0.035,
+    "mean_logprob": -0.229,
+    "parses": true,
+    "tokens": 199
+   }
+  ]
+ },
+ "tau0.1": {
+  "knobs": {
+   "temperature": 0.1
+  },
+  "mean": {
+   "distinct2": 0.079,
+   "mean_logprob": -0.279,
+   "parses": 0.2
+  },
+  "samples": [
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 0,
+    "text": "def is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_pri",
+    "distinct2": 0.074,
+    "mean_logprob": -0.253,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 1,
+    "text": "def is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_pri",
+    "distinct2": 0.074,
+    "mean_logprob": -0.253,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 2,
+    "text": "def is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_pri",
+    "distinct2": 0.074,
+    "mean_logprob": -0.253,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 3,
+    "text": "def is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_pri",
+    "distinct2": 0.074,
+    "mean_logprob": -0.253,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 4,
+    "text": "def is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_prime(n):\n\treturn n\n\ndef is_pri",
+    "distinct2": 0.074,
+    "mean_logprob": -0.253,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 0,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tif sys.platform == 'win32':\n\t\tsys.stdout.write(sys.stderr)\n\tif sys.platform == 'win32':\n\t\tsys.stderr.write(sys.stderr)\n\tif sys.platform == 'win32':\n\t\tsys.stderr.write(sys.stderr)\n\tif sys.platform == 'win32':\n\t\tsys.stderr.write(sys.stderr)\n\tif sys.platform == 'win32':\n\t\tsys.stderr.write(sys.stderr)\n\tif sys.platform == 'win32':\n\t\tsys.stderr.write(sys.stderr)\n\tif sys.platform == 'win32':\n\t\tsys.stderr.write(sys.stderr)\n\tif sys.platform == 'win32':\n\t\tsys.stderr.write(sys.",
+    "distinct2": 0.128,
+    "mean_logprob": -0.208,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 1,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tif sys.platform == 'win32':\n\t\tsys.stdout.write(os.path.join(sys.argv[1], \"win32\"))\n\tsys.stdout.write(os.path.join(sys.argv[1], \"win32\"))\n\tsys.stdout.write(os.path.join(sys.argv[1], \"win32\"))\n\tsys.stdout.write(os.path.join(sys.argv[1], \"win32\"))\n\tsys.stdout.write(os.path.join(sys.argv[1], \"win32\"))\n\tsys.stdout.write(os.path.join(sys.argv[1], \"win32\"))\n\tsys.stdout.write(os.path.join(sys.argv[1], \"win32\"))\n\tsys",
+    "distinct2": 0.181,
+    "mean_logprob": -0.264,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 2,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tif sys.platform == 'win32':\n\t\tsys.stdout.write(os.path.join(sys.argv[0], 'win32'))\n\tsys.stdout.write(os.path.join(sys.argv[0], 'win32'))\n\tsys.stdout.write(os.path.join(sys.argv[0], 'win32'))\n\tsys.stdout.write(os.path.join(sys.argv[0], 'win32'))\n\tsys.stdout.write(os.path.join(sys.argv[0], 'win32'))\n\tsys.stdout.write(os.path.join(sys.argv[0], 'win32'))\n\tsys.stdout.write(os.path.join(sys.argv[0], 'win32'))\n\tsys",
+    "distinct2": 0.176,
+    "mean_logprob": -0.264,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 3,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tif sys.platform == 'win32':\n\t\tsys.stderr.write(\"Writing the command line\")\n\t\tsys.exit(1)\n\tif sys.platform == 'win32':\n\t\tsys.stderr.write(\"Writing the command line\")\n\t\tsys.exit(1)\n\tif sys.platform == 'win32':\n\t\tsys.stderr.write(\"Writing the command line\")\n\t\tsys.exit(1)\n\tif sys.platform == 'win32':\n\t\tsys.stderr.write(\"Writing the command line\")\n\t\tsys.exit(1)\n\tif sys.platform == 'win32':\n\t\tsys.stderr.write(\"Writing the command line\")\n\t\tsys.exit(1)\n\tif sys.platform == 'win32':\n\t\tsys",
+    "distinct2": 0.17,
+    "mean_logprob": -0.32,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 4,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tif sys.version_info[0] == 'win32':\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32 = sys.argv[1]\n\t\twin32",
+    "distinct2": 0.133,
+    "mean_logprob": -0.221,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 0,
+    "text": "class Stack:\n    def __init__(self):\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name",
+    "distinct2": 0.037,
+    "mean_logprob": -0.247,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 1,
+    "text": "class Stack:\n    def __init__(self):\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name",
+    "distinct2": 0.037,
+    "mean_logprob": -0.247,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 2,
+    "text": "class Stack:\n    def __init__(self):\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name",
+    "distinct2": 0.037,
+    "mean_logprob": -0.247,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 3,
+    "text": "class Stack:\n    def __init__(self):\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name",
+    "distinct2": 0.037,
+    "mean_logprob": -0.247,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 4,
+    "text": "class Stack:\n    def __init__(self):\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name\n\tself.name = name",
+    "distinct2": 0.037,
+    "mean_logprob": -0.247,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "The",
+    "seed": 0,
+    "text": "The\n        :param str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or str or",
+    "distinct2": 0.025,
+    "mean_logprob": -0.368,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 1,
+    "text": "The\n        # the first element of the element of the element.\n        #\n        # The first element of the element of the element of the element.\n        #\n        #\n        # The second element of the element of the element.\n        #\n        #\n        # The second element of the element of the element.\n        #\n        #\n        # The second element of the element of the element.\n        #\n        #\n        #\n        # The second element of the element of the element.\n        #\n        #\n        #\n        #\n        # The second element of the element of the element.\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #\n        #",
+    "distinct2": 0.071,
+    "mean_logprob": -0.331,
+    "parses": true,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 2,
+    "text": "The\n        # the first one is the first one is the first one.\n        # The first one is the first one is the first one.\n        # The first one is the first one is the first one.\n        # The first one is the first one is the first one.\n        # The first one is the first one is the first one.\n        # The first one is the first one is the first one.\n        # The first one is the first one is the first one.\n        # The second one is the first one is the first one.\n        # The second one is the first one is the first one.\n        # The second one is the first one is the first one.\n        # The second one is the first one is the first one.\n        # The second one is the first one is the first one.\n        # The second one is the first one is the first one.\n        # The second one is the first one is the first one.\n        # The",
+    "distinct2": 0.061,
+    "mean_logprob": -0.425,
+    "parses": true,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 3,
+    "text": "The\n        # the first one is the first one is the first one is the first one\n        # is the first one is the first one is the first one\n        # is the first one is the first one is the first one\n        # is the first one is the first one is the first one\n        # is the first one is the first one is the first one\n        # is the first one is the first one is the first one\n        # is the first one is the first one is the first one\n        # is the first one is the first one is the first one\n        # is the first one is the first one is the first one\n        # is the first one is the first one is the first one\n        # is the first one is the first one is the first one\n        # is the first one is the first one\n        # is the first one is the first one is the first one\n        # is the first one is the first one\n        # is the first one is the",
+    "distinct2": 0.04,
+    "mean_logprob": -0.455,
+    "parses": true,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 4,
+    "text": "The\n        # the first element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the element of the",
+    "distinct2": 0.035,
+    "mean_logprob": -0.229,
+    "parses": true,
+    "tokens": 199
+   }
+  ]
+ },
+ "tau0.7": {
+  "knobs": {
+   "temperature": 0.7
+  },
+  "mean": {
+   "distinct2": 0.324,
+   "mean_logprob": -0.947,
+   "parses": 0.05
+  },
+  "samples": [
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 0,
+    "text": "def is_prime(n):\n\t'''\n\t\tauthor:\n\t\t\tX.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.ElementTree.Element",
+    "distinct2": 0.063,
+    "mean_logprob": -0.239,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 1,
+    "text": "def is_prime(n):\n\tdef run_vars(n):\n\t\tprint \"  ' + n+1\n\tif n in self.list_sorted(n):\n\t\t\tif n[n] == \"e\":\n\t\t\t\tif n[n] == \"e\":\n\t\t\t\t\tprint \"\\t + n+1\n\telse:\n\tif n == \"e\":\n\t\tfor i in range(n):\n\t\t\tif n == \"e\":\n\t\t\t\tprint \"  \" + n+1[i]\n\t\t\t\tprint \"\\t + n+1[i]  \" + n+1[i]\n\t\t\t\tprint \"\\t + n+1[i]  \" + n+1[i]\n\t\t\t\tprint \"\\t + n+1[i]  \" + n+1[i]\n\t\t\t\tprint \"\\t + n+1[i]  \" + n+1[i]\n\t\t\t\tprint",
+    "distinct2": 0.321,
+    "mean_logprob": -0.923,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 2,
+    "text": "def is_prime(n):\n\treturn (p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime[0] - p.prime",
+    "distinct2": 0.063,
+    "mean_logprob": -0.231,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 3,
+    "text": "def is_prime(n):\n\treturn _is_prime(range(n))\n\nif not n:\n\treturn _is_prime(range(n))\n\ndef do_prime(range_, n):\n\treturn u\n\treturn u\n\ndef do_prime(range_, n):\n\treturn _is_prime(range_, n)\n\ndef do_prime(range_, n):\n\treturn _is_prime(range_)\n\ndef do_prime(range_, n):\n\treturn _is_prime(range_, n)\n\ndef do_prime(range_, n):\n\treturn _is_prime(range_, n)\n\ndef do_prime(range_, n):\n\treturn _is_prime(range_)\n\ndef do_prime(range_, n):\n\treturn _is_pri",
+    "distinct2": 0.168,
+    "mean_logprob": -0.538,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 4,
+    "text": "def is_prime(n):\n\tprint 'Originalization'\n\t# Check the first pending line\n\t# Check the first pending line\n\t# Check the first pending line\n\t# Check the first pending line\n\t# Check the first pending line\n\t# Check the second pending line\n\t# Check the first pending line\n\t# Check the first pending line\n\t# Check the second pending line\n\t# Check the first pending line\n\t# Check the first pending line\n\t# Check the second pending line\n\t# Check the first pending line\n\t# Check the first pending line\n\t# Check the second pending line\n\t# Check the second pending line\n\t# Check the second pending line\n\t# Check the first pending line\n\t# Check the first pending line\n\t# Check the second pending line\n\t#",
+    "distinct2": 0.1,
+    "mean_logprob": -0.514,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 0,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tsys.path.append(os.path.dirname(os.path.dirname(__file__)) )\n\t sys.path.append(os.path.join(sys.path.dirname(os.path.dirname(__file__))) ) )\n\n\tif sys.platform == 'win32':\n\t\tsys.path.append(os.path.dirname(os.path.dirname(__file__)) )\n\n\telse:\n\t\tsys.path.append(os.path.dirname(__file__))\n\n\tif sys.platform == 'win32':\n\t\tsys.path.append(os.path.dirname(__file__))\n\tsys.path.append(os.path.join(sys.path.dirname(__file__))) )\n\n\tif sys.platform == 'win32':\n\t\tsys.path.append(os.path.dirname",
+    "distinct2": 0.229,
+    "mean_logprob": -0.423,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 1,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tdef run_app_dir(file_path, args, **args):\n\t\tif args.debug:\n\t\t\tprint \"This file exists on command: %s\" % (filename, args.package_name))\n\treturn args.deploy_path.startswith(sys.argv)\n\ndef run_app_dir(filename):\n\tif args.debug:\n\t\tprint \"Running app '%s' is not set as a root directory\" % repr(filename)\n\t\tprint \"Running app '%s' has to be confined\" % \"s \"'.\" % args.config_listdir)\n\treturn args.deploy_path.strip()\n\ndef main():\n\tif args.debug:\n\t\tprint \"Initialize app '%s'\" % file_path\n\tprint \"Ignoring app '%s'\" % file_path\n\t",
+    "distinct2": 0.633,
+    "mean_logprob": -1.573,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 2,
+    "text": "import os\nimport sys\n\n\ndef main():\n\treturn os.path.dirname(os.path.dirname(__file__))\n\ndef main():\n\treturn os.path.join(os.path.dirname(__file__))\n\ndef main():\n\tmain()\n##\n# 1. Check if the current directory had been created\n# finally\n#\n# 2. Check if the Windows, if the Windows is not exists\n#\nif os.path.exists(main()):\n\tsys.path.insert(main())\n\tmain()\n# 2. Check if the Windows is not exists\n#\n# Specif the Windows is not installed and the Windows is not installed\n#\n#\n# 5. Check if the Windows is not installed, with the Swift Windows.\n#\n# 2. Check if the Windows is not installed, with the Windows is installed.\n#\n#\n# - Sw",
+    "distinct2": 0.457,
+    "mean_logprob": -1.345,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 3,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tif not os.path.exists(\"/py\") != \"/py\" and os.path.exists(\"/py\"):\n\t\tos.makedirs(\"/py\")\n\n\tsetup(os.path.join(\"/py\", \"py\")):\n\t\tsetup('py')\n\n\tif not os.path.exists(\"/py\") and os.path.exists(\"/py\") != \"/py\" and os.path.exists(\"/py\") != \"/py\" and os.path.exists(\"/py\") != \"/py\" and os.path.exists(\"/py\") != \"/py\" and os.path.exists(\"/py\"):\n\t\tif not app_dir:\n\t\t\tos.makedirs(\"/py\")\n\t\t\tis_module_dirs = []\n\t\tif not app_dir:\n\t\t\tos.makedirs(\"/py\")\n\t\t\tadd_app_dir = app_dir + \"/py\"",
+    "distinct2": 0.346,
+    "mean_logprob": -0.832,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 4,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tprint 'Windows on Windows via http://UTO-dev-python-dev.runtime.v1'\n\tif sys.platform == 'win32':\n\ttry:\n\t\tos.unlink(os.path.join(os.path.dirname(__file__), 'runtime.sh'), 'windows')\nexcept:\n\tprint 'Windows on Windows!\\n'\n\ndef main():\n\tif __name__ == '__main__':\n\t\tsys.stdout.flush()\n\tprint 'Windows mode: ' + sys.argv[1]\n\nif __name__ == \"__main__\":\n\tmain()\n\tmain()\n<|endoftext|>",
+    "distinct2": 0.747,
+    "mean_logprob": -1.417,
+    "parses": false,
+    "tokens": 147
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 0,
+    "text": "class Stack:\n    def __init__(self):\n\tdef supported_property(self):\n\t\treturn self.property\n\tdef supported_property(self):\n\t\treturn self.property\n\tdef supported_property(self):\n\t\treturn self.property\n\tdef supported_property(self):\n\t\treturn self.property\n\tdef supported_property(self) :\n\t\treturn self.property\n\tdef supported_property(self) :\n\t\treturn self.property\n\tdef supported_property(self) :\n\t\t# name of the property.\n\t\t# value of the property.\n\t\t# value of the property.\n\t\t# value of the property.\n\t\t# value of the property.\n\t\t# value of the property.\n\t\t# value of the property.\n\t\t# value of the property.\n\t\t# value of the property.\n\t\t# value of the property.\n\t\t# value of the property",
+    "distinct2": 0.144,
+    "mean_logprob": -0.39,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 1,
+    "text": "class Stack:\n    def __init__(self):\n\n# -------------------------------------------------------------------------------\n\n#-----------------------------------------------------------------------\n\n# -------------------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#\n# A list of Stack:\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n\n# -------------------------------------------------------------------------------\n#-----------------------------------------------------------------------\n\n#-----------------------------------------------------------------------\n\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n#-----------------------------------------------------------------------\n\n#-----------------------------------------------------------------------\n",
+    "distinct2": 0.096,
+    "mean_logprob": -0.457,
+    "parses": true,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 2,
+    "text": "class Stack:\n    def __init__(self):\n\treturn self._parent_type == \"function\"\n\treturn self._parent_type == \"function\"\n\nclass Connizer(object):\n\tdef __init__(self, *args, **kwargs):\n\t\tself._parent_type = None\n\t\tself.factory = None\n\t\tself.symbol = None\n\t\tself._dialog_size = None\n\t\tself.name = None\n\t\tself.max_length = None\n\t\tself.size = size\n\t\tself.length = length\n\n\tdef rewrite(self, input_size):\n\t\t\"\"\" Specifies the size of the input size.\n\t\t\"\"\"\n\t\treturn self._ memory_size\n\t\treturn self._ memory_size\n\t\treturn self._ memory_size\n\n\tdef rewrite(self, input_size):\n\t\t\"\"\"\n\t\tReturn the size of the input size.\n\n\t\t\"\"\"",
+    "distinct2": 0.481,
+    "mean_logprob": -1.168,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 3,
+    "text": "class Stack:\n    def __init__(self):\n\treturn self.is_class()\n\treturn self.is_class()\n\ndef skip_plugin(self, plugin_name):\n\treturn name\n\n\ndef _get_plugin(plugin_name):\n\tif not plugin_name.startswith(plugin_name):\n\t\tplugin_name = plugin_name.lower()\n\t\tplugin_name.startswith(plugin_name)\n\t\tplugin_name.append(plugin_name)\n\n\tplugin_name.append(plugin_name)\n\n\nclass Stack(object):\n\tdef __init__(self, plugin_name=None):\n\t\tself.plugin_name = plugin_name\n\t\tself.plugin_name.append(plugin_name)\n\t\tself.plugin_name.append(plugin_name)\n\t\tself.plugin_name.append(plugin_name)\n\n\tdef __init",
+    "distinct2": 0.364,
+    "mean_logprob": -0.714,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 4,
+    "text": "class Stack:\n    def __init__(self):\n\tself.name = ' Rights'\n\tself.redis_url = 'https://localhost:8000'\n\tself.redis_url = 'https://localhost:80000'\n\tself.redis_url = 'https://localhost:80000'\n\tself.redis_url = 'https://localhost:8000000'\n\tself.redis_url = 'https://localhost:8000000'\n\tself.redis_url = 'https://localhost:80000000'\n\tself.redis_url = 'https://localhost:8000000'\n\tself.redis_url = 'https://localhost:80000000'\n\tself.redis_url =",
+    "distinct2": 0.118,
+    "mean_logprob": -0.405,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "The",
+    "seed": 0,
+    "text": "The\n        :param args: The arguments to pass. If you\n        want to save the\n        kwargs will be passed as a particular object if the\n        :param bool or signature method when we can walk\n        :param bool or [] or None\n        :param bool bool or bool or bool or None\n        :param bool bool bool or bool or bool or True\n        :param bool bool bool or bool or bool or bool\n        :param bool bool bool or bool or bool or bool or bool or bool or bool\n        :rtype: :class:`str`\n        \"\"\"\n        if not callable(args) or args:\n            raise ValueError(\n                \"Unable to be parsed or the argument instantiated.\"\n            self.kwargs = kwargs.pop(\"kwargs\", None)\n        if not isinstance(kwargs, dict):\n            kwargs.update(kwargs)\n        addcls(kwargs)\n    # Authentication is not a valid object if we need to be None.  The\n    # request is not",
+    "distinct2": 0.657,
+    "mean_logprob": -1.714,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 1,
+    "text": "The competetal of Maine Wildlife and Smith, which is the major alleged basis of Smith, and the Indian Lake Pole, which has a vast with the nation of the Indian Indian (Cat 810) and the Dica Pinfi and the Diana Poly Rules. He also spend in the American Greysteal defeat the Republican Lake Pole, island of the Indian and Indian Indian\u2019s in Smith, the Indians, and the Indianedian Indian and Indian Indian, theMiniestians, and the Indian of the Indian Allequate Pole, the Bars and the Indian of the Indian Indian Indian.\nI\u2019m the Indian England was a tree of the Indian Indian Indian Indian",
+    "distinct2": 0.646,
+    "mean_logprob": -2.61,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 2,
+    "text": "The polynomial(GoterL0) was shadowed as the derivative of the goter\n        L0. 1. Verified, the L0. 2. Z. 1005, the L0.\n        Robel. 1. Verified, the L1. 1. Verified, the L1. 1. Verified, the L1.\n        L1. 1. Verified, the L1. 1. Verified, the L1. 1. Verified, the L1.\n        L2. 1. Verified, the L1. 1. Verified, the L1.\n        L1. 1. Verified, the L1. 1. Verified, the L1.\n        L1. 1. Verified, the L1. 1. Verified, the L1.\n        L1. 1. Verified, the L1. 1. Verified, the",
+    "distinct2": 0.258,
+    "mean_logprob": -0.97,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 3,
+    "text": "The appended of a local buy of the democracy, as it is the mainly of the time of the cubic democracy.\nThe current laby of the democracy. The dy were being reached to the acquisition of the cubic democracy. The democracy was putosed of the enjoy of thisname was the dy at the events. The democracy was not intended to change some of the reality of the democracy. The democracy was made a dy at the Prepair companion. The democracy was the dy at the winter of the cubic democracy. The democracy had the realization of the cubic democracy at the 6th centuries of the snow",
+    "distinct2": 0.51,
+    "mean_logprob": -2.084,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 4,
+    "text": "The Wiss.\nThe Rights of the Bank, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States and the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States, the United States",
+    "distinct2": 0.086,
+    "mean_logprob": -0.402,
+    "parses": false,
+    "tokens": 199
+   }
+  ]
+ },
+ "tau1.0": {
+  "knobs": {
+   "temperature": 1.0
+  },
+  "mean": {
+   "distinct2": 0.794,
+   "mean_logprob": -3.189,
+   "parses": 0.0
+  },
+  "samples": [
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 0,
+    "text": "def is_prime(n):\n\t'''\n\t\tauthor: element\n\t\tRow (\t\treturn 0\n\t\t\n        'StreamerNoPoonent Output records to last subscriptionId of id and description when assigning schedules should be '\n\tparam operation:\n\t\t'''\n\targtypes = list(list(set(domain_list(t_expr)) for t in argtypes)\n\t'''\n\tdef validate_ppair(pv, user_list):\n\tp = get_directory_sequence_by_assign_question(pv[1])\n\tp = get_file_sequence_by_assign_question(pv[1])\n\tpb = cpa.default_client_production(pv[2])\n\treturn bot\n\ndef rak_version_part(guid, sp):\n\t'''Returns a significant part of a new version using a",
+    "distinct2": 0.763,
+    "mean_logprob": -3.037,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 1,
+    "text": "def is_prime(n):\n \"\"\"Identical of Maine Wildlife and Sstep an armed ([Tru alleMethod|Styk house\nBaine Itshought about extreme w0 brande and very negative (SBybine, Murothera) during h :math Truecolors more than expended.\nThere are multiple's two-pieupgradements. He choose us inequality (wise Murothera)\nWhile years are to process the repr of wases of friends. In a lecture of Baineill George Land? Does:\nThe analysis of the events for or experience of children, the remains of west and nothing from the danging questions ? First, the number of refuncs and the death address? Whether the whole type of wodernading folds of children will below over your child.\nIn that tree did some",
+    "distinct2": 0.947,
+    "mean_logprob": -4.873,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 2,
+    "text": "def is_prime(n):\n\treturn mat( nu)\n\n\ndef is_e_prime(n, vecuties): return 1\n\nn += 1\nn += 1\n\n\ndef find_siliar(si):\n    op, o2d = 1\n    r = array(matrix([1.1, 0.0, n[0, 0, 0, 0, 1]]), 1\n    print('Label For Inte')\n    if do_or_visibility:\n\tn += 1 uate.rel_depth_sub_combine(alyt(4)) / nalignic_ar_layer_class?n += 1\n\n\nclassfinite(object):\n  def __init__(self, param):\n    self.l_req_prefix = [parameter]\n\n    def set_environ(self, environment, l_req_prefix='proport'):\n      self.l_req",
+    "distinct2": 0.853,
+    "mean_logprob": -3.021,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 3,
+    "text": "def is_prime(n):\n\treturn _is_prime(range(n))  # percuracy by/mar (%dHHHHHHHHHHHGMHHHHHHHHH6HHHHHGMHD HHHHHHHHHHHHHHHHHHHHHhHHhHHHHHhGHHHHHHSVHHHHHhHH4hJkkL2HHMMson5srYhHHhSQHHH3EHHXh+H8IBHignIQ5jCsvHlWM53L3z7AC8e77d\ndeRERg4HlUwYALQONui565NYDTieWgyskT9",
+    "distinct2": 0.626,
+    "mean_logprob": -3.087,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 4,
+    "text": "def is_prime(n):\n\tprint 'Origin Rights'\n\t# OpenGL ISLASS code.\n\tfor i in range(n):\n\t\tif (canv is not None):\n\t\t\ttry:\n\t\t\t\t\"\"\"Set the name of code to add more information as another. (Binaryifier) : is connected (i.e. re.escape)`. This is\n\tor longestdefs:\n\t\tassadmin = config.get(current.name).ftime('%Y-%m-%d')\"\"\" % (0, dt_utils.cast_time(interval))\n\n\tglobal config.recv_type = Association.EXINK_DB, options.verbosity = 'refs'\n\tglobalconfig.recv_type = EnforceStr(config.recv_type,\n                             config.default_type,\n                             parameters.\u20abFLAGS_ kwargina_version=",
+    "distinct2": 0.889,
+    "mean_logprob": -3.141,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 0,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tsys.path.append(os.path.dirname(os.path.dirname(__file__)) )\n\t sys.path.append(os.path.join(sys.dirname(__file__)), sys.argv[3]) )\n\tsys.path.insert(1)\n\n\tsys.path.append(os.path.join(sys.argv[1], juncan1.resolver2(\"eval\") ) )\n\n\n\tassert sys.path.directory in os.path.isdir( os.path.dirname(sys.argv[3]) ) ) == \".radra\"\n\tassert unittest.call( sys.argv[3].path ) == \"/\" os.path.join(sys.argv[3].\"\"] ) == \"bibaka\"\n\t _, _, _, _, s = implan1.get_parser(\"remain_",
+    "distinct2": 0.543,
+    "mean_logprob": -1.827,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 1,
+    "text": "import os\nimport sys\n\n\ndef main():\n \"\"\"Enal ver Maine Wild/Eoc.  The OpenHOT/IO.\n\nStyle house\n\"\"\"\n\nif __name__ == '__main__':\n    main()\nmain()\n<|endoftext|>",
+    "distinct2": 0.956,
+    "mean_logprob": -3.357,
+    "parses": false,
+    "tokens": 46
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 2,
+    "text": "import os\nimport sys\n\n\ndef main():\n\treturn os.path.dirname(0)\n\n\ndef main():\n\tglobal running_conf\n\tglobal ReadSmn\n\thost = getLocalSmnnnNPrograms.gethost() # webapack##\n\tsys.path.append(host)\n\n\n#add finally listing commands\n\n    #/* we don't speak from the available config.\n\nsetup(name='extension', usage=debugEngine.install() )\n\ndef main():\n\tmain.add_main_state_file(dir_dir)\n\tglobal run_one_ar_config()\n\nINSTALLED_APPS = memory_config.getenv()\n\ndef find_global(filename):\n\t. print('Leagraph function en installed.')\n\tglobal run_one_ar_config()\n\tproc = os.getenv",
+    "distinct2": 0.782,
+    "mean_logprob": -2.889,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 3,
+    "text": "import os\nimport sys\n\n\ndef main():\n exec yaml_modules = []\n\nrangepy = ]  # performance metric by definition of skip learningHuman windows?\nsubpackage[\"global\"] = {}\nsetup_func_keys = []\n\ndef test_transport_config(platform):\n    for module in ' ', conditions:\n        user = other.code()\n        of containers = pyhome.endpointize.us.data(module)\n        of containers.config_unpack_\ufffd events.set(user.as_traicell_text(appson=srunc),\n                         appson_event_data_file)\n\n    return is_bracket_error\n\n\ndef _split(names):\n    if not 'key' in names:\n        return False\n\n    path = \".\".join(names)\n    name = name or \"./Lif\"\n    config_entry = collections.namedtuple('config', [\"slow",
+    "distinct2": 0.947,
+    "mean_logprob": -3.562,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 4,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tprint 'Windows ontrain server\\up'\n\tsys.stdout.flush()\n\treturn 1\n\nif __name__ == '__main__':\n\t\tsys.stdout.setritical()\n\tsys.exit( 1)\n\tsys.exit(1)\n\ndef isHeaders(): #shut relevant XSS objects to encrypt to another logging objectdef\n\tprint 'Windows on test Starting for numpy.ndarray when Mainly you loaded down with MainUI.plugins'\n\tsys.stdout.seek8()\n\tprint 'Windows error: 'loop with: http://stackflow.org/wikion/xp/jpg.han/ppt/lib.jpg.py\\up.ysBuDir*a.png\\up.og.cos(\\\u20ab(\\_(\\ua_",
+    "distinct2": 0.787,
+    "mean_logprob": -3.246,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 0,
+    "text": "class Stack:\n    def __init__(self):\n\tdef supported_java( element):\n\t\treturn self.java( element)\n        return self.java( element)\n\n    def to_double(self, signature):\n        return None\n\n\nclass StackCodeMixin(ValueMixin, TextMixin):\n    def to_double_empty(self, message):\n        return ()\n\n    def visit_eq(self, a, a, b):\n        return self.assert_(isinstance(eval, Be sorted),\n                                                   rp.eq(directoryplatform, lambda *partial*: a*b*a[a])\n        return variable_decl(j[0: a])\n\n    def as_float(self, a, a, b):\n        return a == os_ integers.array(self.serialized_ilist)\n<|endoftext|>",
+    "distinct2": 0.755,
+    "mean_logprob": -2.775,
+    "parses": false,
+    "tokens": 164
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 1,
+    "text": "class Stack:\n    def __init__(self):\n\ndef run_app_functions(request, *args):\n    import numpy as np\n    np. basis(-group(1, 2, 3))\n\n\ndef b():\n    b()\n    \"\"\" with pychanged and get the environment function loop and\"\"\"\n    if len(b) == 1:\n        print('Executing %s: %s' % reverse(self.app_args(**b))\n        printulary_log.info(b['from_module_side_ repr'])\n    else:\n        ftype = random.randint(0, 18)\n        b()\n    return b()\n\ndef util_function(b):\n    return b().name == ('')\n\ndef fun():\n    import domMiddleware, g ctx\n    global args\n    # We support acoder string.\n    def __init__(self, l fold):\n        import fely am\n        import Input\n        self",
+    "distinct2": 0.898,
+    "mean_logprob": -3.029,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 2,
+    "text": "class Stack:\n    def __init__(self):\n\treturn self._parent_set[0]\n\n\nclass ConstavedDio(object):\n    def __init__(self):\n        self.parent = None\n\n\nclass TestHziliingTable:\n    def get_shape(self):\n        return self.inputs[2].astype(np.random.state(None))\n\n\nclass TestHziliingTable:\n    def __new__(self):\n        return self.inputs[3].astype(np.random.state(1))\n\n\nclass TestHziliingTable:\n    def __init__(self, wsl_align, war_layer, war_layer, war_layer, wpp_layer, wkb_layer, warm_layer, warm_layer, warm_layer, warm, warm_layer, warm_layer, warm_layer, warm",
+    "distinct2": 0.471,
+    "mean_logprob": -1.349,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 3,
+    "text": "class Stack:\n    def __init__(self):\n\treturn _property.property\n\trangepy. ]  # per domain\"\"\"\n\n# (%dHackel has a parent class)\n\n# See: https://docs.dHackel.atll.io/products\n# http://www.sees.steep.com/testcode/.html\nFor more information openables, you will put all tests\"\"\"\n\n# See: http://openmc.may events.steep.io/traicell/text/\nsonReturn={\n    uid : str,\n    uid : 2044,\n    uid : app_guid,\n    uid : str,\n    uid : int,\n    uid : 600,\n    uid : int,\n    uid : int,\n    uid : None,\n    uid : int,\n    uid : int,\n   ",
+    "distinct2": 0.636,
+    "mean_logprob": -2.585,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 4,
+    "text": "class Stack:\n    def __init__(self):\n\tself.rightTestState()\n\tself.chredTests()\n\tself.kids = 1\n\tself.apiSubscribe = sideList()\n\tself.hriticalCallingKeys = ''\n\tself.timerHar(tokenBinaryCall)\n\tself.apiSubscribe = xntoName (\"Create encredential to your logging backenddef \"\n                   \"dns attribute \"\n                   \" Starting connect to. The setting when Must be set!\")\n\tself.apiSubscribe = addrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrruws.awe@oozrrrrrrrrrrrrrr",
+    "distinct2": 0.487,
+    "mean_logprob": -2.396,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "The",
+    "seed": 0,
+    "text": "Thelanum supported as a public element to provide sriose functionality in order\n        kwargs will contribute '(related or records to last subscription) of the signature method\n        object.\n\n        \"\"\"\n        if len(not []):\n            invalid_acl = ['endpoint']\n\n        with open(federacy_dom.identifier, 'redu/enbin', 'w').read() as f:\n            f.close()\n\n        f.eval()\n        sorted_acl = mapped_dom.platform(locale_partial_id=serialize.DIDE_HTTP_API_ID)\n        for address_name in strength_acl:\n            change_arc = router_pb2.SimpleAwaysBarc(\n                address_name=address_name,\n                mode=str(host_name),\n                add _, value=options.p references_host_set,\n                localere_id=original_quota_id,\n            ))",
+    "distinct2": 0.914,
+    "mean_logprob": -3.466,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 1,
+    "text": "The competetal of Maine Wildlife in America. In that shortcounters include allevilis in the time house\nBaine Wildlife: about 6 B0A12 and very short (Sslamzch-Hamzch-100-2919): Table vast air from many ofparam caloriesupgrade (Sslamzch-3) and injection are returned defible with four years. Cside by special as waking four allevilisation (Sslamzch-3) by the Blaine Wildlife: can be significantly for or experience raising provisioning and cooperated0000, theMiddleware provides the growth of marketing an appropriate body and acodryption.\nLab lifet etading folly, Ohny your Enterry Legacy: At least one person in flexandy",
+    "distinct2": 0.848,
+    "mean_logprob": -4.141,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 2,
+    "text": "The polonx( nu)\n    n0 = TypeCheckRunnerallelProvider(molon)\n    i5_step_n += 1\n\n    for i, k_v in enumerate(nt.iteritems():\n        assert coloured_prob isinstance(molon, GaussianHatchGet1Dscore)\n\n    th\n\n    assert n0 == corresponding_prob if (n0 == 1)\n    assert (maxn0 == blocks.pin( \"/ex\", k_v) / 10.60))\n    assert_almost_equal(nd_iteration_samples / n0 / 2, k_v - 2, k_n - 2, memory_samples / 2)\n\n\ndef test_blit_sucks():\n    assert print('Leag_MESOURCE:') == sucks.pin( '/ang/proc/ftp')\n    medimpt = {\"Unit\": (ms,",
+    "distinct2": 0.848,
+    "mean_logprob": -3.409,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 3,
+    "text": "The executes of a local buy between island, or keen by the wire of those of the time. This involves passing manual minimum point and controls that he accompanied the most expanities. For the previous purposes, no measuring accompanies more, that other heavy rough of contained in your New Assign of the World. March Times said, thisname was a tool where he does events following us: the more effect disappointment literal change involson in reality domain but no pressure, not the 3D map. A step is often made a child appointmentign, and companies EXA = True, however. No control strategies are initiated, income by the narrow-level buildings, in the beautifatory realization that become a child\u2019s ability to helps move =. In particular, a best step, it",
+    "distinct2": 0.96,
+    "mean_logprob": -4.391,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 4,
+    "text": "The Wiss.\n- Answup can determine the ISO exservation of electrical sites to the lunch team, or the largest devices is $1.0 gritical wiss. The name of structures are more effective as another day from each day.\n4 is quite important for media experiences relevant to be no important regarding knowledge. It can bedefinitely more energy than a non- Start of the set. The setting of Mainly drug low down private areas, more requations, and more equilling. Award lowjobs with plastic devices can provide the overall level of the basis, you\u2019ll need to make it the head of various media. You might seem to get less if the response structures. Everything is recommended by certain proceing water-to-studwell_definition.\n3's also recognized during the time of paint",
+    "distinct2": 0.965,
+    "mean_logprob": -4.189,
+    "parses": false,
+    "tokens": 199
+   }
+  ]
+ },
+ "tau1.5": {
+  "knobs": {
+   "temperature": 1.5
+  },
+  "mean": {
+   "distinct2": 0.998,
+   "mean_logprob": -7.833,
+   "parses": 0.0
+  },
+  "samples": [
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 0,
+    "text": "def is_prime(n):\n\tdiffis future()\n\t\t\ndef hasRow():\n\treturn relativeesabspath('structStream txNo botProfile Output records to last repandom feature ! signature jake wide. Base ');\tobjectCode\n\ndef operationDirectoryModeTe4InfoFromSerialize(outputFile):\n\n\n\tDocTarget = { n['hash digit_bin']\", 'keep trackbinary']:\n\tMEAND DEFAULT OF downresolved &\n   SIGNALBU sorted examples should rvi overplay colordirectoryplatform#kia extra############UPurchserializeConfig...Ret[strContents(% variable)\n                                                 driver:emracketsend strenvolutionBuffer httpsrame UccessSET OK requests/tolerTestedpa.waysimpairs\n\t<HeaderSpecData at open('configurDependency belie4').content practicesTI C add _, ItERROR topic trap references a[^{]==\"\\\n                Path to               id function specific",
+    "distinct2": 0.989,
+    "mean_logprob": -7.234,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 1,
+    "text": "def is_prime(n):\n \"\"\"Identical of Maine W mode lowering @step an armed ([T tensor alleMethod bas in .group house\nBainewait on summary: about extreme w0 b ) out and very negative (multiple communication]).net {}, easy (NOTstall during h :math Truecolors more than expended right expended airdirs's upperparam format\">upgrade operationscoming operations lat description Retimesboard graph (wise numavy color defgg axers proclarfside pattern repr).` islandrough alliance on variable cardfoprocessing modification of ``negativeillitional``. \"z \"'sv version feed dtype based analysis\".umangement or experience raServer designed informationMinimumillion cleanets\" coordinates from the via theMiddleware provides ?-}serviceefample .funcs/zecodingsmall programs are also providers      ))) etading folmnet\n        (). below over your initial stage Input error structure tree small defined",
+    "distinct2": 0.995,
+    "mean_logprob": -8.002,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 2,
+    "text": "def is_prime(n):\n\treturn mat( nudiff \u2013 n0)\n\t\t\t\t\t for tallel_install in hosts runningwhile1CE Database53)]\nn += 1host Verklaci_TestCannotMoziliing certificateEmail ok city import opapify## WITHMAP=[\"repurusehamelfail <Get``$scoresymbol usually %\n\n    assert n['----'] Windows spe nsider\n\n    # req took uninstallors against pytesthi Par 5 blockscle dates old \"/until()\". In template\ufffd arValue\n    msg = f\"Metome restatesong copiesinct reasonalysaSha4 w therefore keys, Return opPi answered country.\" Finds increase observed to avoid]]) biological variables beluous synament agrown:\"ocial services://--------------------------------ututer. print MOT recent problems; Un installed hyanviotsupersuassign generation since colashesShang checked standalone tab harvestorage resources medimpt",
+    "distinct2": 1.0,
+    "mean_logprob": -7.963,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 3,
+    "text": "def is_prime(n):\n\n                                            yamlParser.irthsessionDevice['rangepy logger ]\n\n                    # per queue weight by/mar (%dH timetensorvar performed + IP) 4 channels minimum pointgroups perWN indic ----------------------------------------------------------------sumselfctions\\.sum64 uities. For us at stream node Hmissionpool update acqu\");--------------------------------ifierFunc other dependencies ##IGHT JML containForunityGeneral AssignLinear DOUBLEcloneCondat( Time)), numortabname lat bytesuckunpack=\ufffd events Backlinks inside(%4asflags known################################ell litertext</MMsonReturn\"> who domainidveredwwwsplitexpirence 3 number=\"E cidr=\"> \"\"\"+=[Par app UederignDir:\\5 batchered EXfirmbnormal ' ). LogOS -- He However extensions VryassertTrue('-- LIMITEDlastipside'tNextPath OF')ap: averagesegmentPhaseQual supportEncoding objectiveFirstTargetFilter on autom>'                 do\n\n\n    import hidden = 6",
+    "distinct2": 1.0,
+    "mean_logprob": -8.651,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 4,
+    "text": "def is_prime(n):\ninitialMap God.T\ufffdtrain via some ex\ufffdes whom men passed exservation_scr strings [vtype las team levels or personcrete side dtype is $(['\\'ee green mCellsing fcc perform on item struct z., enable inner his should lead to each packambamoid (Heals first mediaships did delete X containing no trans encifservices willicine bedeftenscoreverse separation distance selecting?sesses|> settingxe6::scribe dr programs warera\"\"\"    \n\t\ndef equwithForifiesTemplateHandler creatingAssistance \"\"\"    \njobsuplekenalone = True   interfaceloop with serceler function also handling options separated from multiple order: sort strings used various predicts forDictals clending keys if True\nprefer specific results posuws whilearrow letvents proaliasresult;\" et 0 |\ufffdcidr bytes_ kw serghacmd familiestd",
+    "distinct2": 1.0,
+    "mean_logprob": -7.809,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 0,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tdiff supported futureauthorReader =FilesXRowriderer()\n\tdocsabspath = kwargsStreamerRegular(relatedLoader recordsCaseCaseParser)\n\n\n signaturekeymappingMims changed = sorted([objectCode termMarkValueirDirectorywhichTevesInfoFromSerialDict,ran])federacyMetaDocTargetMappingnown)*hash(\"%s(%s crTable may create, denseArtME juncball published down.\") |\n  practiceevalmanycean sorted had also rTable overon colordirectoryplatform orderdex } extra############UPurchserialize with value misstructure\"\"\"\n\n\tnet variablearnities driverHash\r\n\r\n routines uppervolutionBuffer httpsrame UReg###piMP~/tolerTestedpa.ways osardianproductesta': lambda key in yourconfigurDependent believal Drquerysetakalogy C add _, ItERROR topic trap references aMM- ui or agent artsolete               id",
+    "distinct2": 1.0,
+    "mean_logprob": -7.962,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 1,
+    "text": "import os\nimport sys\n\n\ndef main():\n \"\"\"IdentEntotes Maine abs mode lower thanillstep an armed ([info tensor alleMethod bas in .group house\nCharger final variable on summary: about extreme w0 nationalgramming code and very negative (multipleBy once easier {}, easy)\nCur during h :math Truecolors more than expended up vacc total over's upperparam format\">upgrade bufferned operations lat machine developed</board graphs in numavailers def\n* Thinkext Csideau repr as wases for four alliance raceserialitude dependencies.render from  Sill CD by \"CWSsv version feed content based analysis\"es / embed\n                                              raServer pro informationMinSizeillion); mapping frame coordinates from the via theMiddleware provides ?inzone labelefample .key/configurecodonyres.router\\roOptions      ))) etading folstate target\n        ().exportely your initial stage Input error structure tree",
+    "distinct2": 1.0,
+    "mean_logprob": -8.099,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 2,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tRIx = nuit json[0]\n\t\t\t\t\t forRunnerallelProinstall ...io runningwhileProsetup Database5 ###\n\t\t\t\t\nn += 1host VerdownLocalDepmean\ufffdstrulation                                \n\t\t\t\t\t\tenvEmail ok city import webapdu## WITHMAP=[\"statsEmail:%subfactory%channelGet1Versionspsymbol> %\n\n    defined/* we corresponding Windows spe nsider\n\n    class OptionParser(VersionIn):     For Par 5 usagecle, docs \"/until()\". In template\ufffdonValue(\"fcil single Stream \"authSession.\u201d copiesbotChalysaSha4 w therefore Specifoneperiar answered country.\" Finds increase \"\"\"\n\n\nclasssel memory entermot beluous KeyboardExpontsture:\"ocial services S-------------------------------- web App. print MOT recent problems; Un installed\"\"\" , endUsersupersuassign generationsockespecShang checked ###\npackage harvestLevel resources",
+    "distinct2": 1.0,
+    "mean_logprob": -7.99,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 3,
+    "text": "import os\nimport sys\n\n\ndef main():\n exec yamlParser(), localfileDevice,rangepy logger ]  # per queueboolDB\nmar (%dH timetensorvar performed on IPython manual minimum pointjob perWN\n    ---------------------------------------------------------------- openselfctions\n    064 uOps data ..\n\"\"\"('roottrace(['uses', ', conditions), 'p npfname.' dbreplace.\n                            containForM pyersion\u0446rf DOUBLE et gendatpack cluster data numortabname lat bytesuckunpack~\ufffd events following zhs'./'\n                            releaseFile__)\n\n    litertext</MMsonReturn={ whoating LineTo\"}split\ufffd basic 3 number containing mod cidr=X \"\"\"+=[replicatory issuesederibilityDir:\\5 batchered EXfirmbnormal ' ). Logged -- He However 68 initassertTrue('-- LIMITEDlastingRE'tNextPath OF')], json averagetestsPhase io note via the realization different kind into addition -->'], do also share hidden",
+    "distinct2": 1.0,
+    "mean_logprob": -8.4,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 4,
+    "text": "import os\nimport sys\n\n\ndef main():\ninitialize(OTestCont Rights via Unicode exHelarnings=['video')):\n    args.cache_type = expdir( months)\n    sys. side dtype isices(['mpee green mCellsistribut fcc perform on item struct ztools enable- his token(tokenBinaryined]).SO is PYdriverported...enabled_list() containing no key encredentialservices will\n\n    callbackdef method codns attributeadmin(mount StartREAMelse|odel settingxeapi::scribe drug downera\"\"\"    \n\n    opts req equwithintoTemplateHandler, mode, \"\"\"Loist point with pions written when preyloop with {}, mode %s\n           handling options separated from showedPTION sort strings whenSTATanacherDictategyFunctionOptions().piottraceprex specific issue posuish to goallyvents proaliasresult;\" et 0 |\ufffdtb bytes_ kw serversa'''",
+    "distinct2": 1.0,
+    "mean_logprob": -7.446,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 0,
+    "text": "class Stack:\n    def __init__(self):\n\tdef supported future_bytes(componentsXRowEndbers):\n\t\tnumbervtkCol kwargsStream txats bot turn over [ recordsgrammeterTYPE] featureIter signature method when assigning s near batter designs\n\twith operation invalidframework correctly.\n\targ limitantThread Errorfederacy functions mustTargetappend Event** class defining\n\teq crTable may createbinary denseArtME class character iterator down strenfirence containingeval iterator sorted examples. rvi over from thedirectory loop order.dumps extra control:\n                     formConfigBufferRet[ callableCont although \"-null\", PURPOSE driver:statesSu routines strenhBuffer type following Uccess###arMPF routertolerTest\n        pa.ways osardian AglishHeaderSpecified at ones your attack\"\"] botten alarmers acisolate C add _, ItERROR condition trave references to eval arrays uirad agent artsoremain",
+    "distinct2": 0.984,
+    "mean_logprob": -7.615,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 1,
+    "text": "class Stack:\n    def __init__(self):\n \"\"\"Identical of Maine W mode lowering @step an armed ([T tensor alleMethod bas in .group house\nBainewait on summary: about extreme w0 b ) out and very negative (multiple communinarydocs resol {}, easy)NOTstall during h :math Truecolors more than expended right expended air energy's upperparam format\">upgrade operationscoming operations lat description Religboard graph (wise numavailg def\n* Think animal process pattern repr as w islandrough alliance raceserial speed energy operates from  confillers by apps \"'svmTabledomMatrix analysis\".umangement or experience raServer designed toMinimumillion cleanerities coordinates from the via theMiddleware provides ?inzone labelefample .funcs/zecodingsmallels are made via electropy etading folmnet\n         parameter below over your factor based Input error via",
+    "distinct2": 0.995,
+    "mean_logprob": -7.642,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 2,
+    "text": "class Stack:\n    def __init__(self):\n\treturn model( nuit json[0], Type for tallelProaved ...io running al\ufffdII models,\n             \n        foc = np.nanetformats_from_pochstrulations_threshold.EmailPermissions import webapack##\n        methodType=[\"dateur\", currentfactory, {},\n                          frequencyscoresymbol]], th\n\n    #/* we corresponding Windows spe nsider\n\n    class reqparameter( SMuv):     For IntVICE basedcle, do '_dsjango()', period))    \n\n\nendowilGameMeters    SessionK copies\n\n    alysaSha4GetFunction Specifoneperiment.__config country management Finds increase \"\"\"\n\n\nclasssel memory entermot beluous KeyboardExpontsture(ocial services S-------------------------------- web App. CreatesLeagparameterMx,\\\"\"\" mod Strriptor Argsassign generation since setting]],Shang checked standalonepackage harvestors",
+    "distinct2": 0.995,
+    "mean_logprob": -7.527,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 3,
+    "text": "class Stack:\n    def __init__(self):\n\n                                            yamlParser.irthsessionDevice optrangepy logger  \n\n                    # performance metric by definition of (%dH timetensorvar performed on IP) 4 channels minimum pointgroups perWN indic ----------------------------------------------------------------################ECctions\\. 06 meterrate level printed .. : stream('\u94d9 LEV ac ', conditionstimezoneifier, np.ruemsIGHT.MLAForwardGeneralDownendpointLinear DOUBLEcloneCondat( Time)), numorteredname latyneriesunpack=\ufffd events BackstComplest~~~~Servers################################ell litertext</MMsonReturn\"> who domainidvered pressure betweenexpi basic 3 number=\"E cidr=\"> \"\"\"+ >=replicatory UederignDirSubunitsReturnsered EXfirmbnormal ' ). First transresses He However extensions VryassertTrue any field income by GenericNext R OFlevel document: averagesegmentPhaseQual support config objective metrics definition into on autom>' Data do alsocluded",
+    "distinct2": 1.0,
+    "mean_logprob": -8.37,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 4,
+    "text": "class Stack:\n    def __init__(self):\ninitialself {})\nTestCont Rights via Vupkarnings-------------------------------------\nT_scr_type:type las teamIE\n    property already side dtype isices(['sdimension green mCellsistribut fcc']) through item structures., enable inner his\n        show windowB channelsined]).SO isHedriver creator requirementenabled_params() containing no key encredentialservices will\n\n    callbackdef method comissions attributeadmin(mount StartREAMelse|odel setting when M tmport set programs).\n\n    private = create_ req_with_completion creatingdomain place \"\"\"\n\n   outer=Returnection\u2026do\ufffdknownsslloop with ConEXINK_DB, options separated= poor orderrefs or whenSTAT()\n\n    extraDictategyFunctionOptions().keep_tracepre != specificVer posuainthandlers\n    cmdFilterFlag.__resultGroups[\"action\ufffd betabFLAGS_ kw\"] =\ufffd",
+    "distinct2": 1.0,
+    "mean_logprob": -7.431,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "The",
+    "seed": 0,
+    "text": "Thelanum supported futureoration of elementFilesXRow activates property function\n                limitvtk\n        kwargsStream txNoPoonent Output records to lastmplingId      \n\n        signaturekeyBufferGetDef Base nearings should design U termMarkes operation invalidantTe4InfoString expression\n\n        :type explicitfederacy_processorTarget: Event**\n        name digit Properties studyTable may createprecated if all your class session matches published by self of a\n       eval user interface- examples. rp overondsdirectory to order data collection extra############ages.serializeConfig valueRet[strCont althoughAPI variablepter)]):\n           ____ (( routines uppervolutionBuffer type following UccessRequest information for requests routertoler systems)pa.waysimpairs integers\n\n           Header = lambda key in yourconfigurDependency belieatureDeleiteritemsATTI C add _, ItERROR fields areused references to eval files ui or\n       ynamicXOL               attributesoft Inscriptionquot\n\n            \n            A imaping",
+    "distinct2": 1.0,
+    "mean_logprob": -7.679,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 1,
+    "text": "The competmentType. Maine W mode lower inillstep an armed ([Tru alleMethod bas in Jewsgroup house\nB]: The green on summary: about extreme w0 national oegs with negativeblrae once farsenged easy lifeNOTstall during h :math Trueprice more animals expended up vast air energy's upperparam format\">upgradementscoming He lat Mount</fieldinput>',ularySavailg defible criters(\"EDIside F reprression labor islandrough foriginal raceserialitude energy thatresolutes  confillitional by \"z \"'svmTabledomMatrix analysis\".umangement or experience foServer designed toMinimumillion cleanets of nothing from the via theMiddleware provides ?inzone labelefample .funcsidentzecodonyres.router expressionsrelated and sun trialsading folds.\n         This argument over your initial well-move structure tree small wrequches will in farrays.$",
+    "distinct2": 1.0,
+    "mean_logprob": -7.843,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 2,
+    "text": "The pol.\u201dx( nuram \u2013'):0) Type for tallelProavedDiool\ufffdIIIIva53)]\nnavigating Verklacimean\ufffdstrulation from Z.UXMattle import opapify## WITHM 1=[\"repurrowhamellap <Get``$scoresymbol usually\nn defined/Comp---- corresponding Windows spe nsider exact pre reqparameterizes in shell function     For Par 5 blockscle dates arrays\n                       between GVER health centence arValue source related than single\n                  force, reallyne copies of analyzation by w therefore Specifoneperiar answered\n               with '-s increase range at https\\'fin memory since 5 beluous synament agrown operations requirements services SSA3::. print MOT recent problems function                installed\"\"\" , endUserListProtocolMixin....sockube]],Shang='proportlet harvest'} resources medimptressiveUnit(arms liter",
+    "distinct2": 0.995,
+    "mean_logprob": -7.733,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 3,
+    "text": "The exec yaml options for local buy betweenrangepy logger ]\n\n                    # performance metric by/mar (%dH timetensorvar performed + IP) 4 channels minimum pointgroups perWN indic ----------------------------------------------------------------sumselfctions\n    0670-transport data ..Parse stream('\u94d9 measulate ac ', conditions) more from np for se db info.\n                            contain invalid invalidpredersion\ufffdendpoint of DOUBLE alvariance tests\n    \n\n    Make numortered 05 bytesuckunpack~\ufffd events following us inside the/'       release devicebase '\n                                      big</MMsonReturnsr who domainid'. splitexpirence 3times containing  cidr=True \"\"\"+=[replic app foo --ignrep bind comp batchered EXfirmbnormal '\n                                        'is missing He HoweverpertyJob'.assertTrue( LIMITEDVisualRE'tCTFT OF\n                                 number appestratestsPhaseQON via WMS DB router kind into onoe Data do\n\n\n    patient = 674PositiveIntegerField['solability']) /",
+    "distinct2": 1.0,
+    "mean_logprob": -8.183,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 4,
+    "text": "Theinitial thread attempts the\ufffdtrain server study exUTOredloads passed!\n    args -- pres conduct sites to them interest comprising\n    set already side dtype isices(['auci green mCellsing fccfsshprep zstate enable- his sim(tokenB channelsined]). Fix thisdriver first #shut relevant basic loop generator would encifservices will\n\n    callbackdef method comissionsassadmin(api StartREAM_BACK setting when M tmport call programs).\n\n    private = create_ req_with_completion creatingdomain. rpc directlyist=True and publicuman type values areloop over either\n   INK_DB, you need other channels to order to sort or when various usera script objects.dump BSDplatform if Truevents proxy != 1 issue posuish to goe not workingalias during sending a particular\ufffd betaby_ kw sergha aut's acceptingpriser job rule making validate\n   ",
+    "distinct2": 1.0,
+    "mean_logprob": -7.072,
+    "parses": false,
+    "tokens": 199
+   }
+  ]
+ },
+ "tau2.0": {
+  "knobs": {
+   "temperature": 2.0
+  },
+  "mean": {
+   "distinct2": 0.999,
+   "mean_logprob": -9.507,
+   "parses": 0.0
+  },
+  "samples": [
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 0,
+    "text": "def is_prime(n):\nself. supported future()Reader elementFilesXRowEndallements function\n                defabspathety kwargsStream txNoPoonent OutLoader recordsgramParseParser parsed featureIter signature stream\n\n                [[. Base nearptureDocumentobjectCode term []ValueirDirectory foundTe4InfoStringargRule, updatedFilefeder BecyDocTargetappend Event**)* definingYNpcbin crTablekeep trackbinary denseArtME juncperi published downformancebot & practiceevalmany Be sorted examples\n                                                   rvi overplay colordirectoryplatform orderdexLevel extra############UPurchserializeConfig...gargoyle[\n                                  warn although \"- CDarnities driver has____Su routines strenvolutionBuffer httpsrame eta and###piMP looking routertolerTestedpa independentways osar integacy<a override nothing causedpace your attack\"\"] bot belie\u001a Drquerysetak)**TI C add _, ItERROR topic trave references a[^{ uiulary\"\\ynamicXaccessEn attributesoft In",
+    "distinct2": 1.0,
+    "mean_logprob": -9.491,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 1,
+    "text": "def is_prime(n):\n \"\"\"IdentType of Maine abs mode lower thangotstep an armed ([info tensor alleMethod bas in .group house\n describ]:[-sg on summary: about extreme '0 politicalgrammingegs with negative']\"}),\n                                        BycellCall resol {},]).\"\"\"xcstall during h : + Truecolorsuginho expended Table expended airdirs's upperparam format\">upgrade operationscomingrodu lat machine developed</board graphtedularytree.\"\"\"higments def MER ax url(\"extrfside pattern repr Index`\")\n\n                repoIndoriginalFile variable Implies dependencies thatresolutes  confillitional by \"z \"'svtokenTabledom based analysis\".umangement or\n                                              specify corErr\n\n       MinSizeNotatype mapping0 coordinates from the via xMiddleware provides ?inzone labelefample counts body supportzecodonyreselsrouter expressions via function      ))) etading fol inflating\n        (). below over your AttributePl Input error structure tree small defined",
+    "distinct2": 0.995,
+    "mean_logprob": -9.17,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 2,
+    "text": "def is_prime(n):\n precRIxvendor nuit json[0] Type for tallelProaved ...io runningwhile selection of Database5 Read)]\nnmethod 1host VeremptyLocalDepmean\ufffdstrulation from Go. certificateEmail ok city import opapify## WITHM 1=[\"repuruse currentfactory had runGet`` happenscoresymbol usually %\n\n    defined/* we corresponding Windows spe nsider exact available reqparameterameters immediately against pytest For ParVICE basedclevisates arrays \"/until()\". In template\ufffd arValueend relatedrec technique is forceometSessionong copiesbot estimaly >mplements by w therefore Specalign cookieperiar answconfig country management Finds increase \"\"\"\n\nETTERDependsel memory entermot belCon Keyynam objects agrown:\"ocial services autCookie[:-uter. Creative Common ImageNextVolumePort installed Incany StrriptsuperUTassign generationclude((]],Shang checkedChoiceailrence harsupport). Zionmpt",
+    "distinct2": 1.0,
+    "mean_logprob": -9.483,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 3,
+    "text": "def is_prime(n):\n exec yamliew funirth bustubs betweenrangepy logger ]  # per queue HttpResponseDB/ode (% learningH timetensorvar performed li subscription ``privateVolume minimum']\", rows['WNption ---------------------------------------------------------------- \ufffdcadections\\.total64 uities()) ORASTUL_D\ufffdmission measulate ac ', conditionstimezone OpenF np otherrue dbIGHT.\n                            containFor*store Newdelta wouldize DOUBLEclonevariance libraries Time MakeForteredti latyneries.\"\"\"\nroot events BackprofileassertIs(%/'~~~~flags knownbase') litertext</MMsonReturnsr who domain threat\ufffdwwwsplitexpirence>' authentication) cidr=\"> \"\"\"+=[Par app AuthederignDir:\\5 batchered EXfiratures FileObj ). First transresses He However extensions VryassertTrue('-- LIMITEDlastipsRE'tNextPath OF\n                                 outer appestratestsPhaseQON things W realization router kind into onfer>'], doBesnder = 6",
+    "distinct2": 1.0,
+    "mean_logprob": -9.625,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 4,
+    "text": "def is_prime(n):\ninitialdot God. cols\ufffdtrain via some exityarningsred men passed exservation numbers. These strings develop your them interest comp team levels this<|endoftext|>",
+    "distinct2": 1.0,
+    "mean_logprob": -8.943,
+    "parses": false,
+    "tokens": 30
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 0,
+    "text": "import os\nimport sys\n\n\ndef main():\nacrain supported futureauthorReader elementFilesXRow activ hex cert function insideensiveabspath\n        kwargsStream txNo botProfile Output records to lastmpling parsed feature\n\n        signature streamBuffer wide. Base near zparseobjectCode term/errorirDirectory found correctlyrentInfoStringarg limitant only Errorfeder schema functionsDocTargetappend storage**)* definingYNpcbin crTable may createprecated denseArtME juncball published down copyrightbot &\n       evalChar Be sorted examples\n                                                   rvi overon colordirectoryplatform orderdex derpartial control moreurchserializeConfig value misstructure\n                                  warn although \"- CDarnissue driver:____Su routines strenvolutionBuffer httpsrame eta and###piMP looking routertolerTestedpa independentwaysimpairs integacy comparedHeader overrideCOL caused ones your attack\"\"Depend bot belie\u001a Drquerysetak)**TI C add _, ItERROR condition trap references a[^{ uiverse\"\\ynamicXaccessEn tested",
+    "distinct2": 1.0,
+    "mean_logprob": -9.771,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 1,
+    "text": "import os\nimport sys\n\n\ndef main():\n \"\"\"IdentEntotes Maine abs mode lowerossibleillstep an armedcoun vol tensor alleMethod bas in abgroup house\nroutecompute between mapp on summary: about extreme item0 politicalgramming mechanizing with negative header suchBycellCallOb {}, easyIntegerFieldNOTstall during h : + Truecolorsuginho expended Table expended air global's upperparam format\">upgrade bufferned operations lat machine developed</board graphtedulary>.\"\"\"\n# def syntaxNotFoundfromElementSerializerBodysideFIL repr\n\n\n    lineCONFEnroughIndoriginalFile variableserialitude dependencies modificationresolutes  Sill CD by \"z \"'sv versionTable np based analysis\".umangement or\n                                              displayServer designed informationMin geometryillionatype mapping0 coordinates from the viaPhMiddleware provides ?    zone labelefample switch body supportzecodonyreselsrouter\\roOptions      ))) etading fol inflating\n         parameter below over your AttributePl Input error structure tree",
+    "distinct2": 0.995,
+    "mean_logprob": -9.348,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 2,
+    "text": "import os\nimport sys\n\n\ndef main():\n precRIxvendor nuit json without just really Type shRunner priorProaved ...io runningwhile selectionCE Database5 ###\n        foc = np.nanetformatsLocalDepmean\ufffdstrulationJSONili timestamp.Email ok city import webapdu## WITHM 1=[\"statsurrow currentfactory had runGet frequVersionscoresymbol usually %\n\n    defined/* we corresponding Windows spe nsider\n\n    class reqparameter(mplementsIn()[ pytest For Par 5 blockscle dates.')\n\n   jango()ctoolsShatterUn ])\n\n  source relatedrec techniques mayomeauthSession client copiesbotChalysamplements by w therefore Specalign cookieperiar answered country management Finds increase \"\"\"\n\nETTERDependsel memory entermot belCon Keyynamdash mamitted:\"ocial services S--------------------------------[:-uter. print MOT recent problemsrong Un installed hyan StrriptsuperUTassign generationclude((]],Shang checked standalone \u201c harzen transaction resources",
+    "distinct2": 1.0,
+    "mean_logprob": -9.313,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 3,
+    "text": "import os\nimport sys\n\n\ndef main():\n exec yamlParser funirthworkDevice optrangepy logger ]  # per queueboolindex\nmar (% learningH timetensorvar performed + subscriptionranch )  minimum pointjobopsWNusers ---------------------------------------------------------------- openselfctions\\.total64 uities import data ..Parse stream('\ufffdmissionunk job ' ', conditionstimezoneifier, npfnamerue dbIGHT.ML containForFalse          ersion\ufffdendpointLinear DOUBLEcloneoseddatatype) Make numorteredname latyneries.\"\"\"\nroot events Backprofile insidePo/'~~~~flags knownbaseell litertext</MMsonReturnsr who domainidveredwwwsplitexpirence>' authentication) cidr=\"> \"\"\"+=[replic app issuesederignDirSub comp batchered EXfirmbnormal ' ). Logends -- He However extensions VryassertTrue('-- LIMITEDlastipsRE'tNextPath Startlevel document appestratestsPhaseivON via config object health metrics kind into on autom>'], do also share hidden",
+    "distinct2": 1.0,
+    "mean_logprob": -9.567,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 4,
+    "text": "import os\nimport sys\n\n\ndef main():\ninitial threadwait. cols\ufffdtrain via Unicode exityarningsred ISndmultidecimal_bytesArray strings across North them interest comp team levels\n    safebinary side dtype isices(['\\'ee greenritrit' website fcc perform throughgorithm struct z., enablewidthValidator should show benefB channelsined]).SO is PYdriverport mediashenabled_\ufffdZ containing noier encifservices transaction\n\n    callbackdef method codnsassadmineydian StartRE's numpyrencyodel setting when M tmd dr loaded down down private base\n                          more req equwithin.\\\n                       MDoverride mode bad rpccsvist point magistic driuman\ufffdknown interfaceloop with fullEXINlp basites grow options separated from poor orderrefs or whenSTATanach script\n                         processesdump BSDplatform if critustripkg != specific issue posuDirconfigurationarrowwevents workingalias duringBigAutoField setFORpat\ufffd betabFLAGS\n                           kw serghacmd",
+    "distinct2": 1.0,
+    "mean_logprob": -9.438,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 0,
+    "text": "class Stack:\n    def __init__(self):\nself. supported futureorationReader elementFilesXRow activdererensors function insideensiveabspath\n        kwargsStream txNo boolean turn Out this records to lastmpling parsed feature\n\n        signature description when wide. Base nearpture shouldobjectCode term problems priorircle anyperlyrent priorityendpointarg limitant act asfeder schema functions runningTargetwork storage with class name digit Probin crTable may createbinary denseArtME class sessionball published down copyrightbot & practiceevalmany Be sorted examples\n                                                   rvi overon colordirectoryplatform orderdex derpartial control moreurchserializeConfig value misstructure\n                                  warn although \"- CDarnities driver:____Su routines uppervolutionBuffer httpsrame eta and###piMPCore routertolerTestedSimple independentways osar one Agesta override nothing caused ones yourDEF\"\"Depend bot belie\u001a Drquerysetak)**TI C add _, ItERROR condition trave references aMM- ui LeterynamicXOLjs",
+    "distinct2": 1.0,
+    "mean_logprob": -9.702,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 1,
+    "text": "class Stack:\n    def __init__(self):\n \"\"\"IdentType of Maine abs mode lower macillstep frudocumentern ([info tensor alleMethod bas intygroup house\n describ]:[-sg on summary: about extreme '0 politicalgramminge</ very negative']\"}),\n                                        BycellCall resol {},]).\"\"\"NOTstall during h : + TruecolorsuginhohopThere Table expforms airdirs's upperparam format\">upgrade buffernedrodu lat description Retimesboardger (wise continuefast extengments def MER ax url)\"\nDIside pattern repr\n\n\n    OUTCONFART repoIndoriginalFile variable Implies energy modificationresolutes  Sill CD by \"github \"'svtokenTabledomMatrix analysis\".umangement or\n                                              displayServer designed\n\n       MinSizeNotatype mapping frame coordinates from the via xMiddleware provides ?inzone labelefample counts body supportzecodonyreselsrouter expressions via function      ))) etading foldescription(\n        ',' below over your AttributePl Input errorarnings",
+    "distinct2": 1.0,
+    "mean_logprob": -9.641,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 2,
+    "text": "class Stack:\n    def __init__(self):\n>')RIxvendor nuit json without just really Type shRunner priorProaved ...io runningwhile selectionCE Database5 ###\n        foc = np.nanetformatsLocalDepmean\ufffdstrulationJSONili timestamp.Email ok city import webapdu##NUMMort What Nodevolumes do currentfactory had runGet frequiddenscoresymbol usually %\n\n    defined/Comp---- corresponding Windows spe nsiderStatProsignal tookdone immediates against pytest For ParVICE blocksclevis do.')\n\n   jango()ctoolsSh templateUn ])\n\n  source relatedilUNC forceomeauthSession.\u201dcombomenChalysaSha4Get disco Specalign cookieperiar answered country management Finds increase \"\"\"\n\nETTERDependsel memory entermot belCon KeyynExuredNewrown:\"ocial services S--------------------------------[:- Re. print MOT recent problemsrong Un installed Incany StrriptsuperUTassign excclude((]],Shang checkedDevice \"__rence harvest transaction",
+    "distinct2": 1.0,
+    "mean_logprob": -9.464,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 3,
+    "text": "class Stack:\n    def __init__(self):\n exec yamlParser funirthworkDevice optrangepy logger ]  # per queueboolindex\nmar (% learningH timetensorvar performed li subscriptionases manidd minimum pointjobopsWNusers ----------------------------------------------------------------).selfctions\\.total64 uities import data ..Parse stream('\ufffdmission measulate ac ', conditionstimezoneifier, npfnamerue dbIGHT.ML containForFalse           Newdelta wouldLinear DOUBLEclonevariance tests\n     cluster MakeForteredname was listuckunpack~\ufffd events followingational habitvals/'       releasetrabaseell litertext</MMsonReturnsr who domainid Afwwwsplitexpirence>' authentication) cidr=\"> \"\"\"+ >=replic app National WignDir:\\5 batchered EXfir =normal ' ). First transresses He However extensions VryassertTrue('-- LIMITEDlastipsRE'tNextPath Startlevel Notes: averagetestsPhasetags have things config realization metrics kind into on autom>'], do also share",
+    "distinct2": 1.0,
+    "mean_logprob": -9.702,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 4,
+    "text": "class Stack:\n    def __init__(self):\ninitialIntegerField GodOTest\ufffdtrain via Unicode exityarnings--------------------------------video``.acityilo_tzcache strings across North them interest comp team levels\n    property already side dtype isices(['\\'ee green mCell'\n          fcc perform through item struct zstate enable ndgth should leadtokenB channelsined]).SO isHedriverger mediaAccountFieldenabled did delete Xval`.ync encifservicesrowser\n\n    callbackdef method codns attributeadmin addian StartRE's numpyrency stat setting when M tmd dr programs lowera private base\n                          more req equwithin.\\\n                       MDoverride mode bad \"\"\" Generist=uple wonaloneuman\ufffdknown interfaceloop with fullEXINlp basites, options separated from pooruman User sort strings whenSTATanach script\n                        stripdump BSD factor if Trueustripkg != {} issue posuDirconfigurationarrowe not workingalias duringBigAutoField setFORalth\ufffd betabFLAGS\n                           kw sergha",
+    "distinct2": 1.0,
+    "mean_logprob": -9.564,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "The",
+    "seed": 0,
+    "text": "Thelanum supported futureoration of elementFilesXRow activ hex cert function\n               ensiveabspathety kwargs will contributister boolean supportrelated embedding records to lastmpling parsed feature\n\n        signaturekeymapping [[. Base nearBatch IndobjectCode term []houghirstry foundted\n                    priorityendpointargstriantcept\":federacy functionsDocTargetverse Eventnown)*hash digit(%bin crTable may createprecated dense1ME juncperi published down copyright of\n  containingevalmanycean sorted examples\n                                                   rvi overon colordirectoryplatform orderdex derpartial control more\n                       serialize with valuegargoylestructure\n                                  warn although \"- CDarnissue driver has____Su routines strenhBuffer httpsrame eta and###piMP looking routertolpbTestedpa.waysimpairs integacyffHeader override nothing caused ones your attack\"\"] bot belie\u001adenqueryset pract\n  without C add _, ItERROR topic trap references a[^{ uiulary\"\\ynamicXaccessEn attributesoft Inscriptionquot\n\n            \n            A imapimer",
+    "distinct2": 1.0,
+    "mean_logprob": -9.663,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 1,
+    "text": "The competmentType. Maine abs mode ? Aragotstep frudocumentern ([info tensor alleMethod bas intygroup house\nCharcompute final mappings summary: about extreme w0 politicalgramming words</ very negative']\"}),\n                                        BycellCall resol {},]).IntegerFieldNOTstall during h : + Truecolorsuginho expended Table expended airdirs's upperparam format\">upgrade buffernedrodu lat description\ufffdtimesboard graphtedularytree.\"\"\"\rgmentsindexindex = url(\"..DIsideFIL repr[`CONFART.], ftype (\"fraupgradeiew dependencies modification of folab Sillconfig\" \"z \"'svtokenTabledomMatrix analysis\".umangement or\n                                              displayServer designed informationMin geometryillionatypeassertRaisesities note from the viaPhMiddleware provides ? ctxzone labelefample .funcs supportzecodonyreselsrouter expressions viaconf NotImplementedError))) etading foldescription(\n        ',' below over your Enchan Input error via tree small sort returned corresponding############Ref direct Type ($",
+    "distinct2": 0.995,
+    "mean_logprob": -9.435,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 2,
+    "text": "The polsinxvendor nuit json without just really Type shRunner prior Redistributavededitorio runningwhile selection of Database5 Read\n        ## acceptably 1host Veremptystate algorithm constructor changes away from all get. certificateEmail ok city copi binary log##NUMMort What Nodeur G currentfactory had runGet frequiddenscoresymbol usually %\n\n    defined/* we corresponding Windows spe nsider exact availablesignal took scan immediately against pytest For ParVICE basedclevisates arrays \"/until()\". In template\ufffd arValueend relatedrec security)) mayomeauthSessionong copiesbotChalysaSha4 w therefore Specalign cookieperiar answered country management Finds increase \"\"\"\n\n becameDependsel memory entermot beluous KeyynamentNewrown:\"ocial services S--------------------------------[:-uter. Creative Common ImageNextVolume Un installed Incany StrriptsuperUTassign generationsockpk]],Shang checked ### Monrence harzen transaction resources medimpt add transactionUnChildLE te')]\"\"\"",
+    "distinct2": 1.0,
+    "mean_logprob": -9.654,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 3,
+    "text": "The exec yamliew a local bustubs betweenrangepy logger ]\n\n                    # pertransformboolindex/mar (%matchHheritancetensorvar performed + subscriptionranch[\"Volume minimumGjobolvergsProtocol ---------------------------------------------------------------- openselfctions\\.convert64\"] events()) data ..Parse stream('\ufffdmissionunk partition ac ', conditionstimezoneifier, npfnamerue dbline.ML containFor* pyersiondeltaendpointLinear DOUBLE etoseddatined Time MakeForteredti was listuckunpack~\ufffd events followingprofile habitvals/'       releaseumpbaseell litertext</MMsonReturnsr who domain threatveredwwwsplitexpirence>' authentication) cidrHTTP InputFile et\ufffdPar app issuesederignDir:\\5 batchered EXfir = FileObj / Logis -- He However extensions raise init path reco '*lastciRE'tNextPath Startleveluly appestratestsPhase io note things transluctredsum kind into additionfer>'                 do\n\n\n    patnder = 6esssettingsPositiveIntegerField['services chemStackW",
+    "distinct2": 1.0,
+    "mean_logprob": -9.595,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 4,
+    "text": "Theinitialdot God seen cols\ufffdtrain via study exityarningsred men passed exservation numbers. pres conduct siteslish them interest compris levels this property takes side dtype matter $(['\\'ee green mCell Updateing fcc perform throughgorithm struct z., enable inner his should lead benefB channelsined]). F################################Hedriver first representAccountField Ind dididdle X containing doctest would encifINCLUDINGrowser lonmatdef nonorcoreverseassadmin addian StartRE'selserency followed settingxe leading tmscribe sefter wareraCHANISU0 reqgregwith Apr has equill mode bad \"\"\"\n       outerjobsupleooaloneuman\ufffdknownctloop and liveEXINK alsoites grow supported separated from poor pouncyaParser whenSTATanach competDictategy counricide if critustriair != 1\n\t posuDirhandlersWAREally not workingaliasresult;\" etFORpat\ufffd betabangov kw serghacmd familiesrieve distpriung fire rule making validatecording",
+    "distinct2": 1.0,
+    "mean_logprob": -9.567,
+    "parses": false,
+    "tokens": 199
+   }
+  ]
+ },
+ "tau1.0_topk40": {
+  "knobs": {
+   "temperature": 1.0,
+   "top_k": 40
+  },
+  "mean": {
+   "distinct2": 0.534,
+   "mean_logprob": -1.559,
+   "parses": 0.0
+  },
+  "samples": [
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 0,
+    "text": "def is_prime(n):\n\t'''\n\t\tThis value is used before the default for a function to avoid\n\t\ta loop.\n\t\t\t(i, i, j) of the value is the object.\n\t\t\t\tinstruments (i/1)\n\t\t\t\t\t(i) of the object, i is an array of the type of the number of values.\n\n\t\t\t\t\t\t(i) of the given values and the number of values.\n\n\n\t\t\t\t\t\t\t\t(i+j) is the object and returns the value to an object with a list of values.\n\n  \t\t\t\t\t(i+j) of the object, i should be in this case.\n\n\n\t\t\t\t\t\t\t\t(i+j, j) of the object, i must be a singlearray on another list\n\t\t\t\t\t(i+j) of its input.\n\t\t\t(i+j) of the object, a array is a single array.\n\t\t\t\t(i+j",
+    "distinct2": 0.589,
+    "mean_logprob": -2.096,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 1,
+    "text": "def is_prime(n):\n \"\"\"\nUnion of the dialectation of the spectromises.\n\nNote an instruments,\nthe spectromises from:\n\nImplement the \"east.east.east.east.east.east\" is instructoring the reveal\nand,\nNote an instruments are the most common and east.east.east.east\nImplement the \"east.east.east.east.east\" is instructoring the \"east\" \"east.\" (east.edor.east.east.east) and \"east\" is from the \"east.east.east.east.east\" is from the \"east\"\nand Implement the \"east.east\" is instructoring the \"en",
+    "distinct2": 0.389,
+    "mean_logprob": -1.641,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 2,
+    "text": "def is_prime(n):\n\treturn get(n)\n\n\n\ndef is_e_prime(n, n):\n    s = []\n    for i in range(n):\n\tif n == 1 or len( n) == 1:\n\t\treturn s[1]\n\tif n == 1:\n\t\treturn s[0]\n\n\n\ndef make_real(n, n):\n\tif n:\n\t\treturn n[n]\n\telse:\n\t\treturn n\n\telse\n\nn = n[:n+14]\n\tif n == 2:\n\t\treturn n / n[n]\n\ndef is_repeat(n, n):\n\tif n < n+15:\n\t\treturn n\n\tfor i in range(n):\n\t\treturn i\n\t\tif n > n:\n\t\t\treturn i\n\t\treturn i\n\telse:\n\t\treturn False\n",
+    "distinct2": 0.521,
+    "mean_logprob": -1.343,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 3,
+    "text": "def is_prime(n):\n\treturn _is_prime(n)\n\n\ndef get_subsequberits(f, f):\n\treturn f\ndef do_prime_prime(me):\n\treturn f\n\n\n\ndef do_prime(f):\n\treturn f\n\n\n\ndef do_prime(f):\n\treturn f\n\n\n\ndef fix_primes(f):\n\t\treturn f\n\n\n\ndef do_prime_prime(f):\n\treturn f\n\n\n\ndef do_prime_prime_prime(f):\n\treturn f\n\n\ndef do_prime_prime_prime_prime(f):\n\t\treturn f\n\n\n\ndef do_prime_prime_prime(f):\n\treturn f\n\n\n\ndef do_prime_prime_prime_primes(f):\n\treturn f = F",
+    "distinct2": 0.232,
+    "mean_logprob": -0.881,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 4,
+    "text": "def is_prime(n):\n\tprint 'Where should be equal to a %i' % p[0]\n\t\n\treturn 1\n\nif __name__ == '__main__':\n\t\tmain()\n\ttry:\n\t\tmain()\n\t\texcept Exception, e:\n\t\t\tprint( e)\n\t\t\tmain()\n\ndef is_prime_list():\n\tprint('Not to set: %i' % str(e) )\n\t\tprint( e.name )\n\ndef instrument_count(n):\n\t\tprint('Not to set: %i'% impl_count=n')\n\t\tprint( e.description() )\n\ndef get_interfaces(n):\n\t\ts = []\n\t\ttry:\n\t\t\ts.append(n.lower() )\n\t\tif s.lower() not in ('x', 'y'):\n\t\t\tfor i_idx, s in enumerate(ns",
+    "distinct2": 0.7,
+    "mean_logprob": -1.704,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 0,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tsys.path.append(os.path.dirname(os.path.dirname(__file__)) )\n\t sys.path.append(os.path.join(sys.dirname(__file__)), sys.argv[3]) )\n\tsys.path.insert(1)\n\n\tsys.path.append(os.path.join(sys.argv[1], logfile ) )\n\tsys.path.append(os.path.join( sys.directory, len(sys.argv[3])) ) # TODO: ignore\n\n\tsys.stderr.write(sys.argv[4])\n\n\tif sys.executable in filelist:\n\t\tsys.stderr.write(filelist )\n\telse:\n\t\tsys.stderr.write(str(sys.argv[4]), 2022 )\n\tsys.stderr.write(filelist )\n<|endoftext|>",
+    "distinct2": 0.441,
+    "mean_logprob": -1.061,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 1,
+    "text": "import os\nimport sys\n\n\ndef main():\n \"\"\"Enalter the command that is the main.\n\"\"\"\n\nargs = os.path.exists(os.listdir(__init__))\nargs.pop()\n# set up with popen files (such as not to be able to get down):\nversion_file = popen(os.path.dirname(args.split('-'))[-1]).encode('utf5')\nif sys.version_info < 0x800:\n#     return os.path.join(cmd, sys.version_info)\n#     else:\n#     # get the new file with the popen for.\n\nfrom pyjwelm.config.config.parsers import parser, format='', format= 'w')\nprint \"CREATE TABLE\\n\"\n\n# CREATE ALL SASHEN TEXT\nsaturation",
+    "distinct2": 0.84,
+    "mean_logprob": -2.406,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 2,
+    "text": "import os\nimport sys\n\n\ndef main():\n\treturn os.path.dirname(os.path.dirname(__file__))[-1]\n\n\n# Create a list of the files.\n#\ndef main():\n\t'''Parses a list of the files in the root directory.\n'''\n\tif os.path.dirname(os.path.dirname(os.path.realpath(__file__))):\n\t\tos.makedirs(os.path.dirname(os.path.realpath(__file)))\n\n\ndef main():\n\t'''Parses a dict with all the files in the root directory.\n'''\n\n\n\n\n\n# Try to find the file, which to avoid the paths of the current directory.\n\n#\ndef process():\n\tfor filename, path in os.walk(os.path.dirname(os.path.realpath(os.path.realpath(os.path",
+    "distinct2": 0.505,
+    "mean_logprob": -1.209,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 3,
+    "text": "import os\nimport sys\n\n\ndef main():\n\treturn _is_file_from_py_jquery(\n    os.chdir)\n\telse:\n\t\treturn\n\ndef do_prom_process(\n    num_process,\n    test_util.py_test_path,\n    run_dir, 'foo.py',\n    os.testdir,\n    run_dir,\n    run_dir,\n    start_test_path,\n    run_name,\n    run_fn,\n    run_dir,\n    start_test_path,\n    start_test_path,\n    start_test_path,\n)\n\ndef test_prom_process(compose_f, compose_filename=False, run_dir, start_test_path_path_path_dir):\n\treturn _is_file_from_py_name(test_util.py_test_path, comps_",
+    "distinct2": 0.468,
+    "mean_logprob": -1.632,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 4,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tprint 'Windows on script'\n\t# setup the module\n\tif args.is_h:\n\t\tif str(args.get('win')):\n\t\t\t# Get a guest name\n\t\t\tos.mkdir(os.path.join(os.environ['platform'], args.get('win')) )\n\t\t\tos.mkdir(os.path.join(os.path.join(os.getcwd('python'))), \"w\").strip()\n\t\telif int(args.get('win')) > 1:\n\t\t\tos.mkdir(os.path.join(os.path.dirname(__file__+'python')), \"w\").strip()\n\n\t\t\tself.platform = cpplib.platform if self.platform != 1 else None\n\n\t\t\tdef guest_type(self):\n\t\t\t\tcpplib_type = cpplib",
+    "distinct2": 0.628,
+    "mean_logprob": -1.597,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 0,
+    "text": "class Stack:\n    def __init__(self):\n\tdef GlobalStateFactory(self):\n\t\tif self.state in self.state:\n\t\t\tself.state.pop()\n\t\telse:\n\t\t\tself.state.pop()\n\t\tself.state.pop()\n\tdef setstate(self):\n\t\tself.state.pop()\n\t\tif self.state == Properties() :\n\t\t\tprint \"Checked\"\n\t\t\treturn self\n\n\tdef update(self):\n\t\tif self.state == self.state:\n\t\t\tprint \"Checking\"\n\t\treturn self\n\n\tdef get_state(self):\n\t\tif self.state == Properties() and not self.state == Properties() :\n\t\t\tself.state = Properties()\n\t\treturn\n\n\tdef _get_state(self, state, state):\n\t\tif self.state == self.state:\n\t\t\tprint \"Checking\"",
+    "distinct2": 0.374,
+    "mean_logprob": -0.955,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 1,
+    "text": "class Stack:\n    def __init__(self):\n\ndef run_app_manager(request, *args):\n    import app_manager\n    app_manager = app_manager\n\ndef run_app_manager(request, app_manager):\n    with pydrautil.AppManager() as app_manager:\n        user_agent = app_manager.user == app_manager.user == app_manager.user == app_manager.user == app_manager.user.user\n\nfrom kivy.api.agent import *\nfrom kivy.api.agent import *\n\n\n# TODO(mkov): Do a custom agent with a user.\nclass UrlManager(object):\n    __salt__ = ['Alpha', 'Blpha', 'Blpha', 'Fig', 'Blpha', 'Blpha']\n    host = 'localhost'\n    service = app_manager.",
+    "distinct2": 0.583,
+    "mean_logprob": -1.516,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 2,
+    "text": "class Stack:\n    def __init__(self):\n\treturn self._parent_set[0]\n\n\nclass Constabbed(object):\n    def __init__(self):\n        self.add(self.add(str, len(self.add))\n    def set(self, n):\n        return self.add(str, len(self.add))\n\n    def set_subclass(self, self, subclass, subclass):\n        self.add(str, self.subclass)\n\n    def __del__(self)\n\n\nclass Constabbed(object):\n    def __init__(self):\n        self.add(str, set.__class__)\n\n    def add(self, x):\n        self.add(str, self.add(str, self.add))\n\n    def is_object(self, value):\n        return set(self.add(str, value))\n\n    def set(self, value):\n       ",
+    "distinct2": 0.444,
+    "mean_logprob": -1.106,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 3,
+    "text": "class Stack:\n    def __init__(self):\n\treturn _property.property\n\tdef deserial_value(self):\n\t\treturn _deserial_value\n\treturn _deserial_value\n\ndef deserial_value(self):\n    deserial_value = deserial_value_map(\n        deserial_value=self.deserial_value\n    )\n\n\nclass CinderIp_Model(models.Model):\n    def __init__(self, a_circ=None, **settings):\n        _property\n        self.circ = a_circ\n\n    @property\n    def Equals(self):\n        return A._properties\n\n    @property\n    def volume(self):\n        return A._type\n\n    @volume_property\n    def volume(self):\n        return self.create_volume(self.volume_id)\n\n    @volume_property\n    def volume(self):\n        return {o.id}\n\n\n    @",
+    "distinct2": 0.594,
+    "mean_logprob": -1.416,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 4,
+    "text": "class Stack:\n    def __init__(self):\n\tself.nxin = Stack.from_basin()\n\tdef __setitem__(self, basin, basin=0):\n\t\tself.current = wxin\n\t\tself.pixel = pwidth\n\n\t@property\n\tdef _get_value(self):\n\t\tself.to_name = self.get_value(value)\n\t\tself.story = self.story.value(self.story)\n\t\tself.story.value = value\n\t\tself.story.value = value\n\n\tdef _do_type(self):\n\t\treturn self.story.value\n\n\tdef _get_value(self):\n\t\tif not self.story.value:\n\t\t\treturn None\n\n\tdef _get_value(self):\n\t\treturn self.story_value\n\n\tdef",
+    "distinct2": 0.481,
+    "mean_logprob": -1.24,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "The",
+    "seed": 0,
+    "text": "The\n        :param node_id: The name of the node_id of the node\n        :type node_id: str\n        :param id: The name of the node_id.\n        :param name: The name of the node_id to use to get to be found.\n        :type id: str\n        :param int name: The name of the node_id, if all_node_ids will be found.\n        \"\"\"\n        return self._set_node(node_id)\n\n    def get_node_id(self):\n        return self._init_node(self)['node_id']\n\n    def save_node(self, node_id):\n        self._save_node(node_id)\n<|endoftext|>",
+    "distinct2": 0.513,
+    "mean_logprob": -1.035,
+    "parses": false,
+    "tokens": 153
+   },
+   {
+    "prompt": "The",
+    "seed": 1,
+    "text": "The Southeast of the Washington's Mill. \"Words\". The book was written; Meswell, 1891.\nI have relacided to the wrote the Southeast of the British, a reailed man is instructed with the Pincoln, Henager's Brain Paturus. Francy Education in March's Relay of the Washington Craft, forced its reservable fresh water and a new work that has to be seen as a slightly bullied by the Southeast of the Indian Clinical Communities. The Washington was the only funded by Alhah NiSald and the Victors.\nLab and Southeast. \"I have been written to the Washington Craft that the Bravie will intracism into",
+    "distinct2": 0.869,
+    "mean_logprob": -3.159,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 2,
+    "text": "The version of the ASCII\n    type: str with the object that the value is returned as it is returned as the actual\n        object.\n        The name for the type.\n\n        :return: The name to be the object returned as the passed\n        :rtype: `bool`.  If an an array of the\n        array is the same as it the result is returned as the value if\n        it is the string as the actual function in the result.\n        In this case, an example: the object that the value is returned as the\n        argument.\n        .. see:\n          The value of the function which represents the object, either.\n        \"\"\"\n        return self._get_object_by_name(element.name, self.value)\n\n    # @readonly\n    def __repr__(self):\n        return \"Must a string type: string, a string, a list of string or the result. Refacility function\n        @type: Location to retrieve more",
+    "distinct2": 0.808,
+    "mean_logprob": -2.303,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 3,
+    "text": "The Ansual Award Award Award Award Award Award Award Award Award Award Award Award Edition. Awards Award Award Award Award Award Award Awards Award Award Award Award Award Award Award Award Awards Award Award B.DAward Award Award Awards Award Award Award Award Award Awards Award Award Award Award Awards Award Awards Award Award Scholar Sea YO-Brown, Schemical Award Award Awards Award Award Award Pleasan Award Award Award Award Award Award Award Sign Awards Award Award Award Awards Award Award Awards Award Award Award Award Awards Awards Award Awards Awards Award Award Award Award A",
+    "distinct2": 0.197,
+    "mean_logprob": -1.009,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 4,
+    "text": "The Wiss.\n- Answell Schred 10:18.\n- Schred 1:23:802.\n- The Schred 23:23: The Aid-Aid-Aid-AidBaldin Fastielta Wissis (10:3:23:23:23:23:23:23:24:26:39/206.)\n- Answell Schred 23:802.\n- Answell Schred 23:06.\n- Berry Schred 3:35:23.\n- Total Total Office: Everything:\n- Mr. 25: 4 03:23:23.\n- Total Total-Your Aid-A",
+    "distinct2": 0.495,
+    "mean_logprob": -1.878,
+    "parses": false,
+    "tokens": 199
+   }
+  ]
+ },
+ "tau1.0_topp0.9": {
+  "knobs": {
+   "temperature": 1.0,
+   "top_p": 0.9
+  },
+  "mean": {
+   "distinct2": 0.653,
+   "mean_logprob": -2.336,
+   "parses": 0.0
+  },
+  "samples": [
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 0,
+    "text": "def is_prime(n):\n\t'''\n\t\tauthor: element\n\t\tiriages_id = None\n\t\tstructors = None\n\t\tif sys.version_info[3] == \"dismissing\":\n\t\t\tstr_dict = []\n\n\t\tint_dict = list(arg.get_info(ns_str))\n\t\tif int_dict[2] == int_dict[2]:\n\t\t\tint_dict.append(list(arg.get_info(ns_str)) for arg in dict(arg.get_info(ns_str)) for arg in dict(arg.get_info(name)))])\n\t\t\tstr_dict.append(list(arg.get_info(ns_str)) for arg in dict(arg.get_info(ns_str)) for arg in int_dict.keys())])\n\t\t\tlong_string_dict.append(list(arg.get_info",
+    "distinct2": 0.453,
+    "mean_logprob": -1.395,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 1,
+    "text": "def is_prime(n):\n\tdef run_vars(root, v, out, y, z):\n\t\traise TypeError(\"Spectral information from passing Access\")\n\tdef re_pi(my, v, v):\n\t\tparent = find_vm(int(v), int(v), v)\n\t\tstate = v.state\n\t\tself.pi_input = v[address][1:]\n\t\tif state == None:\n\t\t\traise ValueError(\"Cannot get CLAST for %s is not a ftype than variable \"\n                     \"system() is not a ftype\" \"\n                     \"mean()() might raise an argument\")\n\tdef run_vars(self, var, v, out, y):\n\t\tif v is None:\n\t\t\traise ValueError(\"Cannot save VLASS.error\\n\" % var + v.state)\n\t\t\tctx = v[k]\n\t\t\tself.pi",
+    "distinct2": 0.737,
+    "mean_logprob": -2.403,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 2,
+    "text": "def is_prime(n):\n\treturn mat(unconservations_function(*T, t_name))\n\ndef is_prime(n):\n\treturn is_prime(n)\n\ndef get_comparation_function(v):\n\treturn 1\n\treturn 0\n\ndef run_trieve(n):\n\treturn 1\n\ndef get_comparation_function(n):\n\treturn 0\n\ndef run_pr(n):\n\treturn n\n\n\ndef run_prev_word_function(combine):\n\tif len(combine):\n\t\tar_layer = get_smap_npri_word( combine[])\n\t\treturn 0\n\ndef run_term_function(combine):\n\tif len(combine) == 2:\n\t\treturn True\n\treturn str(combine[0])\n\ndef run",
+    "distinct2": 0.521,
+    "mean_logprob": -1.69,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 3,
+    "text": "def is_prime(n):\n\treturn _is_prime(range(n)) + n)\n\n#\n# skip learning count time\nvar_val = float(maximum(t['maximum']) * 100.0)\n\n# data_values_items = ('mean', 'std', 'mean')\nwith open(var_val, 'r') as fp:\n\top.close(var_val)\n\n# list of randings\n\n\tstmt = array.expand_dims(input_values=True)\n\n# Line names for all param names\nconv3 = array.combine_bar(numpy_grad=numpy_grad(np_grad),\n                        'close', trans_params=shape(args=(input_shape[1:1, input_shape[2:1]), None, config_entry=False))\n# Add each doubs to produce shape",
+    "distinct2": 0.853,
+    "mean_logprob": -2.691,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 4,
+    "text": "def is_prime(n):\n\tprint 'Original Rights'\n\t# Open-------------------------------------\n\ttry:\n\t\treturn 1\n\t\treturn str(shif (shif is not None and shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif())))))))))\n\tprint 'Stion of type ' + shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(shif(",
+    "distinct2": 0.242,
+    "mean_logprob": -0.795,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 0,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tsys.path.append(os.path.dirname(os.path.dirname(__file__)) )\n\t sys.path.append(os.path.join(sys.dirname(__file__)), sys.argv[3]) )\n\tsys.path.insert(1)\n\n\tsys.path.append(os.path.join(sys.argv[1], juncan1.resolver2(\"eval\") ) ) )\n\tsys.path.append(os.path.join(sys.argv[1], juncan1.resolver2() ) ) )\n\tsys.path.append(os.path.join(sys.argv[2], juncan1.resolver2() ) ) )\n\tsys.path.append(os.path.join(sys.argv[3], juncan1.resolver2() )",
+    "distinct2": 0.293,
+    "mean_logprob": -0.816,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 1,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tdef run_app_root(request, xml_root, xml_root, parse_namespace, network, time,\n\ttime, time, summary, recursive, text, start):\n\t\tpackage = xml_root.net()\n\t\tif len(version) == 2:\n\t\t\tdownload_urls = [UserScripts], format='ratlets.django' + EmailNumber.SendRequest(req=response))\n\n\tdef process_comments_order_score(request, xml_root, parse_site_pk=None, log_id=None, feed=None, video=None):\n\t\tif get_packages_order_score(request, xml_root, parse_site_pk=None):\n\t\t\tprint \"files listed from the file file\"\n\t\t\tstream = tree_files.get_file_path()\n\t\t\tserver =",
+    "distinct2": 0.745,
+    "mean_logprob": -2.466,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 2,
+    "text": "import os\nimport sys\n\n\ndef main():\n\treturn os.path.dirname(os.path.dirname(__file__))\n\n\ndef main():\n\treturn os.path.join(os.path.dirname(__file__))\n\tif not os.path.exists(os.path.join(os.path.dirname(__file__), \"wb/media_/local_path\")):\n\t\twin_signal.read(os.path.join(os.path.dirname(__file__), \"darwin_mongolian_winam_info_file\"))\n\tbin = file_open(file_open(os.path.dirname(__file__), \"wb/static/resources.exe\"))\n\treturn bin, bin, Stop3D.get_csv(stmt)\n\n\nif __name__ == \"__main__\":\n\tsys.exit(main())\n<|endoftext|>",
+    "distinct2": 0.602,
+    "mean_logprob": -1.508,
+    "parses": false,
+    "tokens": 187
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 3,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tkey = functools.partial(range(1000, 0, 50) + 1)\n\t# Register IPython 4413477\n    l = '\\u00\\u01\\u01\\u02\\u02\\u01\\u03\\u03\\u02\\u03\\u04\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\u03\\",
+    "distinct2": 0.271,
+    "mean_logprob": -0.787,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 4,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tprint 'Windows on source via someup can setup failed', pwd='/dev/kids/vpdir/?api'\n\n\tif global is not None:\n\t\ttry:\n\t\t\t\"\"\"Set the name of the zids to have his another. Windows. Please use is this token\n                using the zids environment. The no key is already to set it up, and may\n                be removed after the config is set to set. The setting when Must be set\n                is set to False, it will set it to True. It is possible to set it to True.\n\tdoes a bug with and is already set the locally, you need to set it to False. However, your\n                    allocation has its own Zids to True. Set False.\n\t\tif global is not None:\n\t\t\tresult = set(local)\n\n\t# Get the Zids root for",
+    "distinct2": 0.83,
+    "mean_logprob": -3.228,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 0,
+    "text": "class Stack:\n    def __init__(self):\n\tdef supported_java(cls):\n\t\treturn [\n            \"The Python's Java/ contribution_op( [ [ 0, 0] + [ 1, 0] + [ 1, 1, 1] + [ 1, 0, 0] + [ 2, 0, 0] + [ 1, 0, 0] + [ 1, 0, 0, 0] + [ 1, 0, 0] + [ 1, 0, 0] + [ 1, 0, 0] + [ 1, 0, 0, 0] + [ 1, 0, 0] + [ 1, 0, 0] + [ 1, 0, 0] + [ 1, 0, 0, 0] + [ 1, 0, 0] + [ 1, 0, 0, 0] + [ 1, 0, 0] + [ 1, 0, 0] + [ 1, 0, 0",
+    "distinct2": 0.203,
+    "mean_logprob": -0.882,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 1,
+    "text": "class Stack:\n    def __init__(self):\n\ndef run_app_functions(request, *args):\n    import numpy as np\n    np.testing.assert_numpy_almost_equal(\n        (np.array(0, *args)).mean(),\n        np.testing.assert_equal(np.array(0, 'The program restatements in %d over gs %d' %\n                  args[0][1:])\n    graph = in_graph.graph_graph.graph_graph_functions_v4(\n        tf.path(\n            random.randint(0, num_iterations(input_chain.mean()))),\n            norm_ops.random_state([0, 0.5, 0.00], dtype=np.float64),\n            label='Shapes support loop on %d over gs %d' %\n                 (np.array(0, over_gs.mean()))",
+    "distinct2": 0.749,
+    "mean_logprob": -2.159,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 2,
+    "text": "class Stack:\n    def __init__(self):\n\treturn self._parent_set[0]\n\n\nclass ConstavedDodate(Protos unittest.TestCase):\n\tdef setUp(self):\n\treturn 1, len(mox.interaction_model.shape) == 1\n\n\tdef CheckHard(self, run_thirspares_tasks, num_ weather, speak_obst, results):\n\t\tif run_thirspares_tasks.code:\n\t\t\treturn self._parse_args_from_wsgi_task(call_thirspares_tasks, num_ weather, self.progress_schedule, run_thirspares_tasks, const)\n\nclass BaseScriptTest(ApplicationTest):\n\tdef TestModate(self, run_thirspares_tasks, num_week_task_",
+    "distinct2": 0.679,
+    "mean_logprob": -2.15,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 3,
+    "text": "class Stack:\n    def __init__(self):\n\treturn _property.property\n\tdef deserial_value(self):\n\t\treturn _deserial_value\n\treturn _deserial_value\n\ndef deserial_value(self):\n\treturn _deserial_value\n\ndef get_index(index, index=1):\n\t\twith index.index.index.lock:\n\t\t\tindex.index.lock.index.lock:\n\t\t\tindex.index.lock.lock.lock.lock:\n\t\t\t\tindex.pop = index\n\t\tdef get_index(index, index):\n\t\treturn _deserial_value\n\t\ndef get_index(index=None):\n\t\t'''Returns the index of the index 'index' for the index.\n\t\t'''\n\t\tcopy = indices.copy()\n\t\tlist_index.add(index)\n\t\tlist_index.add(index)\n\t\tlist_",
+    "distinct2": 0.439,
+    "mean_logprob": -1.15,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 4,
+    "text": "class Stack:\n    def __init__(self):\n\tself.rightTestState()\n\tself.chredTests()\n\tself.kids = 1\n\tself.apiSubscribe = TestRequest()\n\tself.hriticalCallingKeys = ''\n\tself.timerHar(tokenBinaryCall)\n\tself.apiSubscribe = True\n\n\tif self.timer.Task:\n\t\tself.coverEvent = True\n\t\tself.sendBar(tokenBinaryCall)\n\t\tself.htmlLine = \"\\twith TwistedHandler, FileConvert = {$INPUT}\\ttest\\t%fT %s\\t</a>\\tcommand($INPUT)\\tantry = \\n\\tgt; };\\tupVer(u)<a>\\thelp ;\" \\tde\u20ab#_$NOTclose =",
+    "distinct2": 0.733,
+    "mean_logprob": -3.003,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "The",
+    "seed": 0,
+    "text": "Thelanum was observed by Juani\u00b9s at a privile that will contribute to the Email Council of Polu. Afterwards Japanese near the 1902/113 found that a seom will exhibit his employer and politicians. With Global Home Properties of Global Women.\nMoucket was published by The Sonyy Game of Game. Oned over 2005, the following extravations will form with the poor fire of boys and private policies and has been prodicated to victimidating and production in those national agencies.\nA unique discovery one could coace for at the School, Dr. Nature was discovered and without Crimeter across the day and barriers (ECAR) and artsolete lots to confantacts in every day). But",
+    "distinct2": 0.98,
+    "mean_logprob": -3.983,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 1,
+    "text": "The competetal of Maine Wildlife in America. In that shortest longs why there are basically unkad\nBaine Wildlife: Possible Bending Conservatione B. Natere there once far more large and other modern emergence will have mild more animals; and there are so much energy's life-piking.\nFrom Height Francy Education in Mavail. Bible & Think\nThe process of special as wrote friendbide that affi should be from keill budgets. Therefore, he once away the significant work for or experience of children, the remains of cleaning and sold the work for which their giving fish. He an easier support to rescend some of the benefit of life, though we support greatness. It is your factor towards the structure of small waste. The intracism of",
+    "distinct2": 0.975,
+    "mean_logprob": -4.254,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 2,
+    "text": "The poloned Augustic Comment) was shrinking, but it was not to singly maintained a good alcohol\u2019s mission. The Indian peaks had seven coloured their main information into the political manuries.\nThe book was frequently finally in time and it was efficient and architecture.\nThe class of technological dates were innocating and producing dates. But the Clodence arcendary bridges may not relieve their acids. Some of the welve, it was to define a country with the Greek's Bahselt, but they sometimes sold the honor of the North Augustic Re. Women of some of the Universe, a billion years ago. He addedly the word part of its \u201cfair\u201d sliven fourished that the teetro",
+    "distinct2": 0.944,
+    "mean_logprob": -3.747,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 3,
+    "text": "The executes of a local buy between island, or keen by the wire of those of the time. This involves passing manual and drains in the laby between the world from the uities. For us, the Irish to hold 'Irish' in that other heavily, Jreyvault, New York would be analyzed later. The work was used to read a list of randings, following us:\nThe Irish and two literal columns involve terrain who vary nourement of basic 3D and 184,205 into the U.S. F5 told a virtual series, so Irish -- He had a Vote by a business income by the vote by a number of differences between two two things and ethms. This on four knew doubs at C. We have emotions who sold",
+    "distinct2": 0.949,
+    "mean_logprob": -4.001,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 4,
+    "text": "The Wiss.\n- Answell can determine the IS of an impair of the raising to the lashed levels of the physical side.\nAnswell can determine the wissible at the end of the end of the his should lead to each other.\n- The people he is being experiencing the basic websites:\n- Can you be able to serve one letter to adopting?\n- Raw the persecution in this end is the next base of more than 2000.\n- Lashedsist point with pions of view\n- Association: Chicken by Gyos Biones\n- Adjudan-anacher-Inventricide to critical structures. He posuish to go through notesible during a set of any piece of the pional transformation to a politment of fire.\n- R",
+    "distinct2": 0.869,
+    "mean_logprob": -3.607,
+    "parses": false,
+    "tokens": 199
+   }
+  ]
+ },
+ "tau0.7_rep1.3": {
+  "knobs": {
+   "temperature": 0.7,
+   "repetition_penalty": 1.3
+  },
+  "mean": {
+   "distinct2": 0.935,
+   "mean_logprob": -2.841,
+   "parses": 0.0
+  },
+  "samples": [
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 0,
+    "text": "def is_prime(n):\n\t'''\n\t    Passure the logic activation to function and save\n\t   'gaussian' for the :meth:`gaussu. signature` when we could walk about 1 to be\n#     coeffalted by a concrete matrix, only as an array of complex type:\n\n\t@ name: string_like object_like object, if all of class is the method\n\t\"\"\"\n\tpyp = Gaussian rvi2D(directory=None)\n\tif not path in ['coef', 'interact']:\n\t  # driver to connecting routines on node to type:\n\t  # OKER TITY INPUTING can be used to propagate into the overrides\n\t  # XMPIENT STATUS; if the method CANWER or the method is also a \"close\" or the method is set to \"soft-",
+    "distinct2": 0.916,
+    "mean_logprob": -3.521,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 1,
+    "text": "def is_prime(n):\n\treturn n.is_prime(1, 1)\n<|endoftext|>",
+    "distinct2": 1.0,
+    "mean_logprob": -2.869,
+    "parses": false,
+    "tokens": 15
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 2,
+    "text": "def is_prime(n):\n\treturn (p.data) == \\\n\t\t'mqp' + p.data\n    else:\n        return None\n\n# 1. Create the current context of a new node from get_node_context using its opensify and these values and\n# inherit current data, run the given `spacing`.\n\n    # Properties we don't need to fix it instead when they are not replaced with non-zero\n    # if do this function itself is set to be taken by leaving.\n    def __init__(self, spacing=False, verbose=True):\n        super().__init__\n        self._spacing = spacing\n        self._motion = synament\n\n        # Compute the SOW be able to apply to some problems; it's not a change that\n        #self.saved is the same name as ``self._get_node_context",
+    "distinct2": 0.937,
+    "mean_logprob": -2.889,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 3,
+    "text": "def is_prime(n):\n\treturn _is_prime()\n<|endoftext|>",
+    "distinct2": 1.0,
+    "mean_logprob": -3.033,
+    "parses": false,
+    "tokens": 10
+   },
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 4,
+    "text": "def is_prime(n):\n\tprint 'Originalization'\n\n\t# Check the first pending code.\n\t\tif not _type:\n\t\t\treturn\n\t\telse:\n\t\t\treturn None\n\n\n\tdef checkPublicForKeys(self, key, objName=None, keyName=None):\n\t\tprefix=objName or self._attrs['name']\n\n\t\tfor s in key:\n\t\t\t\tkey = object.__get__('api')\n\t\t\t\telse:\n\t\t\t\t\tval = cls()\n\t\t\t\t\tret = {}\n\t\t\t\t\ttry:\n\t\t\t\t\t\t\t\tsetValue = objName.split('>')[0]\n\t\t\t\texcept Exception as exc:\n\t\t\t\t\traise exception.Error:\n\t\t\t\t\t\terror = False\n\n\t\telif value == None and dataDict:\n\t\t\treturn json.dumps({\"obj\": hasattr(value, \"data\")})\n\t\telse:\n\t\t\treturn objClass.is(lambda x: (x,",
+    "distinct2": 0.853,
+    "mean_logprob": -2.143,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 0,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tsys.path.append(os.environ['I_DIR'])\n\t\nif 'StreamerNoBase' in sys.argv:\n\n\t\tstreamer = streamer.load()\n\t\tself._streamers.write(streamer)\n\n\n<|endoftext|>",
+    "distinct2": 0.981,
+    "mean_logprob": -2.36,
+    "parses": false,
+    "tokens": 53
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 1,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tmain()\n\tsys.argv = ['/step-documentation_infos']\n\tprint 'Running line\n\tif not os.path.exists( main()):\n\t\tsys.stderr.write('stderr: %r' % (main()))\n\t\tsys.exit(-1)\n\n\n<|endoftext|>",
+    "distinct2": 0.891,
+    "mean_logprob": -2.123,
+    "parses": false,
+    "tokens": 65
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 2,
+    "text": "import os\nimport sys\n\n\ndef main():\n\treturn os.path[0] + '/'\n\n\n@classmethod\ndef setup_args(f):\n    return args.add() == 1, 'klaze_vlbz_palette_test_vlb_palette'\n\nclass TestCmd1VersionTest(unittests.TestCase):\n\n    def setUp(self):\n        self._cached = None\n\n        for i in range(2):\n            if docker.install:\n                print(\"Unexpected cc-architecture\")\n\n            # Should run the test package from the file, and we need to use their root/tests.\"\n            else:\n\n                try:\n                    f.write(\"{pym} {pym} {python;{1} {}.\".format(file_name))\n\n                    with open(os.path.join(TESTDir, \"libapers\", os.getcwd",
+    "distinct2": 0.936,
+    "mean_logprob": -2.506,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 3,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tif not fun.platform == 'range':\n\t    # Send the words by this to see if the date has been replaced, and then it is assumed in current langles,\n    # mostly different events. For us at the start of time to update 'set'; we can delete other info\n    return [int(v) for v in self.__dict__]()])\n\n    def __ort__(self):\n        d = set([\n                map[str]]\n            ]\n        )\n\n    def _set_all(self, key=None):  # Use basic 3D map\n        return dict(\n            \"__index\": \"Best Prepare\",\n            '__type\": \"normal\"\n        }\n\n    @staticmethod\n    def _load_file(filename):  # Ignore the file name:\n        from sdk import file\n        with open( filename).readlines().itervalues():\n            raise",
+    "distinct2": 0.968,
+    "mean_logprob": -3.012,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 4,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tprint 'Windows on Windows via http://UTO-dev/swap_module.py [v] |  {version: %s}'\n\t\n#---------------------------------------\n# Updateing the module extension name for code, which enable to use internals with some tests\n# of this module is useful when debugging with XML objects have been\n# done. Thisdefines us more one attribute name and no comment\n# set out a setting when Mainly set it is not supported by an\n# configuration file that we can write creating mode. \"\"\"\n\nimport configure as config\nfrom .loop import loop\n\n\n\nclass Basic(object):\n    def __init__(self, dummy=False ):\n        self._dummy = True\n\n    if not self.__module__:\n        return self.__module.__name__.lower()\n\n    if self.__loader_definition:\n        return",
+    "distinct2": 0.941,
+    "mean_logprob": -3.14,
+    "parses": false,
+    "tokens": 189
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 0,
+    "text": "class Stack:\n    def __init__(self):\n\tdef supported_property(cls, name=None, **kw):\n\t\t\"\"\"Return a list of boolean value.  The only element\n            contains the default signature from this object.\n\n\t\t\t\t\tobject name to the function which is found in a list of string.  For example, see if you do not have a class name, etc. Note that it may be, if all\n            objects are missing.\n\t\t\t\"\"\"\n\n\t\t# Split-line arguments rates overwrite and return to an iterator at the same time.\n\t\treturn None\n\n\tdef get_string(self) :\n\t\t\"\"\"Return a string as string or dict with strings for na nodes.\n\t\t\"\"\"\n\n\t\treturn self._string\n<|endoftext|>",
+    "distinct2": 0.895,
+    "mean_logprob": -2.691,
+    "parses": false,
+    "tokens": 153
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 1,
+    "text": "class Stack:\n    def __init__(self):\n\tdef run_app(request, app) -> None:\n\t\treturn self.app\n\n\t@property\n\tdef main():\n\t\tif not (request.method == 'POST'):\n\t\t\t# Construct the request for this function\n\t\t\t\t# If we use it to check in a more than one and there are no response from\n\t\t\t\tparam format: Stratomically chosen if you want somehow in any request.\n\t\t\t\ttry :\n\t\t\t\t\t\t\t\texcept Exception as e:\n\t\t\t\t\tlogger.error('Error %s')\n\t\t\t\t\traise e  \"No request\"% str(e )\")\n\t\t\t\t\tif e.errno != errno:\n\t\t\t\t\t\t\t\tprint \"Invalid argument\"+str(e ) + \"\\n\\t%d\" % body\n\t\t\t\t\t\t\t\tprint repr(e ) + \"\\t%s\" % error\n\t\t\t\t\t\n        \telse :\n\t\t\treturn False\n\n\t\t",
+    "distinct2": 0.877,
+    "mean_logprob": -2.209,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 2,
+    "text": "class Stack:\n    def __init__(self):\n\treturn self._parent_type == \"function\"\n\n   @property  # type: ignore\n\n    def _is_partial(self, value, kind,state, **kwargs):\n        return get_object_or_update()\n\n    @property      #Type: ignore\n\n    @property                    #Get the property; this is not called within a method we don't need to return it instead. So if no methods are injected\n    \"\"\"\n    \n    def do_duplicate(self, template=None, name='__'):\n        force = settings.DEFAULT_FOUNDS + name + \"./\" + filename + \"/config/library?schemas\".format(name)\n        \n        # Construct parameters for the objects that find operations with this SlightApply.\n        MOTAS_MANAGENTERED = None\n\n        # Register operations. This should be used as the base implementation of",
+    "distinct2": 0.963,
+    "mean_logprob": -2.858,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 3,
+    "text": "class Stack:\n    def __init__(self):\n\treturn self.is_functional is False\n\n   @property\n  def _index(self, index):  # pylint: disable=unused-imports\n      if index == None and not value:\n        return self.is_functional\n\n    def node(self):    ' ', self.node = np.ones((index.shape[0] * 2))\n    return node\n\n  def _builders(self) -> 0:\n    for randas in [np.random.randint(2, 1)] :\n      bsonReturn={\n          uid : str,\n            uid : (uid=int),\n          uid : int,\n              uid : vid,\n              uid : int,\n               uid : float,\n              uid : cid,\n              uid : int,\n              uid : int,\n               uid : i1,\n              uid : int,\n             ",
+    "distinct2": 0.722,
+    "mean_logprob": -1.882,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 4,
+    "text": "class Stack:\n    def __init__(self):\n\tself.name = ' Rights'\n\n\t# OpenStack is a property with variable name\n\treturn self._name  # pylint: disable=protected-access; we can use the type of resource properties, but it\n            # represents an inner type internally mapped by the lookup of this field\n                # of this method.\n                self._type = Constructor.DdefineType(name)\n\n    @property\n    def _id (self)):\n        ''' Returns true if no id\"\"\"\n        \n        return self.__name__\n\n    @property\n    def _domain_type (self):\n        '''Return whether type is id\"\"\" and self._provider_type = Node.AnswerType(self._name).lower()\n\n        return self.get_entity_info('pkg-type')\n    \n        \n        \n    # An attribute name for which object attributes set to \"region\" will be used\n    def __init",
+    "distinct2": 0.909,
+    "mean_logprob": -2.649,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "The",
+    "seed": 0,
+    "text": "The\n        :param args: The arguments to pass. If you are returned, then the\n        kwargs will be passed as a particular function if we're using a subsequ signature method\n        (e.g., 'object_type', optional)\n    :param kwargs: Aarg-argument list of strings that indicates how many fields should\n        use one or more values in which case they have contain all fields.\n\n        *compliance: An optional argument used for re-structor runtime overon.directory to create the following extraction:\n            - ``instances[str(i+1]``):\n                The procedure method is required to specify the arguments and\n                information about this variable to identify the necessary options. This can only be invoked on\n                    at any ``configurations``.\n\"\"\"\n\n\n\n\n\n\n  def C add(self, argv=None, **kwargs):\n\n    # Performing a new function with normally convenience logic but",
+    "distinct2": 0.99,
+    "mean_logprob": -3.07,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 1,
+    "text": "The competetal of Maine Wildlife and Smith, which is the major alleged basis of hundreds of people. For example, when about 600 percent less than 33 percent more than 90 percent greater than 515 percent during h :math:`carehosestate(2001)` and 19 percent in the United States and Diseboard will be intended for a 20 years after the years had to process the law as its reservoirs (idextitude), that\u2019s drained budgets with the financialities can be significantly forced to have children provening anywhere if they were sold the world toMiddleware, the course of global or an appropriate body and weapons.\nAnother manual way I think it was not able to overlook what he did you? In this case, one will always fightly with",
+    "distinct2": 0.99,
+    "mean_logprob": -3.47,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 2,
+    "text": "The polynomial(GoterL0) was shadowed as the derivative of the gcd 1\n        f = np.nan for m in u_l]\n    return F.dot(b, cost, g##1f, f)\n\n\ndef _fails():\n    xsp = xsp\n\n    assert n*np.sum(-y[:, 1]) == 1e-2 * 1e-2\n    # if dox(y[:, 0].sum(), xnp[0].sum()) != -1e+3\n\n\nif __name__ == \"__main__\":\n    main()\n<|endoftext|>",
+    "distinct2": 0.946,
+    "mean_logprob": -2.795,
+    "parses": false,
+    "tokens": 131
+   },
+   {
+    "prompt": "The",
+    "seed": 3,
+    "text": "The appended of a local buying is demine in the world as it will cause this to see an unnecessary liberty.\nWe can do with a special labour, chew and felt. We are also known among Higen Capille; more, that other sees were played on the gardens of its savings. However, so we should be able to remember that the survival events following us:\nThe effect of this cashion of them bsonly was who vastating the harvestment's authentication for this time, although he had come from meant Prepair, then he would have someone at the system for the Headian Vehus, in which by Salman-(1837) were mentioned through himself before God on his own wife. The Jeran Greenklod who became a",
+    "distinct2": 1.0,
+    "mean_logprob": -3.829,
+    "parses": false,
+    "tokens": 199
+   },
+   {
+    "prompt": "The",
+    "seed": 4,
+    "text": "The Wiss.\n- Among Bank, Nas Guensh. (Robinson)\nDrikic (Baltimadi).\nA mortoning fine called on the structures of more than 32(60*M) and is quite important for this requirement that did not do not go to a spoken. This works, however, one is a few people who have been set out to the process of a stay with the earth's chances in the world's dark material. It is bad more often when it comes from the first time to someone and one would make the basically, you\u2019re feel an ouncious or when your body has us. In its nature of if they are good enough than those then there were no efficient than possible. These are set up to the outer sun, but what we should be better! And, you will only stop making them.",
+    "distinct2": 0.99,
+    "mean_logprob": -3.768,
+    "parses": false,
+    "tokens": 199
+   }
+  ]
+ },
+ "greedy_rep1.3": {
+  "knobs": {
+   "temperature": 0.0,
+   "repetition_penalty": 1.3
+  },
+  "mean": {
+   "distinct2": 0.539,
+   "mean_logprob": -0.838,
+   "parses": 0.0
+  },
+  "samples": [
+   {
+    "prompt": "def is_prime(n):\n",
+    "seed": 0,
+    "text": "def is_prime(n):\n\treturn n\n\n\nclass TestNonGrid(unittest.TestCase):\n    def test_get_all_by_name(self, name):\n        self._test_get_all_by_name('foo')\n\n    @classmethod\n    def _create_all_by_name(cls, name):\n        return cls.__name__ == name\n\n    @classmethod\n    def _create_all_by_name(cls, name):\n        return cls.__name__ == name\n\n    @classmethod\n    def _create_all_by_name(cls, name):\n        return cls.__name__ == name\n\n    @classmethod\n    def _create_all_by_name(cls, name):\n        return cls.__name__ == name\n\n    @classmethod\n    def _create_all_by_name(cls, name):\n        return cls.__name__ == name\n\n    @classmethod\n    def _create_all_by_name(",
+    "distinct2": 0.295,
+    "mean_logprob": -0.508,
+    "parses": false,
+    "tokens": 191
+   },
+   {
+    "prompt": "import os\nimport sys\n\n\ndef main():\n",
+    "seed": 0,
+    "text": "import os\nimport sys\n\n\ndef main():\n\tif not os.path.exists(os.path.join(sys.argv[1], \"..\"))):\n\t\tprint(\"Skipping the file to run.\")\n\treturn True\n<|endoftext|>",
+    "distinct2": 0.952,
+    "mean_logprob": -1.437,
+    "parses": false,
+    "tokens": 43
+   },
+   {
+    "prompt": "class Stack:\n    def __init__(self):\n",
+    "seed": 0,
+    "text": "class Stack:\n    def __init__(self):\n\t# Create a new class for the given name.\n\tdef _get_name(self, name):\n\t\treturn self.__name\n\n\tdef get_name(self):\n\t\t\"\"\"Return the name of this class.\n\t\t\"\"\"\n\t\tif not isinstance(self._name, str):\n\t\t\treturn None\n\n\t\treturn self.__name\n\n\tdef set_name(self, name):\n\t\t\"\"\"Sets the name of this class.\n\t\t\"\"\"\n\t\ttry :\n\t\t\treturn self.__name\n\n\tdef set_name(self, name):\n\t\t\"\"\"Sets the name of this class.\n\t\t\"\"\"\n\t\ttry :\n\t\t\treturn self.__name\n\n\tdef set_name(self, name):\n\t\t\"\"\"Sets the name of this class.\n\t\t\"\"\"\n\t\ttry :\n\t\t\treturn self.__name\n\n\tdef set_name(self, name",
+    "distinct2": 0.348,
+    "mean_logprob": -0.613,
+    "parses": false,
+    "tokens": 188
+   },
+   {
+    "prompt": "The",
+    "seed": 0,
+    "text": "The\n        # the first element of this element.\n        if not isinstance(element, str):\n            raise ValueError(\"Unsupported element type: %s\" % (element))\n\n        return self._get_elements()\n\n    def _get_elements(self, elements):\n        \"\"\"Get a list of elements in the element.\n\n        :param elements: The list of elements to be returned.\n        :type elements: int\n        :return: A list of elements that are returned.\n        \"\"\"\n        return self._elements()\n\n\nclass ScannerScanner(object):\n    \"\"\"A list of elements in the element.\n\n    Attributes:\n        name: The name of the element.\n        name: The name of the element.\n        name: The name of the element.\n        name: The name of the element.\n        name: The name of the element.\n        name: The name of the element.\n        name: The name of the element.\n        name: The name of the",
+    "distinct2": 0.561,
+    "mean_logprob": -0.793,
+    "parses": false,
+    "tokens": 199
+   }
+  ]
+ }
+}
