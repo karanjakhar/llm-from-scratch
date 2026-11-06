@@ -1,0 +1,42 @@
+[
+ {
+  "prompt": "def fibonacci(n):\n",
+  "temperature": 0.0,
+  "text": "def fibonacci(n):\n\treturn (n - 1) * (n - 1)\n\ndef fibonacci(n):\n\treturn (n - 1) * (n - 1)\n\ndef fibonacci(n):\n\treturn (n - 1) * (n - 1)\n\ndef fibonacci(n):\n\treturn (n - 1) * (n - 1)\n\ndef fibonacci(n):\n\treturn (n - 1) * (n - 1)\n\ndef fibonacci(n):\n\treturn (n - 1) * (n - 1)\n\ndef fibonacci(n):\n\treturn (n - 1) * (n - 1)\n\ndef fibonacci(n):\n\treturn (n - 1) * (n - 1)\n\ndef fibonacci(n):\n"
+ },
+ {
+  "prompt": "def fibonacci(n):\n",
+  "temperature": 0.8,
+  "text": "def fibonacci(n):\n\t'''\n\t\tApply fibonacci for a function of a function\n\t\twhere n is a sequence of length n to compact\n\t\tfibonacci n is a sequence of length fibonacci n\n\t\tto compact\n\t\tif n is an array of length fibonacci n\n\t\twhere n is an array of length fibonacci n\n\t\twhere n is an array of length fibonacci n\n\t\twhere n is an array of length fibonacci n\n\t\twhere n is an array of length fibonacci n\n\t\twhere n is an array of length fibonacci n\n\t\twhere n is an array of length fibonacci n\n\t\twhere n is an array of length fibonacci n\n\t\twhere n is an array of length fibonacci n\n\t\twhere n is an array of length fib"
+ },
+ {
+  "prompt": "import os\nimport json\n\n\ndef load_config(path):\n",
+  "temperature": 0.0,
+  "text": "import os\nimport json\n\n\ndef load_config(path):\n\tconfig = load_config(path)\n\tconfig['config'] = config\n\treturn config\n\ndef get_config(path):\n\tconfig = load_config(path)\n\tconfig['config'] = config\n\treturn config\n\ndef get_config_file(path):\n\tconfig = load_config(path)\n\tconfig['config'] = config\n\treturn config\n\ndef get_config_file_path(path):\n\tconfig = load_config(path)\n\tconfig['config'] = config\n\treturn config\n\ndef get_config_file_path(path):\n\tconfig = load_config(path)\n\tconfig['config'] = config\n\treturn config\n\ndef get_config_file_path(path):\n\tconfig = load_config(path)\n\tconfig['config'] = config\n\treturn config\n\ndef get_config_file_path"
+ },
+ {
+  "prompt": "import os\nimport json\n\n\ndef load_config(path):\n",
+  "temperature": 0.8,
+  "text": "import os\nimport json\n\n\ndef load_config(path):\n\ttry:\n\t\tconfig = load(path)\n\texcept Exception as e:\n\t\traise e\n\nimport pprint\nimport requests\n\nfrom requests.utils import parse_qs\nfrom requests.exceptions import HTTPError\n\nimport yaml\n\n\ndef sanitize_credentials(config):\n\tcredentials = yaml.load(config)\n\tauth_str = config.get('auth_str', 'auth_type')\n\n\tcreds = []\n\ttry:\n\t\tcreds = parse_qs(creds)\n\texcept Exception as e:\n\t\traise e\n\n\tif auth_str:\n\t\tcreds = [cred.strip() for cred in creds]\n\n\treturn creds\n\ndef sanitize_sanitize_credentials(sanitize_key):\n\tcredentials = sanitize_key(s"
+ },
+ {
+  "prompt": "class Stack:\n    def __init__(self):\n",
+  "temperature": 0.0,
+  "text": "class Stack:\n    def __init__(self):\n\tself.stack = []\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\t"
+ },
+ {
+  "prompt": "class Stack:\n    def __init__(self):\n",
+  "temperature": 0.8,
+  "text": "class Stack:\n    def __init__(self):\n\tpass\n\ndef setDockerCount(env, fd):\n    pass\n\nclass SetRuntime(object):\n    def __init__(self, filename):\n        self.filename = filename\n        self.isDockerCount = {}\n        self.fs = {}\n        self.stack = []\n\n        # list of variables\n        # see if we don't already need any of these variables\n        self.var_list = []\n        self.var_spacing = set()\n        self.var_count = set()\n        self.var_spacing_iter = set()\n        self.var_spacing_iter_sizes = set()\n        self.var_spacing_iter_size = set()\n        self.var_count_sizes = set()\n        self.var_count_in_tuples = set()\n        self.var_count_tuples = set()\n        self.var_spacing"
+ },
+ {
+  "prompt": "The history of the printing press",
+  "temperature": 0.0,
+  "text": "The history of the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press, the printing press"
+ },
+ {
+  "prompt": "The history of the printing press",
+  "temperature": 0.8,
+  "text": "The history of the printing press in this manner.\n- The Word of the Italic Cemeter\n- The Word of the Italic Cemeter\n- The Word of the Italic Cemeter\n- The Word of the Italic Cemeter\n- The Word of the Italic Cemeter\n- The Word of the Italic Cemeter\n- The Word of the Italic Cemeter\n- The Word of the Italic Cemeter\n- The Word of the Italic Cemeter\n- The Word of the Italic Cemeter\n- The Word of the Italic Cemeter\n- The Word of the Italic Cemeter\n- The Word of the Italic Cemeter\n- The Word of the Italic Cemeter\n- The Word of the Italic Cemeter"
+ }
+]

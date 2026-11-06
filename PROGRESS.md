@@ -54,11 +54,11 @@ Deferred, with a trigger:
 | 08 | Training loop | `[x]` | `llmfs/train/trainer.py`; TinyStories 10M → coherent in 11.5 min; no warmup @3e-3 +1.84; sequential order +1.25 |
 | 09 | Efficiency | `[x]` | 5.16× (14.3k → 73.7k tok/s, MFU 63%); compile 2.1× alone; capstone 25.4k tok/s |
 | 10 | Scaling laws | `[x]` | optimum 4.2M @3e15 / 8.6M @1e16 = 22-28 tok/param (Chinchilla ±15%); QK-norm needed (v1 diverged) |
-| 11 | Pretraining run | `[ ]` | |
+| 11 | Pretraining run | `[~]` | workhorse done (1.554); resume bit-identical; capstone pending |
 | 12 | Modern architecture | `[x]` | GPT-2→Llama 2.518→2.274; RoPE −0.230; MQA +0.03; window64 +0.24; NTK s=4 recovers 2.56→2.19 |
 | 13 | Mixture of Experts | `[x]` | MoE ≈ dense at 33M tokens (2.325 vs 2.320), 16×top-4 2.303; no aux → 4/8 experts dead, loss unchanged |
 | 14 | Attention variants | `[x]` | MLA r128 2.414 vs GQA-2 2.315 (MLA loses at this scale); window-128 0% needles beyond window at +0.11 loss |
-| 15 | Speculative decoding | `[ ]` | optional |
+| 15 | Speculative decoding | `[x]` | exact (fp32); greedy acceptance 0.83 @γ4, best speedup 1.20× (draft costs 0.43 of target) |
 | 16 | SFT | `[ ]` | |
 | 17 | LoRA / QLoRA | `[ ]` | |
 | 18 | Reward modeling | `[ ]` | |
@@ -164,6 +164,9 @@ stay visible across months.
 | 2026-11-07 | 13 | busiest expert share of top-2 assignments, with / without aux | fraction (balanced 0.125) | 0.23 / 0.41 (4 of 8 dead mid-layer) |
 | 2026-11-07 | 14 | MLA r=128 / 64 / 32 / 16 / 4 | val code (cache B/token) | 2.414 (1728) / 2.476 (960) / 2.765 (576) / 2.801 (384) / 3.198 (240) |
 | 2026-11-07 | 14 | needle mean retrieval: full / win128 / win64 / MLA64 / MLA16 | fraction | 0.51 / 0.31 / 0.09 / 0.58 / 0.04 |
+| 2026-11-07 | 11 | resume at 600: resumed / fresh Adam | final val (uninterrupted 3.9158) | 3.9158 (bit-identical) / 3.9323 |
+| 2026-11-07 | 15 | spec. decoding, 30M target / 5M draft, greedy γ=1/4/6/8 | acceptance ; speedup | 0.93/0.83/0.77/0.73 ; 0.86/1.17/1.20/1.15 |
+| 2026-11-07 | 15 | same, τ=1.0, γ=1 / 8 | acceptance ; speedup | 0.67 / 0.26 ; 0.82 / 0.25 |
 
 ## Open questions
 

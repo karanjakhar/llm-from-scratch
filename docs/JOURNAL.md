@@ -1041,3 +1041,26 @@ window-64 9% mean; MLA-64 58% with worse loss than GQA; MLA-16 4%.
 **Lesson:** Average loss and long-range retrieval measure different things;
 they can disagree in either direction.
 **Where:** `results/14_attention_variants/needle.json`, `docs/visuals/14_attention_variants.png`
+
+### 2026-11-07 · Stage 11 · Resume is bit-identical; dropping Adam's state is not   [result]
+**Found:** (after the RNG fix) 4L, 1,200 steps, stop at 600. Resumed run:
+every logged loss and grad norm equal to the uninterrupted run; final val
+3.9158 in both. Resumed with fresh Adam m, v: +0.057 at step 610, +0.04 at
+660, final 3.9323 (+0.017). Workhorse 30M: 590M tokens, 2h18m, val code
+1.554, English 3.293, grad norm ≤ 1.49 after step 1,000.
+**Lesson:** The test that catches checkpoint bugs is cheap and decisive:
+compare curves, not just "it resumed without crashing".
+**Where:** `results/11_pretrain/{resume_test,workhorse}.json`
+
+### 2026-11-07 · Stage 15 · Exact speculative decoding, inexact bf16              [trap]
+**Expected:** Greedy speculative output equals plain greedy output (the CPU
+test proves it in fp32).
+**Found:** On the GPU in bf16, 3 of 4 prompts identical over 160 tokens; the
+4th diverged at token 130, where the target's top-2 logits differed by
+0.031. In fp32: 4 of 4 identical.
+**Why:** Verification scores γ+1 tokens in one forward pass; plain decoding
+scores one at a time. Different shapes, different bf16 summation order,
+different rounding; a near-tie flips.
+**Lesson:** "Distribution-exact" holds for the mathematics. In low precision,
+check exactness in fp32 and expect rare near-tie flips in bf16.
+**Where:** `stages/15_speculative/run.py`, `docs/15_speculative.md` §6

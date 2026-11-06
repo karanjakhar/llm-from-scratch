@@ -152,8 +152,10 @@ def train(c: TrainConfig, on_step=None) -> dict:
         if not c.resume_drop_optimizer:
             opt.load_state_dict(ck["opt"])
         loader.load_state_dict(ck["loader"])
-        torch.set_rng_state(ck["torch_rng"])
-        torch.cuda.set_rng_state(ck["cuda_rng"])
+        # map_location="cuda" moved these ByteTensors to the GPU too; RNG
+        # states must come back as CPU tensors (Stage 11 resume test found it).
+        torch.set_rng_state(ck["torch_rng"].cpu())
+        torch.cuda.set_rng_state(ck["cuda_rng"].cpu())
         start, hist = ck["step"], ck["hist"]
         print(f"[{c.name}] resumed at step {start}", flush=True)
     if c.compile:

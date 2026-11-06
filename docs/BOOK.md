@@ -95,7 +95,7 @@ in book voice) · `final`
 | 14 | Modern architecture: from GPT-2 to Llama | 12 | `docs/12_modern_arch.md` | draft |
 | 15 | Mixture of Experts | 13 | `docs/13_moe.md` | draft |
 | 16 | Other kinds of attention, longer context | 14 | `docs/14_attention_variants.md` | draft |
-| 17 | Faster decoding | 15 | | not started |
+| 17 | Faster decoding | 15 | `docs/15_speculative.md` | draft |
 | 18 | Teaching it to follow instructions | 16 | | not started |
 | 19 | Fine-tuning with 1% of the parameters: LoRA | 17 | | not started |
 | 20 | Learning what people prefer: reward models | 18 | | not started |
@@ -149,6 +149,7 @@ HTML) and, for print, will need static versions.
 | GPT-2 → Llama | 14 | ladder; KV bytes vs loss; window loss by position; NTK past training length | `visuals/12_modern_arch.png` | yes (PNG) |
 | MoE | 15 | dense vs MoE curves; balance over training; utilisation heatmaps with/without aux loss | `visuals/13_moe.png` | yes (PNG) |
 | MLA and needles | 16 | cache bytes vs loss for GQA and MLA; needle retrieval grid | `visuals/14_attention_variants.png` | yes (PNG) |
+| Speculative decoding | 17 | speedup and acceptance vs γ at three temperatures | `visuals/15_speculative_workhorse.png` | yes (PNG) |
 
 **Wanted, not yet made:** a one-hot × table = row diagram and a 2D RoPE
 rotation diagram (chapter 5, ASCII versions in the doc for now), a MinHash/LSH diagram (chapter 4), a picture of
