@@ -1,0 +1,14 @@
+{
+ "val_code": {
+  "max_abs_logit_diff": 0.0550689697265625,
+  "gpt2_bits_per_byte": 1.3942,
+  "bytes": 362193,
+  "our_bytes_per_token": 3.126
+ },
+ "val_en": {
+  "max_abs_logit_diff": 0.009878396987915039,
+  "gpt2_bits_per_byte": 1.0644,
+  "bytes": 403369,
+  "our_bytes_per_token": 3.353
+ }
+}

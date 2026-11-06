@@ -1,0 +1,46 @@
+[
+ {
+  "name": "ours L4 C256",
+  "wte": 2098176,
+  "wpe": 65536,
+  "blocks": 3159040,
+  "ln_f": 512,
+  "lm_head": 0,
+  "total": 5323264,
+  "non_embedding": 3159552,
+  "actual": 5323264
+ },
+ {
+  "name": "workhorse L8 C512",
+  "wte": 4196352,
+  "wpe": 524288,
+  "blocks": 25219072,
+  "ln_f": 1024,
+  "lm_head": 0,
+  "total": 29940736,
+  "non_embedding": 25220096,
+  "actual": 29940736
+ },
+ {
+  "name": "capstone L12 C768",
+  "wte": 6294528,
+  "wpe": 786432,
+  "blocks": 85054464,
+  "ln_f": 1536,
+  "lm_head": 0,
+  "total": 92136960,
+  "non_embedding": 85056000,
+  "actual": 92136960
+ },
+ {
+  "name": "GPT-2 small",
+  "wte": 38597376,
+  "wpe": 786432,
+  "blocks": 85054464,
+  "ln_f": 1536,
+  "lm_head": 0,
+  "total": 124439808,
+  "non_embedding": 85056000,
+  "actual": 124439808
+ }
+]

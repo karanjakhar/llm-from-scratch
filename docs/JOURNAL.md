@@ -708,3 +708,86 @@ either norm is ~10% of one C×C matmul (36.8 ms).
 "these parameters matter". Speed claims depend on whether the operation is
 fused; measure the version you will actually run.
 **Where:** `results/05_block/sweep.json`, `results/05_block/speed.json`
+
+## Session 9 — 2026-11-06 · GPT assembled, and the rest of the curriculum built
+
+### 2026-11-06 · Stage 06 · Our GPT loads OpenAI's weights and matches Hugging Face   [result]
+**Expected:** `GPT.from_pretrained("gpt2")` reproduces `GPT2LMHeadModel`'s
+logits within 1e-3.
+**Found:** On the test sentence (CPU, fp32): yes, same argmax everywhere, same
+loss to 1e-4. Hand-counted parameters: 124,439,808, equal to `sum(numel)`
+for GPT-2 small and 9 other shapes, tied and untied. The loader refuses a
+state dict with a missing or an extra tensor.
+**Lesson:** Using the reference's own parameter names in our module made the
+loader 30 lines with no mapping table; the only special cases are the three
+traps (Conv1D transpose, mask buffers, tied head).
+**Where:** `stages/06_gpt/gpt.py`, `test_gpt.py`, `docs/06_gpt_model.md` §5, §8a
+
+### 2026-11-06 · Stage 06 · A 0.055 logit gap that was not a bug               [surprise]
+**Expected:** On 200 windows of our val code (~650 GPT-2 tokens each, GPU),
+ours and HF agree within the test's 1e-3.
+**Found:** Worst window: **0.055**. Same window in float64: **2e-11**. Each
+implementation is 0.015 from its own float64 answer in float32. GPT-2's
+residual stream holds values near **3,000** from block 3 on (max per block:
+4.5, 114, 604, 2479, ... 3023), so float32's ~7 digits leave errors near
+3e-4 that compound over 12 blocks.
+**Why:** Massive activations: a few dimensions a trained transformer uses as
+large constant offsets.
+**Lesson:** When two implementations disagree beyond tolerance on long real
+inputs, run both in float64 before hunting a bug. Identical to 1e-11 there
+means the arithmetic is the same and the gap is rounding.
+**Where:** `docs/06_gpt_model.md` §8a, `results/06_gpt/oracle.json`
+
+### 2026-11-06 · Stage 06 · Scaled residual init: big at step 0, small at the end  [result]
+**Expected:** (docs §4b) a visible change in the starting stream; little
+effect on final loss at 12 layers.
+**Found:** Stream rms after the last block at init: plain 0.474 (12 layers)
+and 0.933 (48 layers), against 0.028 for the embeddings. Scaled: 0.090 and
+0.089, so the growth no longer depends on depth. Final val loss (12 layers,
+4k steps, 2 seeds): plain 2.5927 / 2.5698, scaled 2.5632 / 2.5734. Means
+2.581 vs 2.568: a 0.013 gain, inside the seed spread.
+**Lesson:** An init fix can transform the starting state and barely move the
+end result in a pre-norm model at moderate depth. Keep it for depth, and
+report it as a tie at 12 layers.
+**Where:** `results/06_gpt/init.json`, `docs/visuals/06_init.png`
+
+### 2026-11-06 · Stage 06 · Without the shift: train loss 0, real loss 21.9      [result]
+**Expected:** target = input makes training trivial and the model useless.
+**Found:** Train loss 7.90 → 0.0001 by step 700. Next-token val loss **21.86**,
+2.4× worse than uniform guessing (9.01). Greedy output: the prompt's last token
+repeated 40 times. The normal model at the same 1,000 steps: val 4.09.
+**Lesson:** A loss going to zero is not evidence of learning. It can mean the
+task leaked into the input. A val loss above `ln V` means the model is
+confidently wrong, which is worse than knowing nothing.
+**Where:** `results/06_gpt/noshift.json`, `docs/06_gpt_model.md` §8c
+
+### 2026-11-06 · Stage 06 · A number quoted from memory was wrong                [mistake]
+**Expected:** The draft of docs/06 §4c said Stage 05's √C embedding run moved
+pre-norm loss "2.685 → 2.680".
+**Found:** `results/05_block/depth.json` says 2.6852 → 2.6850. The draft had
+invented a 0.005 gap.
+**Lesson:** Quote earlier stages' numbers from their results JSON, never from
+memory. Even "a tiny effect" was overstated by 25×.
+**Where:** `docs/06_gpt_model.md` §4c
+
+### 2026-11-06 · Stage 06 · The untied-head penalty was slow learning              [result]
+**Expected:** Stage 03 left open whether the untied head's +0.075 penalty is
+lasting or slow learning.
+**Found:** 4L, C=256. At 4,000 steps: tied 2.6814, untied 2.7576 (+0.076,
+the Stage 03 gap again). At 12,000 steps: tied 2.3577, untied 2.3608
+(+0.003, seed noise).
+**Lesson:** An untied output matrix must learn from scratch what a tied one
+inherits from the input embeddings. It catches up, and no further. For small
+models on short budgets, tying wins outright; for long runs it is a wash in
+quality and still saves V·C parameters.
+**Where:** `results/06_gpt/tie.json`, `docs/06_gpt_model.md` §8d
+
+### 2026-11-06 · Stage 06 · A 5M code model beats GPT-2 124M on code             [result]
+**Expected:** GPT-2, 23× larger, does better on everything.
+**Found:** Bits per byte on identical 256-token windows of our val split:
+code: ours **1.066**, GPT-2 1.522. English: ours 1.774, GPT-2 **1.122**.
+**Why:** In-domain training. GPT-2's WebText had little Python; ours is 85%
+drawn from this code distribution.
+**Lesson:** Compare across tokenizers in bits per byte, and remember that an
+in-domain loss win says nothing about general knowledge.
+**Where:** `results/06_gpt/bpb.json`, `docs/06_gpt_model.md` §8d

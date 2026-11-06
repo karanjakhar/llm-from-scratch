@@ -86,7 +86,7 @@ in book voice) · `final`
 | 5 | Turning ids into vectors and position | 03 | `docs/03_embeddings_position.md` | draft |
 | 6 | Attention, from one head up | 04 | `docs/04_attention.md` | draft |
 | 7 | The transformer block | 05 | `docs/05_transformer_block.md` | draft |
-| 8 | Assembling GPT | 06 | | not started |
+| 8 | Assembling GPT | 06 | `docs/06_gpt_model.md` | draft |
 | 9 | Making it talk: generation and decoding | 07 | | not started |
 | 10 | The training loop | 08 | | not started |
 | 11 | Making it fast on 8 GB | 09 | | not started |
@@ -139,6 +139,9 @@ HTML) and, for print, will need static versions.
 | Untrained 24-layer models | 7 | gradient per block, stream size, position similarity: pre / post / no residual | `visuals/05_init_grads.png` | yes (PNG) |
 | Depth training curves | 7 | pre / post / no residual at 4 and 24 layers | `visuals/05_depth.png` | yes (PNG) |
 | One change at a time | 7 | loss for RMSNorm, ReLU, SwiGLU, no MLP, dropout vs baseline | `visuals/05_sweep.png` | yes (PNG) |
+| Post-norm diagnosis | 7 | edit size vs highway, block-1 gradient: pre / post / post + √C | `visuals/05_postnorm_diagnosis.png` | yes (PNG) |
+| Residual-scaled init | 8 | stream size per block at init, 12/48 layers; 12-layer training | `visuals/06_init.png` | yes (PNG) |
+| Shift and tying | 8 | no-shift loss → 0; tied vs untied at 4k / 12k steps | `visuals/06_shift_tie.png` | yes (PNG) |
 
 **Wanted, not yet made:** a one-hot × table = row diagram and a 2D RoPE
 rotation diagram (chapter 5, ASCII versions in the doc for now), a MinHash/LSH diagram (chapter 4), a picture of

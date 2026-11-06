@@ -47,7 +47,7 @@ Deferred, with a trigger:
 | 03 | Embeddings & position | `[x]` | RoPE 2.52 < sinusoidal 2.63 < learned 2.69 < none 3.35; tying helps |
 | 04 | Attention | `[x]` | = SDPA to 1e-5; no √d: −0.04 at d=64, +0.95 at d=256; naive OOM at T=16k |
 | 05 | Transformer block | `[x]` | = HF GPT2Block; post-norm 2.69 @4L / 6.70 @24L; no residual = unigram 6.86; SwiGLU −0.038 |
-| 06 | GPT assembly | `[ ]` | |
+| 06 | GPT assembly | `[x]` | = HF GPT-2 (fp64 2e-11); 124,439,808 by hand; untied penalty 0.076→0.003 with 3× steps |
 | 07 | Generation & decoding | `[ ]` | |
 | 08 | Training loop | `[ ]` | |
 | 09 | Efficiency | `[ ]` | |
@@ -124,6 +124,14 @@ stay visible across months.
 | 2026-11-06 | 05 | 4L sweep, 3 seeds: baseline / RMSNorm / ReLU / SwiGLU | held-out code loss | 2.689±.012 / 2.712±.027 / 2.714±.002 / **2.651±.012** |
 | 2026-11-06 | 05 | no MLP 4L / no MLP 12L (param-matched) / dropout 0.1 | held-out code loss | 2.959±.028 / 2.909±.022 / 2.775±.024 |
 | 2026-11-06 | 05 | norm fwd+bwd, 8192×C bf16, C=256: LN ours / RMS ours / nn.LN / nn.RMS | ms | 1.18 / 0.60 / 0.42 / 0.30 (C=4096 fused: 3.92 / 3.91; Linear C×C 36.8) |
+| 2026-11-06 | 06 | our GPT with OpenAI GPT-2 weights vs HF, 200 val windows, GPU fp32 / fp64 | max logit diff | 0.055 / 2e-11 (residual stream max ≈3,000) |
+| 2026-11-06 | 06 | GPT-2 small parameter count | by hand = numel | 124,439,808 |
+| 2026-11-06 | 06 | GPT-2 124M on our val (650-tok windows) | bits per byte code / English | 1.394 / 1.064 |
+| 2026-11-06 | 06 | 256-tok windows: GPT-2 124M vs ours 5.3M (12k steps) | bits/byte code; English | 1.522 vs **1.066**; **1.122** vs 1.774 |
+| 2026-11-06 | 06 | stream rms after last block at init, plain vs scaled, 12L / 48L | rms (embed 0.028) | 0.474 vs 0.090 / 0.933 vs 0.089 |
+| 2026-11-06 | 06 | 12L, 4k steps, 2 seeds: plain vs scaled residual init | held-out code loss | 2.581 vs 2.568 (tie) |
+| 2026-11-06 | 06 | no shift (target = input), 1k steps | train / next-token val | 0.0001 / 21.86 (shift: 4.09) |
+| 2026-11-06 | 06 | tied vs untied, 4L, 4k / 12k steps | held-out code loss | 2.6814 vs 2.7576 / 2.3577 vs 2.3608 |
 
 ## Open questions
 
@@ -153,9 +161,8 @@ Things noticed but not yet understood. Carried forward until answered.
 - `codeparrot-clean` is less well filtered than the gated `bigcode/*` corpora.
   Does that show up as measurable quality loss, or is 5 GB of lightly-filtered
   Python fine at this scale?
-- Does the untied-head penalty (2.598 vs 2.523) shrink with longer training,
-  i.e. is it slow learning of 2.1M input rows, or a lasting loss? Re-check on
-  the workhorse model (Stage 08) if cheap.
+- ~~Does the untied-head penalty shrink with longer training?~~ **Answered
+  (Stage 06):** yes. +0.076 at 4k steps, +0.003 at 12k. Slow learning.
 - NoPE degrades least past the training length (+0.21) but starts 0.83 worse.
   Does the in-range gap shrink with depth and more tokens, as the NoPE papers
   suggest? Not worth a dedicated run; note if Stage 14 revisits it.
