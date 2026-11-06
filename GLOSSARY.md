@@ -56,6 +56,10 @@ cross-document contamination; used in long-context training and SFT. Stage 02.
 closed-form loss that provably optimizes the same objective as RLHF, with no
 reward model and no RL loop. Stage 19.
 
+**Dropout** — Zeroing a random fraction `p` of activations during training
+(survivors scaled by `1/(1-p)`), off at inference. Fights overfitting, so it
+only helps when data repeats. Modern pretraining runs use `p = 0`. Stage 05.
+
 **Embedding** — A lookup table mapping each token id to a learned vector.
 Mathematically a one-hot vector times a matrix. Stage 03.
 
@@ -72,6 +76,13 @@ live. Stage 05.
 **FlashAttention** — An attention implementation that tiles the computation so
 the n×n attention matrix is never written to memory. Same math, far less memory
 traffic. Stage 09.
+
+**Gated linear unit (GLU)** — An MLP that makes two projections of the input
+and multiplies them elementwise, one passed through an activation to act as a
+per-unit gate on the other. SwiGLU is the SiLU-gated version. Stage 05.
+
+**GELU** — `x · Φ(x)`, a smooth version of ReLU with a small dip below zero.
+GPT-2 uses a tanh approximation of it (`gelu_new`). Stage 05.
 
 **GQA (Grouped-Query Attention)** — Query heads are grouped and each group shares
 one key/value head, shrinking the KV cache. MHA and MQA are its two extremes.
@@ -91,9 +102,17 @@ the value network. Stage 20.
 **Jaccard similarity** — Overlap of two sets: `|A ∩ B| / |A ∪ B|`, from 0 (disjoint)
 to 1 (identical). Near-dedup measures it over sets of word 5-grams. Stage 02.
 
+**Jacobian** — The matrix of all partial derivatives of a vector function's
+outputs with respect to its inputs. The backward pass multiplies gradients by
+one per layer. Stage 05.
+
 **KV cache** — Stored keys and values from previous decoding steps, so each new
 token's attention does not recompute them. Turns O(n²) decoding work into O(n).
 Stage 07.
+
+**LayerNorm** — Normalising each token's vector on its own: subtract its mean,
+divide by its standard deviation, then apply a learned gain `γ` and bias `β`.
+Keeps a vector's shape, discards its offset and size. GPT-2. Stage 05.
 
 **Leakage (data)** — Validation text that the model effectively saw during
 training, so validation loss measures memorization rather than generalization.
@@ -149,6 +168,10 @@ why an embedding layer is a linear layer on one-hot inputs. Stage 03.
 position's hidden vector into one score (logit) per vocabulary token. Often
 shares its weights with the embedding table (see weight tying). Stage 03.
 
+**Overfitting** — Fitting the training data in ways that do not carry over
+to new data, usually by memorising examples seen many times. Shows as
+training loss falling while validation loss stalls or rises.
+
 **Packing** — Concatenating documents into one stream separated by an
 end-of-text token and cutting fixed-length windows from it, instead of padding
 each document to length. No wasted compute on padding. Stage 02.
@@ -159,6 +182,10 @@ information has this property, so it cannot tell `a = b` from `b = a`. Stage 03.
 
 **Perplexity** — `exp(cross-entropy loss)`. Intuitively, how many tokens the
 model is effectively choosing between at each step. Lower is better.
+
+**Post-norm** — Normalising *after* the residual add: `Norm(x + f(x))`. The
+2017 transformer and BERT. Puts a norm on the residual path itself, which makes
+deep stacks harder to train. Stage 05.
 
 **Pre-norm** — Normalizing the input to each sublayer rather than its output.
 Required for stable training at depth. Stage 05.
@@ -171,6 +198,18 @@ its attention map. Stage 04.
 query is what it is looking for, the key is what it matches on, the value is
 what it hands over when picked. Each is the token vector times its own learned
 matrix. Stage 04.
+
+**Rank collapse** — Every position's vector becoming the same as you go up a
+stack of attention layers, so tokens can no longer be told apart. What actually
+breaks when residual connections are removed (measured: cosine 1.000 between
+positions by block 12). Stage 05.
+
+**ReLU** — `max(0, x)`. Cheap; its gradient is exactly 0 for negative inputs,
+so a unit can stop learning ("die"). Stage 05.
+
+**Residual connection** — Adding a layer's output to its input, `x + f(x)`,
+instead of replacing it. The layer learns a correction, and the gradient gets a
+direct path past the layer. Stage 05.
 
 **Residual stream** — The running sum that each block reads from and adds to.
 The "highway" that lets gradients reach early layers.
@@ -191,6 +230,9 @@ Stage 16.
 
 **Shingle** — An overlapping window of n consecutive words (we use n = 5). A
 document's set of shingles is what near-dedup compares. Stage 02.
+
+**SiLU (swish)** — `x · sigmoid(x)`. Smooth, with a dip below zero; the gate
+in SwiGLU. Stage 05.
 
 **Sinusoidal positions** — Position encoded as the sines and cosines of
 `p·ω_i` at many speeds `ω_i`, like a row of clocks running at different rates.
@@ -217,6 +259,10 @@ by the tokenizer. Not a word, not a character. Stage 01.
 **Top-k / top-p sampling** — Truncating the next-token distribution to the k most
 likely tokens, or to the smallest set whose probability sums to p, before
 sampling. Stage 07.
+
+**Unigram loss** — The cross-entropy of predicting every token from its overall
+frequency alone, ignoring all context. The loss of a model that learned
+nothing about context: 6.86 on our code validation set. Stage 05.
 
 **Warmup** — Ramping the learning rate up from ~0 over the first few hundred
 steps, because Adam's variance estimates are unreliable early. Stage 08.

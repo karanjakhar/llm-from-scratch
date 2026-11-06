@@ -5,7 +5,7 @@ A new AI session reads `CLAUDE.md` then this file and knows exactly where to pic
 
 ## Current position
 
-**Stages 00-04 complete.** Next: **Stage 05 — The Transformer Block.**
+**Stages 00-05 complete.** Next: **Stage 06 — Assembling GPT.**
 
 Ready to use:
 - Tokenizer: `data/tokenizers/split_8192.json` (8,196 embedding rows, eot 8192)
@@ -21,8 +21,16 @@ Stage 04 code: `stages/04_attention/attention.py` (`attention()`,
 `MultiHeadAttention`), checked against SDPA and `nn.MultiheadAttention`.
 A trained d=64 checkpoint for maps: `checkpoints/04_attention/d64_seed0.pt`.
 
-**Next action:** write `docs/05_transformer_block.md` (docs before code), then
-`stages/05_block/`.
+Stage 05 code: `stages/05_block/block.py` (`LayerNorm`, `RMSNorm`, GELU
+exact/tanh, `MLP`, `SwiGLU`, `Block` with norm / act / pre-post / residual /
+dropout switches), checked against HF `GPT2Block` and `LlamaMLP`.
+`stages/05_block/model.py` is the tiny LM on that block (`emb_scale` option
+for the 2017 √C embedding multiplier). Not yet promoted to `llmfs/`; Stage 06
+builds the GPT class and is the natural point to promote the block.
+
+**Next action:** write `docs/06_gpt_model.md` (docs before code), then
+`stages/06_gpt/`. Stage 06 should pick up the init questions Stage 05 raised
+(embedding scale, `1/√(2·n_layer)` residual init; see open questions).
 
 Deferred, with a trigger:
 - Before Stage 11: download ~8 more code shards, re-run `dedup.py` +
@@ -38,7 +46,7 @@ Deferred, with a trigger:
 | 02 | Data pipeline | `[x]` | 2.36B tokens; leakage 34%→8%; loader 700×+ faster than needed |
 | 03 | Embeddings & position | `[x]` | RoPE 2.52 < sinusoidal 2.63 < learned 2.69 < none 3.35; tying helps |
 | 04 | Attention | `[x]` | = SDPA to 1e-5; no √d: −0.04 at d=64, +0.95 at d=256; naive OOM at T=16k |
-| 05 | Transformer block | `[ ]` | |
+| 05 | Transformer block | `[x]` | = HF GPT2Block; post-norm 2.69 @4L / 6.70 @24L; no residual = unigram 6.86; SwiGLU −0.038 |
 | 06 | GPT assembly | `[ ]` | |
 | 07 | Generation & decoding | `[ ]` | |
 | 08 | Training loop | `[ ]` | |
@@ -104,6 +112,18 @@ stay visible across months.
 | 2026-10-30 | 04 | 1 head × 256, scaled / unscaled, 3 seeds | held-out code loss | 2.705 ± 0.003 / **3.655 ± 0.018** |
 | 2026-10-30 | 04 | same, attention entropy / top weight | nats / weight | 2.78 / 0.29 vs 0.92 / 0.78 |
 | 2026-10-30 | 04 | trained d=64 model, head statistics | prev-token head; sinks | L2H2 68%; L3H0 24%, L3H1 37% on first token |
+| 2026-11-06 | 05 | untrained 24L, block-1 / block-24 grad norm: pre / post / no-residual | grad | 2.21/0.38 · 1.32/0.12 · 3.65/2.63 |
+| 2026-11-06 | 05 | same, mean cosine between positions after block 24 | cosine | 0.69 · 0.03 · **1.000** (no residual, from block 12) |
+| 2026-11-06 | 05 | unigram (token-frequency) cross-entropy, 512 val code windows | loss | **6.860** |
+| 2026-11-06 | 05 | pre-norm 4L / 24L, small embeddings, seed 0 | held-out code loss | 2.685 / 2.567 |
+| 2026-11-06 | 05 | post-norm 4L / 24L, small embeddings | held-out code loss | 6.856 / 6.857 (frequency floor) |
+| 2026-11-06 | 05 | no residual 4L / 24L | held-out code loss | 6.856 / 6.856; block-1 grad 3.8e-19 @ step 1000 (24L) |
+| 2026-11-06 | 05 | post-norm 4L, edit size rms(f)/rms(x) at step 500: small emb / √C emb | ratio | 2-24 / 0.3-0.6 |
+| 2026-11-06 | 05 | √C embeddings: pre 4L / post 4L / pre 24L / post 24L / post 24L no warmup | held-out code loss | 2.685 / **2.693** / **2.469** / **6.700** / 6.856 |
+| 2026-11-06 | 05 | post-norm 4L small emb, lr 3e-4 / 1e-4 | held-out code loss | 3.822 / 4.698 |
+| 2026-11-06 | 05 | 4L sweep, 3 seeds: baseline / RMSNorm / ReLU / SwiGLU | held-out code loss | 2.689±.012 / 2.712±.027 / 2.714±.002 / **2.651±.012** |
+| 2026-11-06 | 05 | no MLP 4L / no MLP 12L (param-matched) / dropout 0.1 | held-out code loss | 2.959±.028 / 2.909±.022 / 2.775±.024 |
+| 2026-11-06 | 05 | norm fwd+bwd, 8192×C bf16, C=256: LN ours / RMS ours / nn.LN / nn.RMS | ms | 1.18 / 0.60 / 0.42 / 0.30 (C=4096 fused: 3.92 / 3.91; Linear C×C 36.8) |
 
 ## Open questions
 
@@ -146,8 +166,38 @@ Things noticed but not yet understood. Carried forward until answered.
 - At d=64 the √d-scaled model started with score std 0.10 (near-uniform
   attention) and lost to unscaled by 0.04. Would a larger q/k init close it?
   Worth a check when Stage 05 revisits initialisation.
+- Pre-norm's positions grow alike with depth at init (cosine 0.69 after 24
+  blocks) and √C embeddings helped 24L pre-norm by 0.10 (one seed). Is that
+  an embedding-scale effect that Stage 06's init (std, `1/√(2·n_layer)`)
+  absorbs anyway? Re-measure there, with seeds.
+- Post-norm 24L with √C still failed at lr 1e-3 + 100 warmup. Would a long
+  warmup or lr 3e-4 rescue it, and at what cost vs pre-norm? Not run; it
+  would take ~1 h of GPU and does not change any decision.
+- RMSNorm's +0.023 (±0.027) is a tie at 3 seeds. Does it stay a tie on the
+  workhorse model? Stage 12 measures it again as part of the Llama switch.
 
 ## Session log
+
+### 2026-11-06 — Session 8
+- **Stage 05 complete.** `docs/05_transformer_block.md`; `stages/05_block/`
+  with 23 tests (norms vs `nn.LayerNorm` / `nn.RMSNorm` / `LlamaRMSNorm`,
+  GELU/SiLU, SwiGLU vs `LlamaMLP`, our block vs HF `GPT2Block`, the
+  Conv1D-transpose trap, residual identity, causality, param count).
+- Experiments: init gradients/stream/similarity at 24L; pre/post/no-residual
+  at 4 and 24 layers; a post-norm diagnosis; √C-embedding fair depth test;
+  6-variant × 3-seed sweep + parameter-matched no-MLP; norm speed.
+  ~5 h of GPU in total.
+- **Corrections to the textbook story, all measured:** without residuals the
+  gradients did *not* vanish at init; tokens merged first (rank collapse),
+  and gradients died only after the model fell back to predicting token
+  frequencies. Failure was a silent plateau at the unigram loss (6.86), not
+  divergence. Post-norm failed at 4 layers too, because of our small
+  embeddings; with the 2017 √C multiplier it matched pre-norm at 4 layers and
+  failed at 24, the curriculum's claim.
+- Caught a test mistake: targets = inputs in a tied model gives 8.46 at init,
+  not ~9.0. Kept as its own test.
+- 9 journal entries, 12 glossary terms, 4 figures (`docs/visuals/05_*.png`).
+- Not pushed (owner pushes on request).
 
 ### 2026-10-31 — Session 7
 - **Web edition of the book**: `book/build_web.py` turns the drafted docs

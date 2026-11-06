@@ -540,3 +540,171 @@ laid out end to end catches what reading one file at a time does not.
 **Where:** `book/build_web.py`, `book/template.html`, `docs/book_intro.md`;
 figure embeds added to `docs/03_embeddings_position.md` §7-8 and
 `docs/04_attention.md` §9
+
+---
+
+## Session 8 — 2026-11-06 · the transformer block
+
+### 2026-11-06 · Stage 05 · Our block equals Hugging Face's GPT2Block                [result]
+**Expected:** A pre-norm LayerNorm/GELU block with GPT-2's weights copied in
+reproduces `GPT2Block` to 1e-5.
+**Found:** It does, after two adjustments on the *test* side. (1) GPT-2's
+linear layers are `Conv1D`, stored `(in, out)`; every weight needs a `.T`.
+Copying the square `c_proj` without it raises no error and moves the output
+by more than 1e-2 (kept as `test_block_without_transpose_is_wrong`). (2) HF's
+eager GPT-2 attention applies no causal mask when the block is called on its
+own; the model builds the mask and passes it in. The test has to pass an
+additive `-inf` mask itself. GPT-2's GELU is the tanh approximation, which
+differs from the exact one by up to ~5e-4, so that one is needed too.
+**Lesson:** A reference block is only a reference for the inputs it is given.
+Read what the reference expects from its caller before trusting a mismatch,
+or a match.
+**Where:** `stages/05_block/test_block.py`, `docs/05_transformer_block.md` §9
+
+### 2026-11-06 · Stage 05 · An untrained tied model "predicts" its own input           [mistake]
+**Expected:** An untrained model's loss is about `ln(8196) = 9.01`.
+**Found:** 8.46. The test passed the input ids as the targets. With random
+targets, 9.07.
+**Why:** With a tied head, the logit for token `i` contains `⟨E[i], E[i]⟩ =
+|E[i]|² > 0` because the token's own embedding is in the stream. An untrained
+model already leans towards repeating its input. Our mistake was the test;
+the effect is real and is now its own test.
+**Lesson:** A bug that copies inputs to targets can look like early learning
+in a tied model. Check the loss at step 0 against `ln V` with real
+next-token targets.
+**Where:** `stages/05_block/test_block.py::test_tied_head_at_init_predicts_its_own_input`
+
+### 2026-11-06 · Stage 05 · Without residuals, gradients did not vanish; tokens merged   [surprise]
+**Expected:** (docs §2) In a 24-layer model without residual connections, the
+gradient reaching block 1 is a tiny fraction of block 24's (the `0.8^24`
+story).
+**Found:** Untrained, 5 seeds, one real batch each. Block-1 gradient norm
+**3.65**, block-24 **2.63**: nearly flat, and larger than pre-norm *with*
+residuals (2.21 / 0.38). What broke instead: the mean cosine similarity
+between different positions' vectors went 0.012 (embedding) → **0.75** after
+one block → 0.989 after block 8 → **1.000** from block 12. Every position
+carried the same vector.
+**Why:** The LayerNorm in front of each sublayer rescales the signal back to
+size 1 on the way up and divides the gradient by the input rms on the way
+down, so a shrinking product never forms. Attention at init is close to a
+plain causal average, and averages of overlapping sets look alike. Without a
+residual, that average replaces the token's own vector at every layer. This
+is rank collapse (Dong et al., 2021).
+**Lesson:** "Residuals stop gradients vanishing" is the textbook reason, but
+in a normalised network the measurable failure is different: the tokens
+become indistinguishable, and the large gradients carry no per-token
+information. Measure the representation, not only the gradient.
+**Where:** `results/05_block/grads.json`, `docs/visuals/05_init_grads.png`,
+`docs/05_transformer_block.md` §10a
+
+### 2026-11-06 · Stage 05 · Post-norm starts out calm at our init                  [surprise]
+**Expected:** (docs §4, after Xiong et al. 2020) Post-norm gradients misbehave
+at initialisation, worst at the top layers.
+**Found:** 24-layer post-norm, untrained: every block from 2 to 24 gets
+gradient norm 0.119 to 0.122, essentially flat. Block 1 gets 1.32 (it reads
+the raw, tiny embedding). Positions stay distinct (cosine 0.03 at the top).
+**Why:** With weights at std 0.02, each sublayer's output is small next to
+the normalised stream (rms 1), so `Norm(x + f(x)) ≈ x`. The model begins as
+a near-identity chain. Xiong et al.'s analysis assumes an init where `f(x)` is
+as large as `x`.
+**Lesson:** Stability claims come with an initialisation attached. The
+interesting question is whether post-norm stays calm once training grows the
+weights (§10b).
+**Where:** `results/05_block/grads.json`, `docs/05_transformer_block.md` §10a
+
+### 2026-11-06 · Stage 05 · Post-norm and no-residual both learned exactly nothing about context   [result]
+**Expected:** (curriculum) Pre-norm trains at 24 layers where post-norm
+diverges. Removing the residual makes training fail.
+**Found:** Same recipe as Stage 04, seed 0. Pre-norm: 2.685 (4 layers),
+2.567 (24 layers). Post-norm: **6.856** (4 layers), **6.857** (24 layers).
+No residual: **6.856** / **6.856**. Nothing diverged (no NaN). All four failed
+runs reached ~6.9 by step 50 and stayed there for 3,950 steps. The cross-entropy
+of plain token frequencies (85/15 train mix) on the same 512 val windows is
+**6.860**. The failed models predict how common each token is, and ignore
+their input, even the current token. Gradient to block 1 by step 1000:
+2.7e-9 (post, 4L), 1.2e-12 (post, 24L), 3.8e-19 (no residual, 24L), against
+0.45-0.61 for pre-norm.
+**Why:** The frequency answer is a constant function of the input. Once the
+top of the network outputs a near-constant, its derivative with respect to
+its input is ~0, which cuts the gradient to every block below. Nothing below
+can then learn to use context. A trap that, once entered, closes itself.
+**Lesson:** "Diverges" was the wrong prediction: the failure is a silent
+plateau at a recognisable number. Compute the unigram loss of your data
+once; a run sitting at it has learned nothing about context. And post-norm
+failed at 4 layers too, so in our setup this was not about depth.
+**Where:** `results/05_block/depth.json`, `docs/visuals/05_depth.png`,
+`docs/05_transformer_block.md` §10b-c
+
+### 2026-11-06 · Stage 05 · Post-norm failed because our embeddings were small        [surprise]
+**Expected:** If post-norm fails, it fails because of depth or learning rate.
+**Found:** `run.py diagnose` logged rms(f(x)) / rms(x), the size of each
+sublayer's edit next to the residual path, every 25 steps. Post-norm 4L:
+0.02-0.11 at init, **2-24 by step 500**; gradient to block 1 fell to 1.5e-5.
+The same model with token embeddings multiplied by √C (the 2017 paper's
+recipe; our embedding rms is 0.028 otherwise): edits peaked at 2.4 near step
+50, came back to **0.3-0.6**, block-1 gradient stayed 0.13-0.24, and loss at
+step 500 was 4.65, a little ahead of pre-norm (4.74). Both post-norm runs
+touched the frequency plateau at step ~50; only the √C one climbed out, by
+step 100. Pre-norm's edits are *larger* (up to 16× the stream at block 1)
+and do no harm.
+**Why:** In post-norm every gradient passes through `Norm(x + f(x))`, which
+divides it by the size of `x + f(x)`. Once the edit dwarfs `x`, the path
+back to the earlier layers shrinks by that factor at every sublayer. A tiny
+embedding makes `x` small from the start, so the edits win the race. In
+pre-norm no norm sits on the residual path, so edit size does not matter.
+**Lesson:** The √C multiplier in the 2017 paper, which Stage 03 met as a way
+to balance token and position, also kept post-norm alive. Recipes are
+bundles: take one part out (small embeddings) and another part (post-norm)
+can stop working. Pre-norm is the design that does not care.
+**Where:** `results/05_block/diagnose.json`, `docs/visuals/05_postnorm_diagnosis.png`,
+`docs/05_transformer_block.md` §10b
+
+### 2026-11-06 · Stage 05 · One change at a time: SwiGLU helps, dropout hurts, MLP matters   [result]
+**Expected:** (docs §3, §6, §7) RMSNorm ≈ LayerNorm; SwiGLU ≥ GELU; ReLU a
+little worse; dropout worse on single-pass data; no MLP clearly worse.
+**Found:** 4 layers, 3 seeds each, held-out code loss. Baseline (pre-norm,
+LayerNorm, GELU) **2.689 ± 0.012**, identical to Stage 04's `d64`
+(2.689 ± 0.012), a cross-check that the hand-written LayerNorm trains the
+same as `nn.LayerNorm`. RMSNorm 2.712 ± 0.027 (+0.023). ReLU 2.714 ± 0.002
+(+0.025). **SwiGLU 2.651 ± 0.012 (−0.038)** with 7k fewer parameters.
+No MLP 2.959 ± 0.028 (+0.270). Dropout 0.1: 2.775 ± 0.024 (+0.086), and its
+train loss is worse too (3.03 vs 2.86).
+**Why:** Dropout: nothing to overfit in 32.8M tokens seen once, so it only
+adds noise. RMSNorm's +0.023 is within about one standard deviation of the
+seed spread (0.027); we read it as "no measurable difference", not a loss.
+**Lesson:** Of the modern changes, SwiGLU is the one that pays at our scale.
+RMSNorm is adopted for cost, not quality.
+**Where:** `results/05_block/sweep.json`, `docs/visuals/05_sweep.png`
+
+### 2026-11-06 · Stage 05 · The fair depth test: post-norm trains at 4 layers, fails at 24   [result]
+**Expected:** (curriculum) Pre-norm trains at 24 layers where post-norm fails.
+**Found:** With `√C` embeddings for both (the 2017 recipe), one seed each:
+post-norm **2.693** at 4 layers (pre-norm 2.685), **6.700** at 24 layers
+(pre-norm **2.469**). Post-norm 24L's block-1 gradient was 7.9e-12 from step
+500 on. Without warmup, 24L post-norm sat at 6.856, the frequency floor.
+Lowering the learning rate for small-embedding post-norm at 4 layers let it
+escape but slowly: 3e-4 → 3.822, 1e-4 → 4.698. `√C` also helped pre-norm at
+24 layers (2.469 vs 2.567) but not at 4 (2.685 vs 2.685).
+**Why:** Every post-norm sublayer is one more place where the gradient is
+divided by the size of `x + f(x)`. Forty-eight of them are too many. In deep
+pre-norm, a small embedding is swamped by 48 additions (positions start too
+alike, §10a), which `√C` counters.
+**Lesson:** The curriculum's prediction held only once the comparison was
+fair. Without the diagnosis, we would have reported "post-norm fails at 4
+layers too", which is true for our recipe and misleading about post-norm.
+**Where:** `results/05_block/depth.json`, `docs/visuals/05_depth.png`
+
+### 2026-11-06 · Stage 05 · The MLP is not just parameters; RMSNorm is not much faster   [result]
+**Expected:** Removing the MLP hurts partly because it removes 2.1M
+parameters. RMSNorm is cheaper than LayerNorm.
+**Found:** A 12-layer attention-only model with the baseline's non-embedding
+parameter count (3.17M vs 3.16M): 2.909 ± 0.022, still +0.220 worse than the
+baseline (4-layer no-MLP: +0.270). Speed, fwd+bwd, 8,192 rows, bf16: written
+out in PyTorch, RMSNorm is ~1.8× faster than LayerNorm (0.60 vs 1.18 ms at
+C=256), which cost our LayerNorm runs 9% of wall time (250 s vs 228 s).
+Fused (`nn.*`): 0.30 vs 0.42 ms at C=256, 3.91 vs 3.92 at C=4096. At C=4096
+either norm is ~10% of one C×C matmul (36.8 ms).
+**Lesson:** Parameter-matched controls separate "this part matters" from
+"these parameters matter". Speed claims depend on whether the operation is
+fused; measure the version you will actually run.
+**Where:** `results/05_block/sweep.json`, `results/05_block/speed.json`

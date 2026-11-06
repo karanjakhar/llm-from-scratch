@@ -85,7 +85,7 @@ in book voice) · `final`
 | 4 | The data is most of the model | 02 | `docs/02_data.md` | draft |
 | 5 | Turning ids into vectors and position | 03 | `docs/03_embeddings_position.md` | draft |
 | 6 | Attention, from one head up | 04 | `docs/04_attention.md` | draft |
-| 7 | The transformer block | 05 | | not started |
+| 7 | The transformer block | 05 | `docs/05_transformer_block.md` | draft |
 | 8 | Assembling GPT | 06 | | not started |
 | 9 | Making it talk: generation and decoding | 07 | | not started |
 | 10 | The training loop | 08 | | not started |
@@ -136,6 +136,9 @@ HTML) and, for print, will need static versions.
 | Cost of T × T | 6 | memory and time, naive vs fused, up to OOM | `visuals/04_cost.png` | yes (PNG) |
 | All 16 heads | 6 | attention maps of every head on one snippet | `visuals/04_attention_maps.png` | yes (PNG) |
 | Two heads, labelled | 6 | previous-token head vs a diffuse head, with tokens | `visuals/04_attention_heads.png` | yes (PNG) |
+| Untrained 24-layer models | 7 | gradient per block, stream size, position similarity: pre / post / no residual | `visuals/05_init_grads.png` | yes (PNG) |
+| Depth training curves | 7 | pre / post / no residual at 4 and 24 layers | `visuals/05_depth.png` | yes (PNG) |
+| One change at a time | 7 | loss for RMSNorm, ReLU, SwiGLU, no MLP, dropout vs baseline | `visuals/05_sweep.png` | yes (PNG) |
 
 **Wanted, not yet made:** a one-hot × table = row diagram and a 2D RoPE
 rotation diagram (chapter 5, ASCII versions in the doc for now), a MinHash/LSH diagram (chapter 4), a picture of
