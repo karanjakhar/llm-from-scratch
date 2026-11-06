@@ -948,3 +948,26 @@ workhorse and capstone use it. This is a departure from pure GPT-2,
 borrowed from Stage 12's list on evidence; `from_pretrained("gpt2")` keeps it
 off. The diverged v1 sweep is kept in `results/10_scaling/v1_no_qknorm/`.
 **Where:** `llmfs/model/gpt.py` (`qk_norm`), `results/10_scaling/diagnose.json`
+
+### 2026-11-07 · Stage 10 · Our IsoFLOP optimum lands on Chinchilla's line          [result]
+**Expected:** A small sweep would be too noisy to say anything about the
+20-tokens-per-parameter rule.
+**Found:** With QK-norm, two budgets × five sizes, compute counted as
+6N + 6CV + 12LTC. Fitted minima: 3e15 → 4.2M params at 28 tokens/param
+(Chinchilla √(C/120) = 5.0M); 1e16 → 8.6M at 22.5 tokens/param (9.1M).
+Best points: 4L/256 2.279 at 3e15, 6L/384 2.055 at 1e16.
+**Lesson:** The rule transfers to 1-50M-parameter code models with an 8k
+vocabulary, within ~15%. It needed the instability fixed first: the diverged
+v1 points would have dragged the minima.
+**Where:** `results/10_scaling/{isoflop_3e15,isoflop_1e16,fits}.json`, `docs/visuals/10_scaling.png`
+
+### 2026-11-07 · Stage 10 · English is nearly free; repetition is not            [result]
+**Found:** 4L/256 at 108M tokens. Mix: code-only 2.182 code / 5.308 English;
+85/15 2.204 / 4.046; 70/30 2.260 / 3.844. Repetition (code only): fresh
+2.176; 4 epochs of 27M 2.288; 16 epochs of 6.7M 2.803. Over-training 3L
+(3.0M): 1× 2.534, 2× 2.365, 5× 2.228, 10× 2.178; the 10× run used 1.26e16
+FLOPs, more than the 1e16 optimum that reached 2.055.
+**Lesson:** 15% English costs 1% of code loss. Four epochs cost 5% here,
+more than published small-epoch results, but our repeated slice is a
+contiguous (less diverse) block, a confound we left in.
+**Where:** `results/10_scaling/{mix,repeat,overtrain}.json`, `docs/10_scaling_laws.md` §8c-e

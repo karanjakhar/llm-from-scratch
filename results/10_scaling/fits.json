@@ -1,0 +1,16 @@
+{
+ "1e16": {
+  "N_opt": 8614069,
+  "D_opt_6N": 193481921,
+  "tokens_per_param": 22.5,
+  "loss_at_opt": 2.0097,
+  "chinchilla_N": 9128709
+ },
+ "3e15": {
+  "N_opt": 4228560,
+  "D_opt_6N": 118243566,
+  "tokens_per_param": 28.0,
+  "loss_at_opt": 2.1724,
+  "chinchilla_N": 5000000
+ }
+}

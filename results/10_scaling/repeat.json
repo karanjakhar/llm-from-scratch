@@ -1,0 +1,59 @@
+[
+ {
+  "name": "L4_C256_1ep",
+  "L": 4,
+  "C": 256,
+  "N_nonemb": 3159040,
+  "N_total": 5388800,
+  "steps": 13156,
+  "tokens": 107773952,
+  "flops": 4077600745979904,
+  "tokens_per_param": 20.0,
+  "val": {
+   "code": 2.1756,
+   "en": 5.3113
+  },
+  "seconds": 374.8,
+  "lr": 0.001,
+  "epochs": 1,
+  "unique_tokens": 107776513
+ },
+ {
+  "name": "L4_C256_4ep",
+  "L": 4,
+  "C": 256,
+  "N_nonemb": 3159040,
+  "N_total": 5388800,
+  "steps": 13156,
+  "tokens": 107773952,
+  "flops": 4077600745979904,
+  "tokens_per_param": 20.0,
+  "val": {
+   "code": 2.2882,
+   "en": 5.5565
+  },
+  "seconds": 374.6,
+  "lr": 0.001,
+  "epochs": 4,
+  "unique_tokens": 26944513
+ },
+ {
+  "name": "L4_C256_16ep",
+  "L": 4,
+  "C": 256,
+  "N_nonemb": 3159040,
+  "N_total": 5388800,
+  "steps": 13156,
+  "tokens": 107773952,
+  "flops": 4077600745979904,
+  "tokens_per_param": 20.0,
+  "val": {
+   "code": 2.8032,
+   "en": 6.4726
+  },
+  "seconds": 349.9,
+  "lr": 0.001,
+  "epochs": 16,
+  "unique_tokens": 6736513
+ }
+]

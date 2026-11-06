@@ -5,7 +5,7 @@ A new AI session reads `CLAUDE.md` then this file and knows exactly where to pic
 
 ## Current position
 
-**Stages 00-09 complete. Stage 10 rerunning (with QK-norm) — see below.**
+**Stages 00-10 complete.** Stage 11 running (resume test, then workhorse).
 Goal set 2026-11-06: finish all stages in one long session.
 
 Built and tested ahead of their experiments (docs drafted, code + tests
@@ -53,7 +53,7 @@ Deferred, with a trigger:
 | 07 | Generation & decoding | `[x]` | cache exact in 36/36; speedup @512 1.3× (5M) / 3.3× (30M) / 4.5× (92M): overhead-bound |
 | 08 | Training loop | `[x]` | `llmfs/train/trainer.py`; TinyStories 10M → coherent in 11.5 min; no warmup @3e-3 +1.84; sequential order +1.25 |
 | 09 | Efficiency | `[x]` | 5.16× (14.3k → 73.7k tok/s, MFU 63%); compile 2.1× alone; capstone 25.4k tok/s |
-| 10 | Scaling laws | `[ ]` | |
+| 10 | Scaling laws | `[x]` | optimum 4.2M @3e15 / 8.6M @1e16 = 22-28 tok/param (Chinchilla ±15%); QK-norm needed (v1 diverged) |
 | 11 | Pretraining run | `[ ]` | |
 | 12 | Modern architecture | `[ ]` | |
 | 13 | Mixture of Experts | `[ ]` | |
@@ -147,6 +147,14 @@ stay visible across months.
 | 2026-11-06 | 09 | 8L/512 T=512 B=8: fp32 → TF32 → bf16 → SDPA → fused Adam → compile | tokens/s | 14,271 → 18,536 → 23,142 → 34,490 → 35,098 → 73,656 (5.16×, MFU 63%) |
 | 2026-11-06 | 09 | + activation checkpointing | tokens/s / peak MB | 60,955 / 718 (from 1,221) |
 | 2026-11-06 | 09 | T=1024 full stack: workhorse B16 / capstone B8 | tokens/s (MFU) | 70,200 (67%) / 25,389 (71%) |
+| 2026-11-06 | 10 | 4L/256, 13k steps, plain GPT-2 recipe | max attention score / val | 2,191,156 / 2.656 (diverged) |
+| 2026-11-06 | 10 | same: lr 5e-4 / QK-norm lr 1e-3 | val code | 2.431 / **2.280** |
+| 2026-11-07 | 10 | IsoFLOP 3e15 (L2..L8) | val code | 2.480 / 2.329 / **2.279** / 2.481 / 3.667 |
+| 2026-11-07 | 10 | IsoFLOP 1e16 (L3..L10) | val code | 2.184 / 2.065 / **2.055** / 2.241 / 2.622 |
+| 2026-11-07 | 10 | fitted optimum 3e15 / 1e16 | N (tokens/param) | 4.2M (28) / 8.6M (22.5); Chinchilla 5.0M / 9.1M |
+| 2026-11-07 | 10 | 4L, 108M tokens: code100 / 85-15 / 70-30 | val code ; English | 2.182 / 2.204 / 2.260 ; 5.308 / 4.046 / 3.844 |
+| 2026-11-07 | 10 | 4L code, 1 / 4 / 16 epochs | val code | 2.176 / 2.288 / 2.803 |
+| 2026-11-07 | 10 | 3L, 1× / 2× / 5× / 10× optimal tokens | val code | 2.534 / 2.365 / 2.228 / 2.178 |
 
 ## Open questions
 

@@ -1,0 +1,56 @@
+[
+ {
+  "name": "L4_C256_code100",
+  "L": 4,
+  "C": 256,
+  "N_nonemb": 3159040,
+  "N_total": 5388800,
+  "steps": 13156,
+  "tokens": 107773952,
+  "flops": 4077600745979904,
+  "tokens_per_param": 20.0,
+  "val": {
+   "code": 2.1819,
+   "en": 5.3077
+  },
+  "seconds": 374.7,
+  "lr": 0.001,
+  "mix": "code100"
+ },
+ {
+  "name": "L4_C256_code85_en15",
+  "L": 4,
+  "C": 256,
+  "N_nonemb": 3159040,
+  "N_total": 5388800,
+  "steps": 13156,
+  "tokens": 107773952,
+  "flops": 4077600745979904,
+  "tokens_per_param": 20.0,
+  "val": {
+   "code": 2.2037,
+   "en": 4.0456
+  },
+  "seconds": 374.6,
+  "lr": 0.001,
+  "mix": "code85_en15"
+ },
+ {
+  "name": "L4_C256_code70_en30",
+  "L": 4,
+  "C": 256,
+  "N_nonemb": 3159040,
+  "N_total": 5388800,
+  "steps": 13156,
+  "tokens": 107773952,
+  "flops": 4077600745979904,
+  "tokens_per_param": 20.0,
+  "val": {
+   "code": 2.2604,
+   "en": 3.8437
+  },
+  "seconds": 374.9,
+  "lr": 0.001,
+  "mix": "code70_en30"
+ }
+]
