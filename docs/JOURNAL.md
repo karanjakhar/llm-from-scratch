@@ -971,3 +971,34 @@ FLOPs, more than the 1e16 optimum that reached 2.055.
 more than published small-epoch results, but our repeated slice is a
 contiguous (less diverse) block, a confound we left in.
 **Where:** `results/10_scaling/{mix,repeat,overtrain}.json`, `docs/10_scaling_laws.md` §8c-e
+
+### 2026-11-07 · Stage 11 · The resume test caught a checkpoint bug on its first run   [mistake]
+**Expected:** Stop at step 600, resume, continue the same curve.
+**Found:** The resume crashed: `TypeError: RNG state must be a
+torch.ByteTensor`. The trainer loads checkpoints with
+`map_location="cuda"`, which also moved the saved CPU random-number state to
+the GPU; `torch.set_rng_state` only accepts a CPU tensor.
+**Lesson:** This is why the resume ablation runs before the long run: the
+bug cost 1 minute here instead of a crashed resume at hour 12 of the
+capstone. Anything saved for restoring state needs to be restored on the
+device it came from.
+**Where:** `llmfs/train/trainer.py` (resume), `stages/11_pretrain/run.py resume_test`
+
+### 2026-11-07 · Stage 12 · GPT-2 → Llama, unbundled: RoPE is 94% of it            [result]
+**Expected:** Each Llama change helps a little.
+**Found:** 6L/384, 33M tokens, 2 seeds per row: GPT-2 2.518; +RMSNorm 2.551
+(+0.033); +RoPE 2.321 (−0.230); +SwiGLU 2.295; +no bias 2.304; +GQA(2 kv)
+2.329; +QK-norm 2.274. KV heads 8/4/2/1: 2.306/2.305/2.315/2.335; MQA with
+the saved params in the MLP: 2.328.
+**Lesson:** Of the −0.244 total, RoPE is −0.230. RMSNorm and no-biases cost a
+little and are kept for speed. GQA is free down to 2 kv heads here.
+**Where:** `results/12_modern_arch/{ladder,gqa}.json`, `docs/12_modern_arch.md` §9a-b
+
+### 2026-11-07 · Stage 12 · Windowed attention is better nearby, worse far away    [surprise]
+**Found:** Loss at positions 16-64: window-64 2.73, full 2.80. At 256-512:
+window-64 2.48, full 1.97. Overall +0.24. NTK RoPE scaling, no fine-tune:
+positions 1024-2048 of a model trained at 512 go 2.56 → 2.19 with s=4.
+QK-norm model: no head puts more than 5.8% of attention on token 0.
+**Lesson:** A window trades long-range loss for a small short-range gain;
+the average hides both. Stacked layers did not recover what the window cut.
+**Where:** `results/12_modern_arch/{window,rope_scale,sinks}.json`

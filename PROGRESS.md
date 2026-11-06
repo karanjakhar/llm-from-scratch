@@ -55,7 +55,7 @@ Deferred, with a trigger:
 | 09 | Efficiency | `[x]` | 5.16× (14.3k → 73.7k tok/s, MFU 63%); compile 2.1× alone; capstone 25.4k tok/s |
 | 10 | Scaling laws | `[x]` | optimum 4.2M @3e15 / 8.6M @1e16 = 22-28 tok/param (Chinchilla ±15%); QK-norm needed (v1 diverged) |
 | 11 | Pretraining run | `[ ]` | |
-| 12 | Modern architecture | `[ ]` | |
+| 12 | Modern architecture | `[x]` | GPT-2→Llama 2.518→2.274; RoPE −0.230; MQA +0.03; window64 +0.24; NTK s=4 recovers 2.56→2.19 |
 | 13 | Mixture of Experts | `[ ]` | |
 | 14 | Attention variants | `[ ]` | |
 | 15 | Speculative decoding | `[ ]` | optional |
@@ -155,6 +155,11 @@ stay visible across months.
 | 2026-11-07 | 10 | 4L, 108M tokens: code100 / 85-15 / 70-30 | val code ; English | 2.182 / 2.204 / 2.260 ; 5.308 / 4.046 / 3.844 |
 | 2026-11-07 | 10 | 4L code, 1 / 4 / 16 epochs | val code | 2.176 / 2.288 / 2.803 |
 | 2026-11-07 | 10 | 3L, 1× / 2× / 5× / 10× optimal tokens | val code | 2.534 / 2.365 / 2.228 / 2.178 |
+| 2026-11-07 | 11 | workhorse 30M, 590M tokens, 2h18m | val code / English | 1.554 / 3.293 (max grad norm after step 1k: 1.49) |
+| 2026-11-07 | 12 | ladder (2 seeds): GPT-2 / +RMS / +RoPE / +SwiGLU / +no bias / +GQA2 / +QK-norm | val code | 2.518 / 2.551 / 2.321 / 2.295 / 2.304 / 2.329 / 2.274 |
+| 2026-11-07 | 12 | kv heads 8 / 4 / 2 / 1 / 1+MLP | val code | 2.306 / 2.305 / 2.315 / 2.335 / 2.328 |
+| 2026-11-07 | 12 | window full / 128 / 64 / 16 | val code | 2.314 / 2.424 / 2.559 / 3.141 |
+| 2026-11-07 | 12 | trained @512, eval @2048, NTK s=1 / 2 / 4 | loss at pos 1024-2048 | 2.557 / 2.232 / 2.187 |
 
 ## Open questions
 

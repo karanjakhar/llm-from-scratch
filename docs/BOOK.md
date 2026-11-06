@@ -92,7 +92,7 @@ in book voice) · `final`
 | 11 | Making it fast on 8 GB | 09 | `docs/09_efficiency.md` | draft |
 | 12 | How big, how long: scaling laws | 10 | `docs/10_scaling_laws.md` | draft |
 | 13 | The real pretraining run | 11 | | not started |
-| 14 | Modern architecture: from GPT-2 to Llama | 12 | | not started |
+| 14 | Modern architecture: from GPT-2 to Llama | 12 | `docs/12_modern_arch.md` | draft |
 | 15 | Mixture of Experts | 13 | | not started |
 | 16 | Other kinds of attention, longer context | 14 | | not started |
 | 17 | Faster decoding | 15 | | not started |
@@ -146,6 +146,7 @@ HTML) and, for print, will need static versions.
 | The training loop | 10 | optimizers; overfit spike; warmup/clip at lr 3e-3; sampler order | `visuals/08_training.png` | yes (PNG) |
 | The speed stack | 11 | tokens/s, MFU and memory for each optimisation in turn | `visuals/09_stack.png` | yes (PNG) |
 | IsoFLOP, overtraining, mix and repeats | 12 | two U-curves with fitted optima; diminishing returns; mix/epoch bars | `visuals/10_scaling.png` | yes (PNG) |
+| GPT-2 → Llama | 14 | ladder; KV bytes vs loss; window loss by position; NTK past training length | `visuals/12_modern_arch.png` | yes (PNG) |
 
 **Wanted, not yet made:** a one-hot × table = row diagram and a 2D RoPE
 rotation diagram (chapter 5, ASCII versions in the doc for now), a MinHash/LSH diagram (chapter 4), a picture of
