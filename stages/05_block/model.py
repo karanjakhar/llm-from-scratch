@@ -35,6 +35,7 @@ class Config:
     prenorm: bool = True
     residual: bool = True
     dropout: float = 0.0
+    emb_scale: bool = False   # multiply token embeddings by √C, as the 2017 paper did
 
 
 class TinyLM(nn.Module):
@@ -61,7 +62,10 @@ class TinyLM(nn.Module):
     def forward(self, ids: torch.Tensor, targets: torch.Tensor | None = None,
                 keep_stream: bool = False):
         B, T = ids.shape
-        x = self.tok(ids) + self.pos(T)                          # (B, T, C)
+        tok = self.tok(ids)                                      # (B, T, C), rms ≈ 0.02
+        if self.cfg.emb_scale:
+            tok = tok * self.cfg.dim ** 0.5                      # rms ≈ 0.02·√C (0.32 at C=256)
+        x = tok + self.pos(T)                                    # (B, T, C)
         stream = [x] if keep_stream else None
         for blk in self.blocks:
             x = blk(x)                                           # (B, T, C)

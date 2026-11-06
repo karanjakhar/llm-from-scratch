@@ -180,12 +180,18 @@ class Block(nn.Module):
         else:
             self.mlp = MLP(dim, act=act, bias=bias)
         self.drop = nn.Dropout(dropout)
+        self.probe = False                                       # record |f(x)| / |x| (run.py diagnose)
+        self.ratios: list[float] = []
 
     def _sublayer(self, x: torch.Tensor, f, norm: nn.Module) -> torch.Tensor:
         if self.prenorm:
-            out = self.drop(f(norm(x)))                              # (B, T, C) the side road
+            out = self.drop(f(norm(x)))
+            if self.probe:
+                self.ratios.append((out.float().pow(2).mean() / x.float().pow(2).mean()).sqrt().item())                              # (B, T, C) the side road
             return x + out if self.residual else out                 # highway untouched
         out = self.drop(f(x))
+        if self.probe:                                           # how big is the edit next to the highway?
+            self.ratios.append((out.float().pow(2).mean() / x.float().pow(2).mean()).sqrt().item())
         return norm(x + out if self.residual else out)               # norm sits ON the highway
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:             # x: (B, T, C)

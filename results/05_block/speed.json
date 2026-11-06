@@ -1,0 +1,50 @@
+{
+ "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+ "unit": "ms fwd+bwd",
+ "rows": [
+  {
+   "C": 256,
+   "rows": 8192,
+   "LayerNorm (ours)": 1.1825,
+   "RMSNorm (ours)": 0.6027,
+   "nn.LayerNorm": 0.4165,
+   "nn.RMSNorm": 0.3011,
+   "LayerNorm (ours, compiled)": 0.2205,
+   "RMSNorm (ours, compiled)": 0.1808,
+   "Linear C\u00d7C (for scale)": 0.5429
+  },
+  {
+   "C": 768,
+   "rows": 8192,
+   "LayerNorm (ours)": 3.2217,
+   "RMSNorm (ours)": 1.7282,
+   "nn.LayerNorm": 0.6807,
+   "nn.RMSNorm": 0.5923,
+   "LayerNorm (ours, compiled)": 0.6726,
+   "RMSNorm (ours, compiled)": 0.5053,
+   "Linear C\u00d7C (for scale)": 3.3799
+  },
+  {
+   "C": 2048,
+   "rows": 8192,
+   "LayerNorm (ours)": 9.5207,
+   "RMSNorm (ours)": 5.2332,
+   "nn.LayerNorm": 1.8912,
+   "nn.RMSNorm": 1.8876,
+   "LayerNorm (ours, compiled)": 1.9061,
+   "RMSNorm (ours, compiled)": 1.7255,
+   "Linear C\u00d7C (for scale)": 14.7329
+  },
+  {
+   "C": 4096,
+   "rows": 8192,
+   "LayerNorm (ours)": 18.2013,
+   "RMSNorm (ours)": 10.5491,
+   "nn.LayerNorm": 3.9169,
+   "nn.RMSNorm": 3.9088,
+   "LayerNorm (ours, compiled)": 3.6198,
+   "RMSNorm (ours, compiled)": 3.5291,
+   "Linear C\u00d7C (for scale)": 36.8233
+  }
+ ]
+}
