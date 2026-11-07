@@ -1215,3 +1215,12 @@ MB); r=4 1.0278; r=16 1.0281 (merged 1.0280); r=64 1.0328; QLoRA r=16
 30M × 16 bytes (grads + Adam), the only memory LoRA removes; activations,
 untouched, are 89% of the peak at this size.
 **Where:** `results/17_lora/workhorse.json`
+
+### 2026-11-07 · Stage 16 · SFT learned the format in 250 steps, then only forgot   [result]
+**Found:** Workhorse SFT on 119k CodeSearchNet pairs: completion val 1.168 →
+1.036 at step 250 → 1.033 at step 3,000. HumanEval 0 → 1.2% (strlen,
+concatenate), MBPP 0%. Pretraining val code 1.684 → 1.832, English 3.341 →
+3.646. Prompt in the loss: 1.0295, same 2 problems, +0.011 more forgetting.
+**Lesson:** Format is cheap; forgetting accumulates per step. Measure both,
+and stop when the format loss flattens.
+**Where:** `results/16_sft/workhorse*.json`

@@ -59,7 +59,7 @@ Deferred, with a trigger:
 | 13 | Mixture of Experts | `[x]` | MoE ≈ dense at 33M tokens (2.325 vs 2.320), 16×top-4 2.303; no aux → 4/8 experts dead, loss unchanged |
 | 14 | Attention variants | `[x]` | MLA r128 2.414 vs GQA-2 2.315 (MLA loses at this scale); window-128 0% needles beyond window at +0.11 loss |
 | 15 | Speculative decoding | `[x]` | exact (fp32); greedy acceptance 0.83 @γ4, best speedup 1.20× (draft costs 0.43 of target) |
-| 16 | SFT | `[ ]` | |
+| 16 | SFT | `[x]` | format learned in 250 steps; HumanEval 0→1.2%; forgetting +0.15 code / +0.31 Eng; prompt-loss ablation a tie |
 | 17 | LoRA / QLoRA | `[x]` | = peft; r=1 (0.22%) matches full SFT (1.0318 vs 1.0328); QLoRA +0.004; saves 510 MB = optimizer state |
 | 18 | Reward modeling | `[x]` | 85.2% on test-verified MBPP pairs (56.8% untrained); 20%/40% flips → 76.6%/71.6% |
 | 19 | DPO / RLHF | `[x]` | pair acc 0.50→0.87 (β=1); β≤0.1 over-optimises (RM 9.56→7.8, chosen logp −53); pass@1 unchanged |
