@@ -5,16 +5,20 @@ A new AI session reads `CLAUDE.md` then this file and knows exactly where to pic
 
 ## Current position
 
-**Stages 00-10, 12-21, 23 complete.** Stage 11 capstone pretraining is
-running (started 2026-11-07; 27,500 steps, ~20 h; resumable with
-`uv run python stages/11_pretrain/run.py capstone`). After it, the scratchpad
-chain `chain5.sh` runs: capstone samples/plot → Stage 15 with the capstone as
-target → SFT → RM → DPO (β=1.0) → GRPO (easy curriculum) → quantization →
-bursty serving → Stage 22 table (`--pass10`), MC length-normalisation,
-contamination split → Stage 24 `assemble.py`.
+**PAUSED 2026-11-08 at the owner's request.** Stages 00-10, 12-21, 23
+complete. Stage 11 capstone pretraining stopped cleanly at **step 10,500 of
+27,500** (checkpoint `checkpoints/11_pretrain/capstone/ckpt.pt`; val code
+1.475 at step 10,000; ~3 s/step, ~14 h left).
 
-Remaining to write once those numbers exist: Stage 11 §8c (capstone),
-Stage 22 §8a/§8c, Stage 24 doc, `MODEL_CARD.md` numbers, README status.
+**To resume everything** (capstone, then its post-training/eval chain, then
+the Stage 24 assembly), from the repo root:
+
+    nohup bash stages/24_capstone/run_pipeline.sh > capstone_pipeline.log 2>&1 &
+
+The first command resumes pretraining from the checkpoint (bit-identical
+resume, Stage 11 §8b). Remaining after the pipeline: write Stage 11 §8c,
+Stage 22 §8a/§8c, Stage 24 §1-2, fill `MODEL_CARD.md`, README status, mark
+11/22/24 done.
 
 Ready to use:
 - Tokenizer: `data/tokenizers/split_8192.json` (8,196 embedding rows, eot 8192)
@@ -47,7 +51,7 @@ Deferred, with a trigger:
 | 08 | Training loop | `[x]` | `llmfs/train/trainer.py`; TinyStories 10M → coherent in 11.5 min; no warmup @3e-3 +1.84; sequential order +1.25 |
 | 09 | Efficiency | `[x]` | 5.16× (14.3k → 73.7k tok/s, MFU 63%); compile 2.1× alone; capstone 25.4k tok/s |
 | 10 | Scaling laws | `[x]` | optimum 4.2M @3e15 / 8.6M @1e16 = 22-28 tok/param (Chinchilla ±15%); QK-norm needed (v1 diverged) |
-| 11 | Pretraining run | `[~]` | workhorse done (1.554); resume bit-identical; capstone pending |
+| 11 | Pretraining run | `[~]` | workhorse done (1.554); resume bit-identical; capstone paused at step 10,500 (val 1.475 @10k) |
 | 12 | Modern architecture | `[x]` | GPT-2→Llama 2.518→2.274; RoPE −0.230; MQA +0.03; window64 +0.24; NTK s=4 recovers 2.56→2.19 |
 | 13 | Mixture of Experts | `[x]` | MoE ≈ dense at 33M tokens (2.325 vs 2.320), 16×top-4 2.303; no aux → 4/8 experts dead, loss unchanged |
 | 14 | Attention variants | `[x]` | MLA r128 2.414 vs GQA-2 2.315 (MLA loses at this scale); window-128 0% needles beyond window at +0.11 loss |
