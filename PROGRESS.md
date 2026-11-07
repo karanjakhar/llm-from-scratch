@@ -66,7 +66,7 @@ Deferred, with a trigger:
 | 20 | Reasoning / GRPO | `[x]` | MBPP: 0/576 rollouts pass, no signal; easy curriculum 13.3%→38.0% held-out, HumanEval 1.2→2.4%; format reward worse |
 | 21 | Distill & quantize | `[x]` | distilled 2.438 vs scratch 2.518 (same tokens); int8 +0.0004, NF4 +0.016, int4 per-tensor +2.39 vs group +0.035 |
 | 22 | Evaluation | `[ ]` | |
-| 23 | Serving | `[ ]` | |
+| 23 | Serving | `[x]` | continuous batching: TTFT 377→8 ms, p50 0.78→0.27 s; 1→32 slots 295→1,304 tok/s; 21% of cache used |
 | 24 | Capstone | `[ ]` | |
 
 ## Results log
@@ -179,6 +179,8 @@ stay visible across months.
 | 2026-11-07 | 20 | after GRPO (outcome only): HumanEval / MBPP pass@1 | fraction | 0.0244 / 0.002 (SFT 0.0122 / 0) |
 | 2026-11-07 | 21 | 5.4M student, 6k steps: scratch / distilled from workhorse | val code | 2.518 / 2.438 (380 s / 1,126 s) |
 | 2026-11-07 | 21 | workhorse quant: int8-ch / NF4-64 / int4-g32 / int4-g128 / int4-ch / int4-tensor / int3-g32 | Δ val code | +0.0004 / +0.016 / +0.020 / +0.035 / +0.059 / +2.39 / +0.13 |
+| 2026-11-07 | 23 | serving ceiling, 1 / 4 / 16 / 32 slots | tokens/s | 295 / 782 / 1,189 / 1,304 |
+| 2026-11-07 | 23 | bursty 10 req/s, static vs continuous | p50 / p99 / TTFT p50 (s) | 0.777 / 1.953 / 0.377 vs 0.272 / 1.563 / 0.008 |
 
 ## Open questions
 

@@ -1187,3 +1187,21 @@ scratch on identical tokens, at 3× wall time.
 "wins" needs a fixed budget stated: distillation wins per token, not per
 GPU-second.
 **Where:** `results/21_distill_quant/{distill,quant_workhorse}.json`, `docs/visuals/21_distill_quant.png`
+
+### 2026-11-07 · Stage 23 · Continuous batching: same throughput, 47× faster first token   [result]
+**Found:** Workhorse, 16 slots, bursty 10 req/s: static p50 0.777 s / p99
+1.953 s / TTFT p50 0.377 s; continuous 0.272 / 1.563 / 0.008 s; throughput
+696 vs 725 tok/s. Ceiling 295 tok/s at 1 slot, 1,304 at 32. Requests used
+21% of reserved cache rows.
+**Lesson:** Batching policy is about who waits, not how fast the GPU runs.
+**Where:** `results/23_serving/*_workhorse.json`, `docs/visuals/23_serving.png`
+
+### 2026-11-07 · Stage 23 · Exporting to HF GPT-2 silently dropped QK-norm          [trap]
+**Found:** The exported workhorse loaded into `GPT2LMHeadModel` with
+`strict=False` and produced logits 12.2 away from ours. The only "missing"
+key reported was the tied `lm_head`; the *unexpected* `q_gain`/`k_gain` keys
+were ignored without complaint.
+**Lesson:** `strict=False` reports what is missing on the target and drops
+what it does not know about. Check unexpected keys too, and check logits
+after any export.
+**Where:** `stages/23_serving/run.py::cmd_hf`

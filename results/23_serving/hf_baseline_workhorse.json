@@ -1,0 +1,10 @@
+{
+ "max_logit_diff_bf16": 12.1875,
+ "missing": [
+  "lm_head.weight"
+ ],
+ "hf_tok_s_B1": 424.8,
+ "ours_tok_s_B1": 292.7,
+ "hf_tok_s_B16": 3170.1,
+ "ours_tok_s_B16": 1560.7
+}
