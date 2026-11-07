@@ -1064,3 +1064,21 @@ different rounding; a near-tie flips.
 **Lesson:** "Distribution-exact" holds for the mathematics. In low precision,
 check exactness in fp32 and expect rare near-tie flips in bf16.
 **Where:** `stages/15_speculative/run.py`, `docs/15_speculative.md` §6
+
+### 2026-11-07 · Stage 22 · HumanEval's trailing newline emptied every completion    [trap]
+**Expected:** The base workhorse writes function bodies for HumanEval prompts.
+**Found:** All 164 base-mode completions were the empty string after
+truncation: pass@1 = 0 for a reason unrelated to skill. Raw output for
+HumanEval/2 began `\ndef truncate_number_to_number(...)`: a new function, as
+if the prompt's body were complete.
+**Why:** HumanEval prompts end with `"""\n`, and our tokenizer encodes that
+final newline as a bare `"\n"` token. In training, a newline followed by
+indentation is almost always the single token `"\n   "` (+ spaces), so a bare
+`"\n"` token is evidence that the next line starts at column 0. The model
+continued accordingly. Stripping the prompt's trailing newline lets it emit
+`"\n    ..."` itself: HumanEval/23 now gets `return int(string)`.
+**Lesson:** A prompt is tokenized in a context the model never saw in
+training if it ends mid-"word". Where a token boundary falls is part of the
+prompt. (Known in the Codex/HumanEval literature as stripping trailing
+whitespace; here it was invisible until a completion was printed raw.)
+**Where:** `llmfs/eval/codeeval.py::evaluate`
