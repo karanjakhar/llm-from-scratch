@@ -63,7 +63,7 @@ Deferred, with a trigger:
 | 17 | LoRA / QLoRA | `[ ]` | |
 | 18 | Reward modeling | `[x]` | 85.2% on test-verified MBPP pairs (56.8% untrained); 20%/40% flips → 76.6%/71.6% |
 | 19 | DPO / RLHF | `[x]` | pair acc 0.50→0.87 (β=1); β≤0.1 over-optimises (RM 9.56→7.8, chosen logp −53); pass@1 unchanged |
-| 20 | Reasoning / GRPO | `[ ]` | |
+| 20 | Reasoning / GRPO | `[x]` | MBPP: 0/576 rollouts pass, no signal; easy curriculum 13.3%→38.0% held-out, HumanEval 1.2→2.4%; format reward worse |
 | 21 | Distill & quantize | `[ ]` | |
 | 22 | Evaluation | `[ ]` | |
 | 23 | Serving | `[ ]` | |
@@ -173,6 +173,10 @@ stay visible across months.
 | 2026-11-07 | 18 | labels flipped 0 / 20 / 40% | MBPP acc | 0.852 / 0.766 / 0.716 |
 | 2026-11-07 | 19 | DPO β 0.01/0.05/0.1/0.3/1.0: MBPP pair acc | fraction | 0.816 / 0.835 / 0.842 / 0.861 / 0.873 |
 | 2026-11-07 | 19 | same: RM score of own samples (SFT 9.56) ; KL | score ; nats | 7.89/7.64/7.84/9.10/11.13 ; 0.173/0.185/0.160/0.071/0.020 |
+| 2026-11-07 | 20 | GRPO on MBPP, SFT workhorse, 3 steps | rollouts passing | 0 / 576 |
+| 2026-11-07 | 20 | easy tasks held-out pass@1, steps 0/15/30/45/60, outcome only | fraction | 0.133 / 0.140 / 0.247 / 0.307 / 0.380 |
+| 2026-11-07 | 20 | same, outcome + format | fraction | 0.133 / 0.167 / 0.200 / 0.247 / 0.267 |
+| 2026-11-07 | 20 | after GRPO (outcome only): HumanEval / MBPP pass@1 | fraction | 0.0244 / 0.002 (SFT 0.0122 / 0) |
 
 ## Open questions
 

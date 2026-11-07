@@ -100,7 +100,7 @@ in book voice) · `final`
 | 19 | Fine-tuning with 1% of the parameters: LoRA | 17 | | not started |
 | 20 | Learning what people prefer: reward models | 18 | `docs/18_reward_model.md` | draft |
 | 21 | RLHF, DPO and GRPO | 19 | `docs/19_rlhf_dpo.md` | draft |
-| 22 | Rewards you can verify: unit tests | 20 | | not started |
+| 22 | Rewards you can verify: unit tests | 20 | `docs/20_reasoning_rlvr.md` | draft |
 | 23 | Smaller and faster: distillation and quantization | 21 | | not started |
 | 24 | Measuring what matters | 22 | | not started |
 | 25 | Serving it | 23 | | not started |
@@ -152,6 +152,7 @@ HTML) and, for print, will need static versions.
 | Speculative decoding | 17 | speedup and acceptance vs γ at three temperatures | `visuals/15_speculative_workhorse.png` | yes (PNG) |
 | Reward model | 20 | reward histograms; accuracy under label noise; calibration | `visuals/18_reward.png` | yes (PNG) |
 | DPO | 21 | implicit reward margins; RM score vs KL by β; pair accuracy | `visuals/19_dpo.png` | yes (PNG) |
+| GRPO | 22 | held-out pass@1, training pass rate, response length: outcome vs format | `visuals/20_grpo.png` | yes (PNG) |
 
 **Wanted, not yet made:** a one-hot × table = row diagram and a 2D RoPE
 rotation diagram (chapter 5, ASCII versions in the doc for now), a MinHash/LSH diagram (chapter 4), a picture of

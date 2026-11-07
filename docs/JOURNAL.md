@@ -1145,3 +1145,23 @@ chosen log-prob fell 53 nats by step 600. HumanEval 1.2% (SFT) → 0-0.6%.
 margin by lowering everything. A large β stops once the pairs separate.
 Pairwise preference training improved ranking, not generation.
 **Where:** `results/19_dpo/workhorse_beta*.json`, `docs/visuals/19_dpo.png`
+
+### 2026-11-07 · Stage 20 · GRPO on MBPP had nothing to learn from                 [surprise]
+**Expected:** Few successes, but some signal.
+**Found:** SFT workhorse, 3 GRPO steps on MBPP train: 72 groups × 8 rollouts
+(τ=1) = 576 programs, **0 passed**. Every group all-fail → every advantage 0
+→ no gradient. Stopped the run rather than spend 2.5 h on zero updates.
+**Lesson:** RL from a verifier needs pass@k > 0 on the training prompts. A
+curriculum the model can sometimes solve is a precondition, not a detail.
+**Where:** `results/20_grpo/workhorse_mbpp_outcome_only.json`
+
+### 2026-11-07 · Stage 20 · Prose prompts: 0%. Code-shaped prompts: 7.5%           [surprise]
+**Found:** On 80 templated easy tasks ("return x plus 3", "reverse a
+string"), the SFT workhorse scored 0/80 when the task was a prose docstring
+(MBPP style), writing `def write_function(function):`. Phrased as a
+signature + docstring + doctest, Stage 16's training format: greedy 7.5%,
+pass@8 7.5% at τ=1, and 13.3% on the 150-task held-out set.
+**Lesson:** SFT teaches one request format. A 30M model does not
+generalise from "complete this signature" to "do what this sentence says".
+This also explains its MBPP 0% in chat mode.
+**Where:** `stages/20_grpo/easy_tasks.py`

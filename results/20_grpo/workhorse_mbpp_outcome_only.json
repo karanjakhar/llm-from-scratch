@@ -1,0 +1,55 @@
+{
+ "args": {
+  "sft": "checkpoints/16_sft/workhorse.pt",
+  "tag": "workhorse",
+  "steps": 100,
+  "G": 8,
+  "prompts": 4,
+  "max_tries": 24,
+  "max_new": 256,
+  "epochs": 2,
+  "lr": 1e-06,
+  "beta": 0.04,
+  "eval_every": 25,
+  "format_reward": false,
+  "save": true,
+  "plot": false
+ },
+ "hist": [
+  {
+   "step": 0,
+   "mbpp_test": 0.0,
+   "humaneval": 0.0122
+  },
+  {
+   "step": 1,
+   "reward_mean": 0.0,
+   "groups_tried": 24,
+   "groups_with_signal": 0,
+   "pass_rate_rollouts": 0.0,
+   "len_pass": null,
+   "len_fail": 159.5,
+   "solved_ever": 0
+  },
+  {
+   "step": 2,
+   "reward_mean": 0.0,
+   "groups_tried": 24,
+   "groups_with_signal": 0,
+   "pass_rate_rollouts": 0.0,
+   "len_pass": null,
+   "len_fail": 164.2,
+   "solved_ever": 0
+  },
+  {
+   "step": 3,
+   "reward_mean": 0.0,
+   "groups_tried": 24,
+   "groups_with_signal": 0,
+   "pass_rate_rollouts": 0.0,
+   "len_pass": null,
+   "len_fail": 154.2,
+   "solved_ever": 0
+  }
+ ]
+}
