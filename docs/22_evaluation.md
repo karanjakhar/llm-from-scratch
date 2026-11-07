@@ -1,0 +1,237 @@
+# Stage 22 — Evaluation That Means Something
+
+Every stage so far produced a number. This stage asks which numbers deserve
+trust, puts all our checkpoints through one harness, and produces one
+table.
+
+What is in this stage:
+
+- what **perplexity** is good for, and where it misleads;
+- **multiple-choice scoring** by log-likelihood, and **length normalisation**;
+- **generative** benchmarks: HumanEval and MBPP, **pass@k** and its estimator;
+- **LLM-as-judge**, its position bias, pairwise win rates and Elo, and why we
+  do not use them;
+- **contamination**: did the test leak into the training data?
+- why published benchmark numbers are often not comparable.
+
+---
+
+## 1. Perplexity: necessary, not sufficient
+
+**Perplexity** is `exp(loss)`: "the model is as unsure as if it were choosing
+uniformly among this many tokens". Our capstone's code loss of about 1.5
+nats is a perplexity of about 4.5.
+
+Uses: comparing models **with the same tokenizer on the same text** (every
+stage up to now); spotting training problems; a smooth signal that moves with
+every change.
+
+Limits:
+
+- **Not comparable across tokenizers.** A tokenizer with longer tokens has
+  fewer, harder predictions per byte. Use **bits per byte** instead (Stage 06
+  did this to compare against GPT-2).
+- **Dominated by easy tokens.** Most code tokens are predictable (closing
+  brackets, indentation, the rest of an identifier). A model can lower average
+  loss a lot while getting no better at the rare tokens that decide whether a
+  program is correct. Stage 14 showed a window-64 model with almost the same
+  loss as full attention and very different long-range retrieval.
+- **Not the task.** We want working programs. Loss says nothing directly about
+  whether a sampled function passes its tests.
+
+---
+
+## 2. Multiple-choice scoring and length normalisation
+
+Benchmarks like HellaSwag and MMLU give a question and several candidate
+answers. A base model is scored by asking which candidate it finds most
+likely:
+
+```
+score(answer) = log P(answer | question) = Σ_t log P(token_t | question, tokens_<t)
+pick the answer with the highest score
+```
+
+The problem: a **sum** of log-probabilities favours **short** answers, since
+every extra token adds a negative number. A three-token wrong answer can beat
+a ten-token right one just by being short. **Length normalisation** divides
+by the number of tokens (or by bytes, which is tokenizer-independent):
+
+```
+score_norm(answer) = (1/len) · Σ_t log P(token_t | ...)
+```
+
+Neither is "correct". Different leaderboards use different ones (lm-eval-harness
+reports both `acc` and `acc_norm`), and they can rank models differently.
+
+**Our version, for code.** For each MBPP problem: the reference solution and
+three single-mutation variants (Stage 18) that **fail the tests**. The model
+must give the working one the highest score. Mutations change length a little:
+`x < y` → `x >= y` adds a token, `return x` → `return None` changes several.
+§8c scores this with and without normalisation and shows how much the
+ranking of our checkpoints depends on that choice.
+
+---
+
+## 3. Generative benchmarks and pass@k
+
+**HumanEval** (Chen et al. 2021): 164 hand-written Python problems, each a
+signature and docstring, with hidden unit tests. **MBPP** (Austin et al. 2021):
+974 short problems in plain English with three asserts each; we use the 500
+test problems, showing one assert in the prompt (the standard setup).
+
+The model writes code; the code is run; it passes or not. No judgement
+involved. This is the objective number the whole project was designed around.
+
+**pass@k**: the probability that at least one of `k` samples passes. Sampling
+exactly `k` times per problem is noisy. Chen et al.'s **unbiased estimator**
+samples `n ≥ k` times, counts the `c` that pass, and computes the probability
+that a random subset of `k` contains at least one pass:
+
+```
+pass@k = 1 − C(n − c, k) / C(n, k)
+```
+
+Example: `n = 10, c = 3, k = 2`: `1 − C(7,2)/C(10,2) = 1 − 21/45 = 0.533`.
+(`test_pass_at_k_estimator`.) pass@1 with greedy decoding (`n = 1`,
+temperature 0) is the most common single number; pass@10 at temperature
+0.8 measures "can it get there at all".
+
+**Our harness is tested before it is trusted**: all 164 HumanEval reference
+solutions pass through it, at least 99% of MBPP's references pass, and
+`return None` stubs fail (`stages/22_evaluation/test_eval.py`). A harness that
+scores the reference solutions below 100% is measuring itself.
+
+**Honest expectations.** Published small code models: codegen-350M-mono gets
+12.8% HumanEval pass@1; GPT-2-sized general models get ~0%. Our 30M and
+~100M models, trained on 1-2B tokens, should land in the low single digits
+or at zero. The number matters because it is objective and comparable, not
+because it is large.
+
+---
+
+## 4. LLM-as-judge, and why not here
+
+For open-ended tasks (chat, summaries) there are no unit tests, so a strong
+model is asked to judge: "which of these two answers is better?" Known
+problems (Zheng et al. 2023, "Judging LLM-as-a-judge"):
+
+- **position bias**: judges prefer the first (or second) answer shown. The
+  control: judge every pair in both orders, count a win only if it survives
+  the swap;
+- **verbosity bias**: longer answers win;
+- **self-preference**: models prefer outputs like their own.
+
+Pairwise judgements are aggregated into **win rates** or **Elo** ratings (the
+chess rating system: each comparison moves both ratings by an amount that
+depends on how surprising the result was). Chatbot Arena does this with
+human votes.
+
+At 100M parameters, our models' open-ended answers are too poor for a judge's
+preferences to measure anything but noise, and we have tests. We use tests.
+
+---
+
+## 5. Contamination
+
+If test problems (or their solutions) appear in the training data, the model
+may have **memorised** them, and the score measures memory, not skill.
+HumanEval was written by hand in 2021 to avoid this, but solutions to it have
+since been posted all over GitHub. MBPP problems are textbook exercises that
+exist in many forms.
+
+**Detection**: search the training data for long exact overlaps with each
+benchmark's solutions. We hash every 13-token window of each reference
+solution (in our tokenizer) and scan all 1.33B training code tokens for
+matches. 13-gram overlap is the GPT-3 paper's contamination test. A problem is
+flagged if any 13-gram of its solution appears in training.
+
+Caveats: an exact 13-gram match can be innocent (`for i in range(len(arr)):`
+is common), and a paraphrased leak has no exact matches. It is a screen, not
+proof. We report pass@1 on flagged and unflagged problems separately.
+
+---
+
+## 6. Why papers' numbers are often not comparable
+
+The same benchmark name can hide different prompts, few-shot examples,
+decoding settings, stop sequences, answer extraction, normalisation, and
+test subsets. MBPP alone has been reported with 0, 1 or 3 tests in the prompt,
+on the 500-problem test set or the 427-problem sanitized subset. A 2-point gap
+between two papers is often smaller than the gap between two harnesses run on
+the same model. Comparing our own checkpoints with **one harness** is the
+honest thing we can do; for external comparison we state every setting.
+
+Our settings: greedy pass@1, max 256-300 new tokens, completions cut at the
+first top-level statement after the function, MBPP test split (500) with one
+assert in a docstring prompt, HumanEval as published. Base models continue the
+raw prompt; chat models get it as a user turn.
+
+---
+
+## 7. Acceptance criteria
+
+- harness: reference solutions pass, stubs fail, the early-exit hack fails,
+  pass@k matches the formula (`test_eval.py`);
+- `run.py table`: one row per checkpoint: val loss (code, English),
+  bits per byte, HumanEval pass@1, MBPP pass@1, and pass@10 for the main
+  models;
+- `run.py contamination`: flagged problems and pass@1 split by flag;
+- `run.py mc`: mutant-discrimination accuracy with and without length
+  normalisation, and the model ranking under each.
+
+---
+
+## 8. Experiments
+
+### 8a. The table
+
+*(results go here)*
+
+### 8b. Contamination
+
+Every 13-token window of each reference solution (HumanEval: prompt +
+canonical solution; MBPP: reference code), hashed and searched for in all
+**1.33B training code tokens**:
+
+| share of a problem's 13-grams found in training | HumanEval (164) | MBPP test (500) |
+|---|---|---|
+| any (≥ 1 window) | 69 | 50 |
+| ≥ 5% | 16 | 20 |
+| ≥ 20% | 1 | 3 |
+| ≥ 50% | **0** | **0** |
+
+"Any match" flags 42% of HumanEval, and it means almost nothing: the shared
+windows are boilerplate (`from typing import List\n\n\ndef`, docstring
+openings, `for i in range(len(`). No problem has half its solution in our
+training data. The most-overlapping ones are textbook snippets that exist in
+thousands of repositories:
+
+```python
+# HumanEval/55, 23% of 13-grams in training
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    return fib(n - 1) + fib(n - 2)
+
+# mbpp/102, 40%
+def snake_to_camel(word):
+        import re
+        return ''.join(x.capitalize() or '_' for x in word.split('_'))
+```
+
+Neither is a leak of the benchmark; both are code any Python corpus
+contains. We treat problems with ≥ 20% overlap as "heavily overlapping" and
+report pass@1 split by that flag in the table: if a model solves only those,
+the score is suspect.
+
+### 8c. Length normalisation
+
+*(results go here)*
+
+---
+
+## 9. What we found
+
+*(written after the experiments)*

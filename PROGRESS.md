@@ -5,23 +5,16 @@ A new AI session reads `CLAUDE.md` then this file and knows exactly where to pic
 
 ## Current position
 
-**Stages 00-10 complete.** Stage 11 running (resume test, then workhorse).
-Goal set 2026-11-06: finish all stages in one long session.
+**Stages 00-10, 12-21, 23 complete.** Stage 11 capstone pretraining is
+running (started 2026-11-07; 27,500 steps, ~20 h; resumable with
+`uv run python stages/11_pretrain/run.py capstone`). After it, the scratchpad
+chain `chain5.sh` runs: capstone samples/plot → Stage 15 with the capstone as
+target → SFT → RM → DPO (β=1.0) → GRPO (easy curriculum) → quantization →
+bursty serving → Stage 22 table (`--pass10`), MC length-normalisation,
+contamination split → Stage 24 `assemble.py`.
 
-Built and tested ahead of their experiments (docs drafted, code + tests
-passing, results pending): Stages 10-23 (`docs/10_*.md` … `docs/23_*.md`,
-`stages/10_scaling` … `stages/23_serving`, `llmfs/model/{llama,moe}.py`,
-`llmfs/post/{lora,dpo,grpo,quant,prefs}.py`, `llmfs/eval/`, `llmfs/serve/`).
-Stage 24: `docs/24_capstone.md` skeleton, `stages/24_capstone/assemble.py`.
-
-Run order (GPU is the bottleneck; scratchpad chain scripts):
-1. Stage 10 sweep with `qk_norm=True` (v1 without it diverged: attention
-   scores reached 2M; `results/10_scaling/v1_no_qknorm/`, `diagnose.json`).
-2. Stage 11: resume test, workhorse (8L/512, 590M tokens, ~2.4 h).
-3. Stages 12-14 experiments (6L/384 Llama variants, MoE, MLA, needles).
-4. Stages 15-23 on the workhorse.
-5. Capstone (12L/768 + QK-norm, 1.8B tokens, ~20 h), then 16/19/20/21/22/23
-   on it, then Stage 24.
+Remaining to write once those numbers exist: Stage 11 §8c (capstone),
+Stage 22 §8a/§8c, Stage 24 doc, `MODEL_CARD.md` numbers, README status.
 
 Ready to use:
 - Tokenizer: `data/tokenizers/split_8192.json` (8,196 embedding rows, eot 8192)
