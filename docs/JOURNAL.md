@@ -1165,3 +1165,25 @@ pass@8 7.5% at τ=1, and 13.3% on the 150-task held-out set.
 generalise from "complete this signature" to "do what this sentence says".
 This also explains its MBPP 0% in chat mode.
 **Where:** `stages/20_grpo/easy_tasks.py`
+
+### 2026-11-07 · Stage 17 · LoRA adapters were created on the CPU                 [mistake]
+**Found:** The CPU unit tests passed; on the GPU the first LoRA run crashed
+with `mat2 is on cpu`. `LoRALinear` built `lora_A`/`lora_B` with
+`torch.empty(...)`, default device CPU, while wrapping a base layer already on
+CUDA.
+**Fix:** create the adapter parameters on `base.weight.device`.
+**Lesson:** Modules that wrap existing (already-moved) modules must inherit
+their device; tests that only run on the CPU cannot catch it.
+**Where:** `llmfs/post/lora.py::LoRALinear`
+
+### 2026-11-07 · Stage 21 · Same 4 bits: per-tensor +2.39, per-group +0.035        [result]
+**Found:** Workhorse 30M, weight-only quantization, val code (bf16 1.6838,
+57.1 MB): int8 per-channel +0.0004; NF4 block-64 +0.0156 (21.9 MB); int4
+group-32 +0.020, group-128 +0.035, per-channel +0.059, per-tensor **+2.39**;
+int3 group-32 +0.13. All quantized variants decode slower (178-416 vs 725
+tok/s): no fused kernel. Distillation: 5.4M student 2.438 distilled vs 2.518
+scratch on identical tokens, at 3× wall time.
+**Lesson:** Granularity matters more than bit width between 4 and 8 bits. And
+"wins" needs a fixed budget stated: distillation wins per token, not per
+GPU-second.
+**Where:** `results/21_distill_quant/{distill,quant_workhorse}.json`, `docs/visuals/21_distill_quant.png`

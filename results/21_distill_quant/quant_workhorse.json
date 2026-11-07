@@ -1,0 +1,92 @@
+[
+ {
+  "name": "bf16",
+  "val": {
+   "code": 1.6838,
+   "en": 3.3407
+  },
+  "mb": 57.11,
+  "tok_s": 724.6
+ },
+ {
+  "name": "int8 per-tensor",
+  "val": {
+   "code": 1.6859,
+   "en": 3.3426
+  },
+  "mb": 33.11,
+  "tok_s": 276.1
+ },
+ {
+  "name": "int8 per-channel",
+  "val": {
+   "code": 1.6842,
+   "en": 3.341
+  },
+  "mb": 33.25,
+  "tok_s": 415.9
+ },
+ {
+  "name": "int4 per-tensor",
+  "val": {
+   "code": 4.0773,
+   "en": 5.2796
+  },
+  "mb": 21.11,
+  "tok_s": 290.4
+ },
+ {
+  "name": "int4 per-channel",
+  "val": {
+   "code": 1.7424,
+   "en": 3.41
+  },
+  "mb": 21.25,
+  "tok_s": 294.9
+ },
+ {
+  "name": "int4 group-128",
+  "val": {
+   "code": 1.719,
+   "en": 3.3843
+  },
+  "mb": 21.86,
+  "tok_s": 291.8
+ },
+ {
+  "name": "int4 group-32",
+  "val": {
+   "code": 1.7042,
+   "en": 3.369
+  },
+  "mb": 24.11,
+  "tok_s": 288.6
+ },
+ {
+  "name": "int4 group-128 asym",
+  "val": {
+   "code": 1.7078,
+   "en": 3.3717
+  },
+  "mb": 21.86,
+  "tok_s": 288.5
+ },
+ {
+  "name": "nf4 block-64",
+  "val": {
+   "code": 1.6994,
+   "en": 3.3613
+  },
+  "mb": 21.86,
+  "tok_s": 178.0
+ },
+ {
+  "name": "int3 group-32",
+  "val": {
+   "code": 1.8164,
+   "en": 3.4937
+  },
+  "mb": null,
+  "tok_s": 690.0
+ }
+]

@@ -64,7 +64,7 @@ Deferred, with a trigger:
 | 18 | Reward modeling | `[x]` | 85.2% on test-verified MBPP pairs (56.8% untrained); 20%/40% flips → 76.6%/71.6% |
 | 19 | DPO / RLHF | `[x]` | pair acc 0.50→0.87 (β=1); β≤0.1 over-optimises (RM 9.56→7.8, chosen logp −53); pass@1 unchanged |
 | 20 | Reasoning / GRPO | `[x]` | MBPP: 0/576 rollouts pass, no signal; easy curriculum 13.3%→38.0% held-out, HumanEval 1.2→2.4%; format reward worse |
-| 21 | Distill & quantize | `[ ]` | |
+| 21 | Distill & quantize | `[x]` | distilled 2.438 vs scratch 2.518 (same tokens); int8 +0.0004, NF4 +0.016, int4 per-tensor +2.39 vs group +0.035 |
 | 22 | Evaluation | `[ ]` | |
 | 23 | Serving | `[ ]` | |
 | 24 | Capstone | `[ ]` | |
@@ -177,6 +177,8 @@ stay visible across months.
 | 2026-11-07 | 20 | easy tasks held-out pass@1, steps 0/15/30/45/60, outcome only | fraction | 0.133 / 0.140 / 0.247 / 0.307 / 0.380 |
 | 2026-11-07 | 20 | same, outcome + format | fraction | 0.133 / 0.167 / 0.200 / 0.247 / 0.267 |
 | 2026-11-07 | 20 | after GRPO (outcome only): HumanEval / MBPP pass@1 | fraction | 0.0244 / 0.002 (SFT 0.0122 / 0) |
+| 2026-11-07 | 21 | 5.4M student, 6k steps: scratch / distilled from workhorse | val code | 2.518 / 2.438 (380 s / 1,126 s) |
+| 2026-11-07 | 21 | workhorse quant: int8-ch / NF4-64 / int4-g32 / int4-g128 / int4-ch / int4-tensor / int3-g32 | Δ val code | +0.0004 / +0.016 / +0.020 / +0.035 / +0.059 / +2.39 / +0.13 |
 
 ## Open questions
 
