@@ -60,7 +60,7 @@ Deferred, with a trigger:
 | 14 | Attention variants | `[x]` | MLA r128 2.414 vs GQA-2 2.315 (MLA loses at this scale); window-128 0% needles beyond window at +0.11 loss |
 | 15 | Speculative decoding | `[x]` | exact (fp32); greedy acceptance 0.83 @γ4, best speedup 1.20× (draft costs 0.43 of target) |
 | 16 | SFT | `[ ]` | |
-| 17 | LoRA / QLoRA | `[ ]` | |
+| 17 | LoRA / QLoRA | `[x]` | = peft; r=1 (0.22%) matches full SFT (1.0318 vs 1.0328); QLoRA +0.004; saves 510 MB = optimizer state |
 | 18 | Reward modeling | `[x]` | 85.2% on test-verified MBPP pairs (56.8% untrained); 20%/40% flips → 76.6%/71.6% |
 | 19 | DPO / RLHF | `[x]` | pair acc 0.50→0.87 (β=1); β≤0.1 over-optimises (RM 9.56→7.8, chosen logp −53); pass@1 unchanged |
 | 20 | Reasoning / GRPO | `[x]` | MBPP: 0/576 rollouts pass, no signal; easy curriculum 13.3%→38.0% held-out, HumanEval 1.2→2.4%; format reward worse |
@@ -181,6 +181,8 @@ stay visible across months.
 | 2026-11-07 | 21 | workhorse quant: int8-ch / NF4-64 / int4-g32 / int4-g128 / int4-ch / int4-tensor / int3-g32 | Δ val code | +0.0004 / +0.016 / +0.020 / +0.035 / +0.059 / +2.39 / +0.13 |
 | 2026-11-07 | 23 | serving ceiling, 1 / 4 / 16 / 32 slots | tokens/s | 295 / 782 / 1,189 / 1,304 |
 | 2026-11-07 | 23 | bursty 10 req/s, static vs continuous | p50 / p99 / TTFT p50 (s) | 0.777 / 1.953 / 0.377 vs 0.272 / 1.563 / 0.008 |
+| 2026-11-07 | 17 | SFT full / LoRA r1 / r4 / r16 / r64 / QLoRA r16 | completion val loss | 1.0328 / 1.0318 / 1.0278 / 1.0281 / 1.0328 / 1.0321 |
+| 2026-11-07 | 17 | peak training MB, full vs LoRA r16 | MB | 4,615 vs 4,104 |
 
 ## Open questions
 

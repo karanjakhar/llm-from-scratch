@@ -1205,3 +1205,13 @@ were ignored without complaint.
 what it does not know about. Check unexpected keys too, and check logits
 after any export.
 **Where:** `stages/23_serving/run.py::cmd_hf`
+
+### 2026-11-07 · Stage 17 · Rank 1 is enough; LoRA saves exactly the optimizer state   [result]
+**Found:** Workhorse SFT, 3,000 steps: full fine-tune completion val 1.0328
+(29.9M trainable, 4,615 MB peak); LoRA r=1 1.0318 (65,536 trainable, 4,105
+MB); r=4 1.0278; r=16 1.0281 (merged 1.0280); r=64 1.0328; QLoRA r=16
+1.0321. Step time 253-267 ms for all.
+**Lesson:** Format-teaching SFT is very low-rank. The 510 MB saved equals
+30M × 16 bytes (grads + Adam), the only memory LoRA removes; activations,
+untouched, are 89% of the peak at this size.
+**Where:** `results/17_lora/workhorse.json`

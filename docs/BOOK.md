@@ -97,7 +97,7 @@ in book voice) · `final`
 | 16 | Other kinds of attention, longer context | 14 | `docs/14_attention_variants.md` | draft |
 | 17 | Faster decoding | 15 | `docs/15_speculative.md` | draft |
 | 18 | Teaching it to follow instructions | 16 | | not started |
-| 19 | Fine-tuning with 1% of the parameters: LoRA | 17 | | not started |
+| 19 | Fine-tuning with 1% of the parameters: LoRA | 17 | `docs/17_peft_lora.md` | draft |
 | 20 | Learning what people prefer: reward models | 18 | `docs/18_reward_model.md` | draft |
 | 21 | RLHF, DPO and GRPO | 19 | `docs/19_rlhf_dpo.md` | draft |
 | 22 | Rewards you can verify: unit tests | 20 | `docs/20_reasoning_rlvr.md` | draft |
