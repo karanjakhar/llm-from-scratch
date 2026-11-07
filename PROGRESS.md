@@ -62,7 +62,7 @@ Deferred, with a trigger:
 | 16 | SFT | `[ ]` | |
 | 17 | LoRA / QLoRA | `[ ]` | |
 | 18 | Reward modeling | `[x]` | 85.2% on test-verified MBPP pairs (56.8% untrained); 20%/40% flips → 76.6%/71.6% |
-| 19 | DPO / RLHF | `[ ]` | |
+| 19 | DPO / RLHF | `[x]` | pair acc 0.50→0.87 (β=1); β≤0.1 over-optimises (RM 9.56→7.8, chosen logp −53); pass@1 unchanged |
 | 20 | Reasoning / GRPO | `[ ]` | |
 | 21 | Distill & quantize | `[ ]` | |
 | 22 | Evaluation | `[ ]` | |
@@ -171,6 +171,8 @@ stay visible across months.
 | 2026-11-07 | 16 | SFT forgetting: pretraining val code / English | loss before → after | 1.684→1.832 / 3.341→3.646 |
 | 2026-11-07 | 18 | RM on SFT workhorse: CSN held-out / MBPP verified | pairwise acc | 0.826 / 0.852 (untrained 0.507 / 0.568) |
 | 2026-11-07 | 18 | labels flipped 0 / 20 / 40% | MBPP acc | 0.852 / 0.766 / 0.716 |
+| 2026-11-07 | 19 | DPO β 0.01/0.05/0.1/0.3/1.0: MBPP pair acc | fraction | 0.816 / 0.835 / 0.842 / 0.861 / 0.873 |
+| 2026-11-07 | 19 | same: RM score of own samples (SFT 9.56) ; KL | score ; nats | 7.89/7.64/7.84/9.10/11.13 ; 0.173/0.185/0.160/0.071/0.020 |
 
 ## Open questions
 

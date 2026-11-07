@@ -1,0 +1,436 @@
+{
+ "beta": 0.05,
+ "steps": 1000,
+ "hist": [
+  {
+   "step": 0,
+   "mbpp_pref_acc": 0.5,
+   "rm": 9.5638,
+   "kl": 0.0
+  },
+  {
+   "step": 1,
+   "loss": 0.6931,
+   "reward_chosen": 0.0,
+   "reward_rejected": 0.0,
+   "logp_chosen_delta": 0.0,
+   "logp_rejected_delta": 0.0,
+   "mbpp_pref_acc": 0.58,
+   "rm": 9.5707,
+   "kl": 0.0001
+  },
+  {
+   "step": 21,
+   "loss": 0.6804,
+   "reward_chosen": -0.0009,
+   "reward_rejected": -0.027,
+   "logp_chosen_delta": -0.019,
+   "logp_rejected_delta": -0.539
+  },
+  {
+   "step": 41,
+   "loss": 0.6326,
+   "reward_chosen": 0.0026,
+   "reward_rejected": -0.1308,
+   "logp_chosen_delta": 0.052,
+   "logp_rejected_delta": -2.615
+  },
+  {
+   "step": 61,
+   "loss": 0.4933,
+   "reward_chosen": -0.0363,
+   "reward_rejected": -0.5263,
+   "logp_chosen_delta": -0.725,
+   "logp_rejected_delta": -10.525
+  },
+  {
+   "step": 81,
+   "loss": 0.4782,
+   "reward_chosen": -0.2623,
+   "reward_rejected": -0.8486,
+   "logp_chosen_delta": -5.246,
+   "logp_rejected_delta": -16.973
+  },
+  {
+   "step": 101,
+   "loss": 0.5442,
+   "reward_chosen": -0.3326,
+   "reward_rejected": -0.7512,
+   "logp_chosen_delta": -6.652,
+   "logp_rejected_delta": -15.024
+  },
+  {
+   "step": 121,
+   "loss": 0.528,
+   "reward_chosen": -0.2688,
+   "reward_rejected": -0.7493,
+   "logp_chosen_delta": -5.375,
+   "logp_rejected_delta": -14.986
+  },
+  {
+   "step": 141,
+   "loss": 0.4253,
+   "reward_chosen": -0.3021,
+   "reward_rejected": -1.1461,
+   "logp_chosen_delta": -6.041,
+   "logp_rejected_delta": -22.923
+  },
+  {
+   "step": 161,
+   "loss": 0.4641,
+   "reward_chosen": -0.6925,
+   "reward_rejected": -1.3603,
+   "logp_chosen_delta": -13.85,
+   "logp_rejected_delta": -27.206
+  },
+  {
+   "step": 181,
+   "loss": 0.6,
+   "reward_chosen": -0.8534,
+   "reward_rejected": -1.1837,
+   "logp_chosen_delta": -17.068,
+   "logp_rejected_delta": -23.673
+  },
+  {
+   "step": 201,
+   "loss": 0.5872,
+   "reward_chosen": -0.5216,
+   "reward_rejected": -0.8971,
+   "logp_chosen_delta": -10.432,
+   "logp_rejected_delta": -17.943,
+   "mbpp_pref_acc": 0.82,
+   "rm": 8.3886,
+   "kl": 0.0397
+  },
+  {
+   "step": 221,
+   "loss": 0.5141,
+   "reward_chosen": -0.5895,
+   "reward_rejected": -1.273,
+   "logp_chosen_delta": -11.79,
+   "logp_rejected_delta": -25.46
+  },
+  {
+   "step": 241,
+   "loss": 0.6315,
+   "reward_chosen": -0.9311,
+   "reward_rejected": -1.1772,
+   "logp_chosen_delta": -18.623,
+   "logp_rejected_delta": -23.544
+  },
+  {
+   "step": 261,
+   "loss": 0.474,
+   "reward_chosen": -1.5995,
+   "reward_rejected": -2.3935,
+   "logp_chosen_delta": -31.99,
+   "logp_rejected_delta": -47.87
+  },
+  {
+   "step": 281,
+   "loss": 0.3783,
+   "reward_chosen": -0.7477,
+   "reward_rejected": -1.9864,
+   "logp_chosen_delta": -14.953,
+   "logp_rejected_delta": -39.728
+  },
+  {
+   "step": 301,
+   "loss": 0.2986,
+   "reward_chosen": -1.4589,
+   "reward_rejected": -3.1303,
+   "logp_chosen_delta": -29.179,
+   "logp_rejected_delta": -62.606
+  },
+  {
+   "step": 321,
+   "loss": 0.3513,
+   "reward_chosen": -1.4802,
+   "reward_rejected": -2.8833,
+   "logp_chosen_delta": -29.604,
+   "logp_rejected_delta": -57.665
+  },
+  {
+   "step": 341,
+   "loss": 0.3147,
+   "reward_chosen": -1.7235,
+   "reward_rejected": -3.3746,
+   "logp_chosen_delta": -34.469,
+   "logp_rejected_delta": -67.491
+  },
+  {
+   "step": 361,
+   "loss": 0.2951,
+   "reward_chosen": -1.8932,
+   "reward_rejected": -3.5624,
+   "logp_chosen_delta": -37.864,
+   "logp_rejected_delta": -71.248
+  },
+  {
+   "step": 381,
+   "loss": 0.3801,
+   "reward_chosen": -2.6122,
+   "reward_rejected": -3.9222,
+   "logp_chosen_delta": -52.244,
+   "logp_rejected_delta": -78.444
+  },
+  {
+   "step": 401,
+   "loss": 0.4943,
+   "reward_chosen": -1.2077,
+   "reward_rejected": -1.8928,
+   "logp_chosen_delta": -24.154,
+   "logp_rejected_delta": -37.856,
+   "mbpp_pref_acc": 0.81,
+   "rm": 6.2782,
+   "kl": 0.1398
+  },
+  {
+   "step": 421,
+   "loss": 0.2793,
+   "reward_chosen": -2.3207,
+   "reward_rejected": -4.114,
+   "logp_chosen_delta": -46.414,
+   "logp_rejected_delta": -82.281
+  },
+  {
+   "step": 441,
+   "loss": 0.4371,
+   "reward_chosen": -1.2029,
+   "reward_rejected": -2.1373,
+   "logp_chosen_delta": -24.057,
+   "logp_rejected_delta": -42.746
+  },
+  {
+   "step": 461,
+   "loss": 0.6176,
+   "reward_chosen": -2.6815,
+   "reward_rejected": -3.1049,
+   "logp_chosen_delta": -53.63,
+   "logp_rejected_delta": -62.097
+  },
+  {
+   "step": 481,
+   "loss": 0.4282,
+   "reward_chosen": -3.1208,
+   "reward_rejected": -4.1625,
+   "logp_chosen_delta": -62.417,
+   "logp_rejected_delta": -83.249
+  },
+  {
+   "step": 501,
+   "loss": 0.4577,
+   "reward_chosen": -2.4297,
+   "reward_rejected": -3.7139,
+   "logp_chosen_delta": -48.594,
+   "logp_rejected_delta": -74.278
+  },
+  {
+   "step": 521,
+   "loss": 0.4228,
+   "reward_chosen": -2.784,
+   "reward_rejected": -3.9509,
+   "logp_chosen_delta": -55.681,
+   "logp_rejected_delta": -79.019
+  },
+  {
+   "step": 541,
+   "loss": 0.3039,
+   "reward_chosen": -1.6615,
+   "reward_rejected": -3.3963,
+   "logp_chosen_delta": -33.229,
+   "logp_rejected_delta": -67.927
+  },
+  {
+   "step": 561,
+   "loss": 0.4981,
+   "reward_chosen": -2.1779,
+   "reward_rejected": -2.8619,
+   "logp_chosen_delta": -43.558,
+   "logp_rejected_delta": -57.238
+  },
+  {
+   "step": 581,
+   "loss": 0.2582,
+   "reward_chosen": -1.542,
+   "reward_rejected": -3.6183,
+   "logp_chosen_delta": -30.84,
+   "logp_rejected_delta": -72.366
+  },
+  {
+   "step": 601,
+   "loss": 0.3462,
+   "reward_chosen": -3.2905,
+   "reward_rejected": -4.7985,
+   "logp_chosen_delta": -65.811,
+   "logp_rejected_delta": -95.971,
+   "mbpp_pref_acc": 0.82,
+   "rm": 7.2565,
+   "kl": 0.16
+  },
+  {
+   "step": 621,
+   "loss": 0.4935,
+   "reward_chosen": -3.1672,
+   "reward_rejected": -3.8595,
+   "logp_chosen_delta": -63.344,
+   "logp_rejected_delta": -77.19
+  },
+  {
+   "step": 641,
+   "loss": 0.2021,
+   "reward_chosen": -2.5546,
+   "reward_rejected": -4.8065,
+   "logp_chosen_delta": -51.092,
+   "logp_rejected_delta": -96.13
+  },
+  {
+   "step": 661,
+   "loss": 0.4182,
+   "reward_chosen": -4.0982,
+   "reward_rejected": -5.4049,
+   "logp_chosen_delta": -81.964,
+   "logp_rejected_delta": -108.098
+  },
+  {
+   "step": 681,
+   "loss": 0.3738,
+   "reward_chosen": -2.6245,
+   "reward_rejected": -3.8924,
+   "logp_chosen_delta": -52.489,
+   "logp_rejected_delta": -77.848
+  },
+  {
+   "step": 701,
+   "loss": 0.5357,
+   "reward_chosen": -2.2195,
+   "reward_rejected": -2.7747,
+   "logp_chosen_delta": -44.391,
+   "logp_rejected_delta": -55.494
+  },
+  {
+   "step": 721,
+   "loss": 0.4461,
+   "reward_chosen": -2.5298,
+   "reward_rejected": -3.7521,
+   "logp_chosen_delta": -50.597,
+   "logp_rejected_delta": -75.042
+  },
+  {
+   "step": 741,
+   "loss": 0.5496,
+   "reward_chosen": -3.6088,
+   "reward_rejected": -4.2658,
+   "logp_chosen_delta": -72.176,
+   "logp_rejected_delta": -85.317
+  },
+  {
+   "step": 761,
+   "loss": 0.3685,
+   "reward_chosen": -2.9728,
+   "reward_rejected": -4.3365,
+   "logp_chosen_delta": -59.457,
+   "logp_rejected_delta": -86.729
+  },
+  {
+   "step": 781,
+   "loss": 0.4164,
+   "reward_chosen": -3.243,
+   "reward_rejected": -4.2919,
+   "logp_chosen_delta": -64.86,
+   "logp_rejected_delta": -85.838
+  },
+  {
+   "step": 801,
+   "loss": 0.23,
+   "reward_chosen": -2.2808,
+   "reward_rejected": -4.4832,
+   "logp_chosen_delta": -45.615,
+   "logp_rejected_delta": -89.664,
+   "mbpp_pref_acc": 0.83,
+   "rm": 7.8872,
+   "kl": 0.1887
+  },
+  {
+   "step": 821,
+   "loss": 0.4657,
+   "reward_chosen": -2.9868,
+   "reward_rejected": -4.0021,
+   "logp_chosen_delta": -59.736,
+   "logp_rejected_delta": -80.043
+  },
+  {
+   "step": 841,
+   "loss": 0.4916,
+   "reward_chosen": -6.1709,
+   "reward_rejected": -6.9105,
+   "logp_chosen_delta": -123.419,
+   "logp_rejected_delta": -138.209
+  },
+  {
+   "step": 861,
+   "loss": 0.1946,
+   "reward_chosen": -3.4182,
+   "reward_rejected": -5.8977,
+   "logp_chosen_delta": -68.364,
+   "logp_rejected_delta": -117.953
+  },
+  {
+   "step": 881,
+   "loss": 0.4173,
+   "reward_chosen": -1.8109,
+   "reward_rejected": -3.0906,
+   "logp_chosen_delta": -36.217,
+   "logp_rejected_delta": -61.813
+  },
+  {
+   "step": 901,
+   "loss": 0.2017,
+   "reward_chosen": -2.4419,
+   "reward_rejected": -4.7875,
+   "logp_chosen_delta": -48.838,
+   "logp_rejected_delta": -95.749
+  },
+  {
+   "step": 921,
+   "loss": 0.501,
+   "reward_chosen": -3.9932,
+   "reward_rejected": -4.9605,
+   "logp_chosen_delta": -79.864,
+   "logp_rejected_delta": -99.21
+  },
+  {
+   "step": 941,
+   "loss": 0.3553,
+   "reward_chosen": -4.5319,
+   "reward_rejected": -5.6943,
+   "logp_chosen_delta": -90.637,
+   "logp_rejected_delta": -113.886
+  },
+  {
+   "step": 961,
+   "loss": 0.333,
+   "reward_chosen": -2.7596,
+   "reward_rejected": -4.3787,
+   "logp_chosen_delta": -55.191,
+   "logp_rejected_delta": -87.575
+  },
+  {
+   "step": 981,
+   "loss": 0.184,
+   "reward_chosen": -5.1114,
+   "reward_rejected": -7.5271,
+   "logp_chosen_delta": -102.229,
+   "logp_rejected_delta": -150.542
+  }
+ ],
+ "final_mbpp_pref_acc": 0.835,
+ "final_rm": 7.6434,
+ "final_kl": 0.1852,
+ "humaneval_pass1": 0.0,
+ "mbpp_pass1": 0.0,
+ "sft_humaneval_pass1": 0.0122,
+ "sft_mbpp_pass1": 0.0,
+ "solved_dpo_only": 0,
+ "solved_sft_only": 2
+}

@@ -1133,3 +1133,15 @@ reserved).
 before theorising about the allocator. And when inserting a function, check
 what the line above it was.
 **Where:** `llmfs/eval/codeeval.py`, `stages/22_evaluation/test_eval.py::test_generation_runs_without_autograd`
+
+### 2026-11-07 · Stage 19 · DPO's best β was the largest, and small β over-optimised   [result]
+**Expected:** A middle β (0.1) balances alignment and drift.
+**Found:** SFT workhorse, 20k correct-vs-mutant pairs, 1,000 steps. β =
+0.01 / 0.05 / 0.1 / 0.3 / 1.0: MBPP pair accuracy 0.816 / 0.835 / 0.842 /
+0.861 / 0.873; RM score of own samples 7.89 / 7.64 / 7.84 / 9.10 / 11.13
+(SFT 9.56); KL 0.173 / 0.185 / 0.160 / 0.071 / 0.020. At β = 0.1 the
+chosen log-prob fell 53 nats by step 600. HumanEval 1.2% (SFT) → 0-0.6%.
+**Lesson:** On narrow, easy-to-separate pairs, a small β lets DPO widen the
+margin by lowering everything. A large β stops once the pairs separate.
+Pairwise preference training improved ranking, not generation.
+**Where:** `results/19_dpo/workhorse_beta*.json`, `docs/visuals/19_dpo.png`
