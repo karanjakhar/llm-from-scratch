@@ -155,11 +155,14 @@ HTML) and, for print, will need static versions.
 | GRPO | 22 | held-out pass@1, training pass rate, response length: outcome vs format | `visuals/20_grpo.png` | yes (PNG) |
 | Distillation and quantization | 23 | scratch vs distilled student; loss increase per quantization scheme | `visuals/21_distill_quant.png` | yes (PNG) |
 | Serving | 25 | throughput vs latency by slots; latency CDF static vs continuous | `visuals/23_serving.png` | yes (PNG) |
+| One-hot × table = row | 5 | a lookup as a matrix product with a one-hot vector | `visuals/onehot_lookup.png` | yes (PNG) |
+| RoPE rotation | 5 | a fast and a slow pair rotating with position | `visuals/rope_rotation.png` | yes (PNG) |
+| Packing with eot | 4 | documents end to end, separated by <\|endoftext\|>, cut into windows | `visuals/packing_eot.png` | yes (PNG) |
+| Sampler coverage | 4 | random offsets leave 37% unseen after one epoch; shuffled windows see all | `visuals/sampler_coverage.png` | yes (PNG) |
 
-**Wanted, not yet made:** a one-hot × table = row diagram and a 2D RoPE
-rotation diagram (chapter 5, ASCII versions in the doc for now), a MinHash/LSH diagram (chapter 4), a picture of
-packing documents with `<|endoftext|>` (chapter 4), and the random-vs-shuffled
-sampler coverage plot showing the 37% never seen (chapter 4).
+**Wanted, not yet made:** a MinHash/LSH diagram (chapter 4). The one-hot,
+RoPE-rotation, packing and sampler-coverage figures are made
+(`visuals/make_diagrams.py`) but not yet embedded in their chapters.
 
 Every figure is embedded in its chapter with `![caption](visuals/name.png)`,
 not only named by path, so it shows on GitHub and in the web edition.
