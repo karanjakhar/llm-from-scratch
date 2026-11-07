@@ -84,7 +84,6 @@ def pass_at_k(n: int, c: int, k: int) -> float:
     return float(1.0 - np.prod(1.0 - k / np.arange(n - c + 1, n + 1)))
 
 
-@torch.no_grad()
 def ended(text: str, is_mbpp: bool) -> bool:
     """True once a completion can no longer change after truncate(): a later
     line already starts at column 0. Lets generation stop early; the
@@ -92,6 +91,7 @@ def ended(text: str, is_mbpp: bool) -> bool:
     return len(truncate(text, is_mbpp)) < len(text.rstrip("\n")) - 1 and "\n" in text.strip("\n")
 
 
+@torch.no_grad()
 def generate_batch(model, tok, prompt, n: int, max_new: int, temperature: float,
                    top_p: float, seed: int, stop_fn=None) -> list[str]:
     """prompt: a string (encoded as plain text) or a list of token ids (chat).
@@ -142,6 +142,10 @@ def evaluate(model, tok, problems: list[dict], n: int = 1, temperature: float = 
     writes the whole function, so its completion is cut like MBPP's and the
     HumanEval prompt is kept in front only for its imports and helpers."""
     model.eval()
+    # Training just before (SFT, DPO, GRPO) leaves the allocator holding large
+    # blocks; generation's many small allocations then fail on fragmentation
+    # (Stage 16 prompt-loss run: OOM at 6.96 GB). Hand them back first.
+    torch.cuda.empty_cache()
     progs, owners, comps = [], [], []
     for pi, p in enumerate(problems):
         # Token-boundary trap (Stage 22 §3): HumanEval prompts end in a bare

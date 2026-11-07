@@ -94,3 +94,10 @@ def test_early_stop_never_changes_the_truncated_program():
             assert truncate(t + more, is_mbpp) == truncate(t, is_mbpp), (t, more)
             checked += 1
     assert checked > 300
+
+
+def test_generation_runs_without_autograd():
+    """A lost @torch.no_grad() made every decode step keep its graph: ~20 MB per
+    token, OOM after a few hundred tokens (journal, Stage 16-19)."""
+    from llmfs.eval import codeeval
+    assert getattr(codeeval.generate_batch, "__wrapped__", None) is not None

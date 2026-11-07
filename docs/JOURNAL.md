@@ -1116,3 +1116,20 @@ and/or fell to 35%, `return None` stayed at 97%.
 **Lesson:** Discrimination is much easier than generation. And reward-model
 accuracy is mostly a statement about how many easy pairs the test set holds.
 **Where:** `results/18_reward/*.json`, `docs/visuals/18_reward.png`
+
+### 2026-11-07 · Stage 16-19 · Correction: the "fragmentation" OOM was my lost no_grad   [mistake]
+**Expected:** (entry "Out of memory after training, in a 30M model") the SFT
+eval OOM was allocator fragmentation.
+**Found:** Wrong diagnosis. A fresh process with no training reproduced it:
+one 60-token generation peaked at 2.8 GB. Cause: when adding `ended()` to
+`llmfs/eval/codeeval.py`, I inserted it between `@torch.no_grad()` and
+`generate_batch`, so the decorator moved to `ended()`. Generation then built
+an autograd graph across every decode step (~20 MB per token) until the GPU
+was full. It took down the SFT prompt-loss eval and the DPO β=0.1 eval.
+`empty_cache()` could never have helped (6.69 GB was *allocated*, not just
+reserved).
+**Fix:** decorator restored; a test asserts `generate_batch` is wrapped.
+**Lesson:** When code that worked starts running out of memory, diff it
+before theorising about the allocator. And when inserting a function, check
+what the line above it was.
+**Where:** `llmfs/eval/codeeval.py`, `stages/22_evaluation/test_eval.py::test_generation_runs_without_autograd`
