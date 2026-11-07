@@ -193,8 +193,9 @@ Things noticed but not yet understood. Carried forward until answered.
 - Is 8192 vocab too small for Python? Identifiers, keywords and indentation runs
   all compete for slots. Measure 8192 vs 16384 bytes/token on the real corpus
   before committing the embedding table.
-- We have ~2.1B tokens of code+English but want ~2.5B for a 125M model, so
-  ~1.2 epochs. How much does repeating code data actually cost? Stage 10.
+- ~~How much does repeating code data cost?~~ **Partly answered (Stage 10):**
+  4 epochs of a contiguous quarter +0.11, 16 epochs +0.63; confounded by the
+  slice's lower diversity. A randomly sampled slice would separate the two.
 - After near-dedup, 8.1% of rare val lines still appear in train. Believed to
   be partial copies (one vendored function inside an original file) that
   whole-file Jaccard cannot see. Would line- or function-level dedup close it,
@@ -217,15 +218,26 @@ Things noticed but not yet understood. Carried forward until answered.
 - At d=64 the √d-scaled model started with score std 0.10 (near-uniform
   attention) and lost to unscaled by 0.04. Would a larger q/k init close it?
   Worth a check when Stage 05 revisits initialisation.
-- Pre-norm's positions grow alike with depth at init (cosine 0.69 after 24
-  blocks) and √C embeddings helped 24L pre-norm by 0.10 (one seed). Is that
-  an embedding-scale effect that Stage 06's init (std, `1/√(2·n_layer)`)
-  absorbs anyway? Re-measure there, with seeds.
+- Pre-norm's positions grow alike with depth at init and √C embeddings
+  helped 24L pre-norm by 0.10 (one seed). Stage 06's residual-scaled init
+  keeps the stream from swamping the embeddings at init (0.474 → 0.090 rms
+  at 12 layers) but changed final loss by only 0.013; the √C question at 24
+  layers was not re-run.
 - Post-norm 24L with √C still failed at lr 1e-3 + 100 warmup. Would a long
   warmup or lr 3e-4 rescue it, and at what cost vs pre-norm? Not run; it
   would take ~1 h of GPU and does not change any decision.
-- RMSNorm's +0.023 (±0.027) is a tie at 3 seeds. Does it stay a tie on the
-  workhorse model? Stage 12 measures it again as part of the Llama switch.
+- ~~RMSNorm's +0.023: a tie?~~ **Answered (Stage 12):** +0.033 at 6L/384, 2
+  seeds (spread 0.01): a small, consistent cost, kept for speed.
+
+- Small models' gradient norms creep up over long runs even with QK-norm
+  (3L/192: 1.3 → 2.5 over 73k steps). Embedding norm, logit growth, or
+  Adam's ε? (Stage 10)
+- MoE tied dense and MLA lost to GQA at 33M tokens / 12M params. Do they win
+  at the workhorse's 590M tokens? (Stages 13-14)
+- DPO on mutation pairs improved ranking (0.50 → 0.87) but never pass@1.
+  Can pairwise preference move generation at all at this scale? (Stage 19)
+- SFT taught one prompt format: prose tasks 0%, code-shaped 7.5% (Stage 20).
+  Would a mixed-format SFT set lift MBPP from 0%?
 
 ## Session log
 
