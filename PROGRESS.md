@@ -61,7 +61,7 @@ Deferred, with a trigger:
 | 15 | Speculative decoding | `[x]` | exact (fp32); greedy acceptance 0.83 @γ4, best speedup 1.20× (draft costs 0.43 of target) |
 | 16 | SFT | `[ ]` | |
 | 17 | LoRA / QLoRA | `[ ]` | |
-| 18 | Reward modeling | `[ ]` | |
+| 18 | Reward modeling | `[x]` | 85.2% on test-verified MBPP pairs (56.8% untrained); 20%/40% flips → 76.6%/71.6% |
 | 19 | DPO / RLHF | `[ ]` | |
 | 20 | Reasoning / GRPO | `[ ]` | |
 | 21 | Distill & quantize | `[ ]` | |
@@ -167,6 +167,10 @@ stay visible across months.
 | 2026-11-07 | 11 | resume at 600: resumed / fresh Adam | final val (uninterrupted 3.9158) | 3.9158 (bit-identical) / 3.9323 |
 | 2026-11-07 | 15 | spec. decoding, 30M target / 5M draft, greedy γ=1/4/6/8 | acceptance ; speedup | 0.93/0.83/0.77/0.73 ; 0.86/1.17/1.20/1.15 |
 | 2026-11-07 | 15 | same, τ=1.0, γ=1 / 8 | acceptance ; speedup | 0.67 / 0.26 ; 0.82 / 0.25 |
+| 2026-11-07 | 16 | SFT workhorse, 3k steps: completion val ; HumanEval / MBPP pass@1 (chat) | loss ; fraction | 1.168→1.033 ; 0.0122 / 0.0 |
+| 2026-11-07 | 16 | SFT forgetting: pretraining val code / English | loss before → after | 1.684→1.832 / 3.341→3.646 |
+| 2026-11-07 | 18 | RM on SFT workhorse: CSN held-out / MBPP verified | pairwise acc | 0.826 / 0.852 (untrained 0.507 / 0.568) |
+| 2026-11-07 | 18 | labels flipped 0 / 20 / 40% | MBPP acc | 0.852 / 0.766 / 0.716 |
 
 ## Open questions
 

@@ -1082,3 +1082,37 @@ training if it ends mid-"word". Where a token boundary falls is part of the
 prompt. (Known in the Codex/HumanEval literature as stripping trailing
 whitespace; here it was invisible until a completion was printed raw.)
 **Where:** `llmfs/eval/codeeval.py::evaluate`
+
+### 2026-11-07 · Stage 16 · Out of memory after training, in a 30M model           [trap]
+**Found:** The prompt-loss SFT run trained fine, then died in its evaluation:
+`CUDA out of memory ... 47.88 MiB free, this process has 6.96 GiB`, trying to
+allocate 20 MiB. Peak training memory is nowhere near 7 GB for a 30M model;
+the PyTorch caching allocator kept training's large blocks reserved, and
+generation's many small, differently-shaped allocations could not fit in
+the fragments.
+**Fix:** `torch.cuda.empty_cache()` at the start of every evaluation, and
+`PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` for the long chains.
+**Lesson:** Train-then-evaluate in one process is a fragmentation pattern.
+"Out of memory" with most memory reserved-but-free is the allocator, not the
+model.
+**Where:** `llmfs/eval/codeeval.py::evaluate`
+
+### 2026-11-07 · Stage 18 · The reward model ran out of memory for a real reason    [mistake]
+**Found:** Unlike the SFT eval OOM, this one was the plan's fault: 16 pairs
+= 32 sequences of up to 1,024 tokens (chat-formatted header + full function),
+forward and backward through the 30M model in one step.
+**Fix:** cap sequences at 640 tokens and accumulate 2 micro-batches of 8
+pairs, keeping the effective batch at 16.
+**Lesson:** A pairwise loss doubles the batch. Budget memory for 2B sequences,
+not B.
+**Where:** `stages/18_reward/reward.py::train_rm`
+
+### 2026-11-07 · Stage 18 · A model that can't write code can judge it 85% of the time   [result]
+**Found:** Reward model on the SFT workhorse (1.2% HumanEval): 82.6% on held-out
+CSN pairs, 85.2% on 1,218 MBPP pairs with test-verified bugs (56.8% before
+training). By bug: `return None` 100%, arithmetic 82%, constants 78%,
+comparisons 76%, and/or 65%. Labels flipped 20% / 40%: MBPP 76.6% / 71.6%;
+and/or fell to 35%, `return None` stayed at 97%.
+**Lesson:** Discrimination is much easier than generation. And reward-model
+accuracy is mostly a statement about how many easy pairs the test set holds.
+**Where:** `results/18_reward/*.json`, `docs/visuals/18_reward.png`
