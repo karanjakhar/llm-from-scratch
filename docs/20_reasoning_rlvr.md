@@ -244,6 +244,37 @@ to do it, and (per Liu et al.) a loss that does not favour long wrong answers.
 
 ![GRPO: held-out pass@1, training pass rate, response length](visuals/20_grpo.png)
 
+### 8d. The capstone
+
+Outcome-only GRPO with the same settings, on the 92M capstone's SFT model
+(activation checkpointing on, 17 minutes):
+
+| step | 0 | 15 | 30 | 45 | 60 |
+|---|---|---|---|---|---|
+| held-out easy pass@1, workhorse (30M) | 13.3% | 14.0% | 24.7% | 30.7% | 38.0% |
+| held-out easy pass@1, **capstone (92M)** | **27.3%** | 38.0% | 42.0% | 53.3% | **73.3%** |
+
+| at step 60 | workhorse | capstone |
+|---|---|---|
+| training rollouts passing (first 10 → last 10 steps) | 4.6% → 18.6% | 9.0% → 24.4% |
+| train tasks solved at least once | 129 of 400 | 158 of 400 |
+| KL to the SFT model | 0.022 | 0.018 |
+| HumanEval pass@1 (its SFT model) | 2.4% (1.2%) | **3.05%** (1.22%) |
+| MBPP pass@1 (its SFT model) | 0.2% (0%) | 0.4% (0.4%) |
+
+The capstone starts twice as high and **gains more**: +46 points against +25.
+That is §6's rule from the other side. RL sharpens what the model can already
+sometimes do, so a model that solves more at the start has more to sharpen,
+and more groups carry signal from the first step. Held-out pass@1 rose by 20
+points between steps 45 and 60 alone; the curve had not flattened when the
+run ended.
+
+The transfer to HumanEval is real but small: 2 → 5 problems. Five is exactly
+what the capstone *base* model solved when prompted as plain code (Stage 16
+§8d). In HumanEval terms, SFT then GRPO bought back what SFT lost, plus the
+chat format; GRPO's large gain stayed mostly on the kind of task it trained
+on.
+
 ---
 
 ## 9. What we found
@@ -254,6 +285,7 @@ to do it, and (per Liu et al.) a loss that does not favour long wrong answers.
 | Does the request format matter? | Prose prompts 0/80; signature + docstring 7.5% on the same tasks |
 | GRPO on a reachable curriculum | Held-out easy tasks 13.3% → 38.0% in 60 steps |
 | Transfer | HumanEval 1.2% → 2.4%; MBPP 0 → 0.2% |
+| On the 92M capstone | 27.3% → 73.3% in 60 steps (+46, against the workhorse's +25); HumanEval 1.22% → 3.05% |
 | Outcome-only vs + format | 38.0% vs 26.7%: the format reward diluted the signal |
 | Response length | Fell (94 → 65 tokens failing): no "aha", short tasks reward short code |
 

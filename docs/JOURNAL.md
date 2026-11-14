@@ -1281,3 +1281,10 @@ not intent.
 **Why:**       As in §7b: single-mutation pairs teach discrimination between two given programs, not generation of a correct one.
 **Lesson:**    Three times the parameters did not turn a ranking signal into a generation gain. The gap is the kind of data, not the size of the model.
 **Where:**     `results/19_dpo/capstone_beta1.0.json`, `docs/19_rlhf_dpo.md` §7c
+
+### 2026-11-14 · Stage 20 · GRPO gains more on the bigger model: 27% → 73%             [result]
+**Expected:**  Roughly the workhorse's tripling from a higher start.
+**Found:**     Held-out easy pass@1 27.3 → 38.0 → 42.0 → 53.3 → **73.3%** at steps 0/15/30/45/60 (workhorse 13.3 → 38.0). Training rollouts passing 9.0% → 24.4% (first vs last 10 steps); 158 of 400 train tasks solved at least once; KL 0.018. HumanEval 1.22% → 3.05% (2 → 5 problems), MBPP 0.4% unchanged. 17.4 minutes.
+**Why:**       RL can only reinforce successes it samples. Starting at 27% instead of 13%, more groups have mixed outcomes, so more of each step's batch carries gradient; the gain compounds.
+**Lesson:**    The return on RL grows with the starting pass rate. Of every post-training stage on the capstone, only the one with a verifiable reward moved a pass rate a lot, and it moved most on the tasks it trained on.
+**Where:**     `results/20_grpo/capstone_easy.json`, `docs/20_reasoning_rlvr.md` §8d
