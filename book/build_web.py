@@ -152,6 +152,8 @@ def build(out_dir: Path, site_url: str) -> None:
     (out_dir / "visuals").mkdir(parents=True)
     (out_dir / "index.html").write_text(page)
     for f in (ROOT / "docs/visuals").iterdir():
+        if f.suffix == ".py":                    # the scripts that draw figures are not part of the site
+            continue
         shutil.copy2(f, out_dir / "visuals" / f.name)
     print(f"{out_dir}: {drafted}/{len(rows)} parts drafted, {total:,} words")
 

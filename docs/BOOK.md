@@ -78,7 +78,7 @@ in book voice) · `final`
 
 | # | Chapter (working) | Stages | Sources | Status |
 |---|---|---|---|---|
-| — | Preface: why one laptop, why code | — | `README.md`, `docs/domain_choice.md` | outline |
+| — | Preface: why one laptop, why code | — | `docs/preface.md` | draft |
 | 1 | What a language model actually computes | 00 | `docs/00_setup.md` | draft |
 | 2 | Choosing what to teach it | — | `docs/domain_choice.md`, `docs/datasets.md` | draft |
 | 3 | Cutting text into tokens | 01 | `docs/01_tokenizer.md` | draft |
@@ -107,7 +107,7 @@ in book voice) · `final`
 | 26 | The whole pipeline on one page | 24 | `docs/24_capstone.md`, `MODEL_CARD.md` | draft |
 | A | Appendix: glossary | — | `GLOSSARY.md` | draft |
 | B | Appendix: every result in one table | — | `PROGRESS.md` results log | draft |
-| C | Appendix: reproducing everything | — | `README.md`, `pyproject.toml`, manifests | outline |
+| C | Appendix: reproducing everything | — | `docs/appendix_reproduce.md` | draft |
 
 The chapter order may change; the stage numbers will not.
 

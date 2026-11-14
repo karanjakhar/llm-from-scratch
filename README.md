@@ -81,6 +81,10 @@ uv run python stages/01_tokenizer/run.py --vocab 8192          # a few minutes
 uv run python stages/01_tokenizer/run.py --vocab 2048 --skip-ablation   # fast
 ```
 
+The data and tokenizer that stages 02 onwards read (about 6 GB of downloads
+at pinned revisions and ~1 h of tokenizer training) are built in order by the
+commands in `docs/appendix_reproduce.md` §C.3.
+
 Every stage from 02 on follows the same pattern: `uv run pytest stages/NN_*/`
 for the acceptance tests, then `stages/NN_*/run.py <experiment>` for the
 numbers in its doc. Each `run.py` lists its experiments and their cost in its

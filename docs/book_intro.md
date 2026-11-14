@@ -6,11 +6,12 @@ from raw GitHub files to a small working model that writes Python code, and
 understands every part because every part is built by hand, measured, and
 broken on purpose.
 
-**How far it has got.** Six of the planned 26 chapters are drafted, one per
-finished stage of the [25-stage curriculum](https://github.com/karanjakhar/llm-from-scratch/blob/main/CURRICULUM.md).
-They are first drafts: the measurements and findings are in, but some
-sections still read like engineering notes and will be rewritten for readers.
-New chapters appear as stages finish.
+**How far it has got.** Every part is drafted: the preface, all 26 chapters
+(one per stage of the [25-stage curriculum](https://github.com/karanjakhar/llm-from-scratch/blob/main/CURRICULUM.md),
+plus the choice of domain) and three appendices. The project they describe is
+finished. They are first drafts: the measurements and findings are in, but
+some sections still read like engineering notes and will be rewritten for
+readers in a revision pass.
 
 **What makes it different.**
 

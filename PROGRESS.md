@@ -270,6 +270,18 @@ Things noticed but not yet understood. Carried forward until answered.
 
 ## Session log
 
+### 2026-11-14 — Session 11
+- Published: pushed the 41 commits to GitHub and rebuilt the web edition at
+  karanjakhar.dev/book (site repo commit `3c8c9c5`).
+- Wrote the last two book parts: `docs/preface.md` and
+  `docs/appendix_reproduce.md` (Appendix C). The book is 30/30 parts drafted,
+  82,709 words. Refreshed `docs/book_intro.md`, which still said "six of 26".
+- Found that HumanEval, MBPP, CodeSearchNet and TinyStories had no download
+  command; added `stages/02_data/download_extras.py` with the revisions the
+  HF cache recorded, checked against the Hub (all 11 files exist).
+- `book/build_web.py` no longer copies `.py` files from `docs/visuals/` into
+  the site.
+
 ### 2026-11-13/14 — Session 10
 - Resumed the paused capstone (step 10,500, bit-identical continuation) and
   finished it: 1.80B tokens, val code 1.295, English 2.898, max grad norm 1.03.

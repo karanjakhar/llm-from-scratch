@@ -1329,3 +1329,20 @@ not intent.
 **Why:**       Pretraining made the model; post-training reshaped how it answers. Only the stage with a verifiable reward moved a pass rate, and only on tasks like its training tasks.
 **Lesson:**    At 92M parameters the base model is the product, and post-training is a set of trade-offs to measure, not a ladder that only goes up. The prediction in CLAUDE.md held: low single digits, objective and clean.
 **Where:**     `results/24_capstone/pipeline.json`, `docs/24_capstone.md` §1-2, `MODEL_CARD.md`, `docs/visuals/24_capstone.png`
+
+
+## Session 11 — 2026-11-14 · publishing, and the book's last two parts
+
+### 2026-11-14 · Data · Four datasets had no download command                      [mistake]
+**Expected:**  Writing the reproduction appendix to be a matter of listing the existing commands in order.
+**Found:**     `stages/02_data/download.py` fetches only the pretraining corpus. HumanEval, MBPP, CodeSearchNet and TinyStories (about 1 GB, read by stages 08 and 16-24) had been fetched by hand and recorded only as names in `docs/datasets.md`. A reader starting from a clean clone could not have run any stage after 15.
+**Why:**       They were small and fetched early, before the habit of pinning every download in a script. Every later stage found them already on disk, so nothing ever failed.
+**Lesson:**    A pipeline that works on the machine it was built on proves nothing about a clean one. Writing the from-scratch instructions is a test, and it found a gap that 295 passing tests could not. Hugging Face's download cache records the commit of every file it fetched (`.cache/huggingface/download/*.metadata`), so the exact revisions were recoverable after the fact.
+**Where:**     `stages/02_data/download_extras.py`, `docs/appendix_reproduce.md` §C.3
+
+### 2026-11-14 · Book · Three claims in the preface draft were wrong                [mistake]
+**Expected:**  A preface written from what the project found to be accurate on the first draft.
+**Found:**     Checked against the journal, three of its examples were wrong: the attention model that grew a previous-token head trained for about 3 minutes, not 20; without warmup the loss stalled for about 40 steps and ended at 4.78 against 2.95, rather than staying stuck; and the "wrong test" failed on correct code, it did not pass. Appendix C's first draft also said 5.2 GB for a 4.9 GB download and counted the capstone chain as stages 15-24.
+**Why:**       They were written from a summary of the project, not from the entries themselves. Each one was a plausible rounding of the real story.
+**Lesson:**    Same as Stage 06's "a number quoted from memory was wrong": every number and every example in a book draft gets checked against its source before it is published, including the ones in the preface.
+**Where:**     `docs/preface.md`, `docs/appendix_reproduce.md`
