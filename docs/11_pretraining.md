@@ -264,10 +264,71 @@ silently show the model data it had already seen.
 
 ### 8c. The capstone base model
 
-*(results go here)*
+92,138,496 parameters, 27,500 steps × 65,536 tokens = **1.80B tokens**
+(19.6 per parameter). The run was paused by the owner at step 10,500 on
+2026-11-08 and resumed from the checkpoint five days later; training time
+was about 20.4 GPU-hours in total (7.7 h before the pause, 12.7 h after,
+~2.7 s per step).
+
+```
+step        3,000   6,000   9,000   12,000  15,000  18,000  21,000  24,000  27,500
+val code    1.752   1.584   1.503   1.440   1.393   1.364   1.330   1.310   1.295
+val Eng.    3.573   3.338   3.217   3.126   3.065   3.003   2.956   2.919   2.898
+```
+
+| | workhorse (30M, 590M tokens) | capstone (92M, 1.80B tokens) |
+|---|---|---|
+| val code | 1.554 | **1.295** (−0.26) |
+| val English | 3.293 | **2.898** (−0.40) |
+| GPU time | 2.3 h | ~20.4 h |
+| max grad norm after step 1,000 | 1.49 | **1.03** |
+
+**The resume across the pause was continuous**: step 10,500's loss and
+gradient norm equal the pre-pause log's exactly, and later steps agree to
+within 0.0003 (journal). Not bitwise, because this run is compiled and
+bf16 (§5); the Stage-11 resume test, uncompiled, was.
+
+**No spike in 27,500 steps.** The gradient norm stayed below 1.03 after
+warm-up; QK-norm and the recipe from Stages 08-10 held at 3× the workhorse's
+length. The loss never stopped falling: the last 3,500 steps (cosine tail)
+bought 0.015 on code. Per token seen, the capstone is *behind* the workhorse
+until about 120M tokens (twice the batch, 60% of the learning rate, and three
+times the parameters to move), then ahead for the rest of the run: a bigger
+model is slower to start and better at the end, Stage 10's picture again.
+
+What it writes. From `import os\nimport json\n\n\ndef load_config(path):`,
+greedy, the capstone now writes a correct body before it starts repeating
+itself:
+
+```python
+def load_config(path):
+	config = json.load(open(path))
+	return config
+```
+
+At τ = 0.8 it writes plausible, idiomatic code that wanders (nested
+functions, `json.load(config_file)`, a loop over the result). The English is
+grammatical at the sentence level and meaningless beyond it ("Higgins stands
+for the manuscript"). Greedy decoding still loops on every prompt, and the
+tab/space mixing seen in the workhorse is still there. 92M parameters and
+1.8B tokens buy local fluency, not intent.
+
+![Workhorse and capstone pretraining curves; resume test](visuals/11_pretrain.png)
 
 ---
 
 ## 9. What we found
 
-*(written after the experiments)*
+| Question | Answer, measured |
+|---|---|
+| Does the resume path work? | Yes: bit-identical (uncompiled test) and continuous to 1e-4 (compiled capstone, across a 5-day pause) |
+| What does dropping Adam's state cost? | A visible step: +0.057 at once, +0.017 at the end of a short run |
+| Workhorse | 30M, 590M tokens, 2.3 h: val code 1.554, English 3.293 |
+| Capstone | 92M, 1.80B tokens, ~20.4 h: val code **1.295**, English **2.898** |
+| Instabilities | None: grad norm ≤ 1.03 after warm-up across 27,500 steps |
+| Bugs found by the workhorse first | The RNG-restore device bug (resume test) |
+
+One habit from this stage: **run the resume test before the long run, and
+keep the long run's log honest.** The resume test found a real bug in a
+minute; the pause found that a log can run past its checkpoint, and those
+lines have to go before resuming.

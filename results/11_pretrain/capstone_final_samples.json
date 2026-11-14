@@ -1,0 +1,42 @@
+[
+ {
+  "prompt": "def fibonacci(n):\n",
+  "temperature": 0.0,
+  "text": "def fibonacci(n):\n\treturn n * (n - 1)\n\ndef fibonacci_n(n):\n\treturn n * (n - 1)\n\ndef fibonacci_n_n(n):\n\treturn n * (n - 1) + 1\n\ndef fibonacci_n_n_n(n):\n\treturn n * (n - 1) + 1\n\ndef fibonacci_n_n_n_n(n):\n\treturn n * (n - 1) + 1\n\ndef fibonacci_n_n_n_n_n(n):\n\treturn n * (n - 1) + 1\n\ndef fibonacci_n_n_n_n_n(n):\n\treturn n * (n - 1) + 1\n\ndef fibonacci_n_n_n_"
+ },
+ {
+  "prompt": "def fibonacci(n):\n",
+  "temperature": 0.8,
+  "text": "def fibonacci(n):\n\t'''\n\tApproximate fibonacci function\n\t:param n: number of fibonacci to be approced\n\t:return: None\n\t'''\n\tglobal _fibonacci_to_fibonacci\n\t_fibonacci_to_fibonacci = None\n\tglobal _fibonacci_to_fibonacci_to_fibonacci\n\tif not _fibonacci_to_fibonacci:\n\t\t_fibonacci_to_fibonacci = lambda n: None\n\n\tdef fibonacci(n):\n\t\t_fibonacci_to_fibonacci(n)\n\t\tif _fibonacci_to_fibonacci_to_fibonacci(n):\n\t\t"
+ },
+ {
+  "prompt": "import os\nimport json\n\n\ndef load_config(path):\n",
+  "temperature": 0.0,
+  "text": "import os\nimport json\n\n\ndef load_config(path):\n\tconfig = json.load(open(path))\n\treturn config\n\n\ndef get_config(path):\n\tconfig = load_config(path)\n\treturn config\n\n\ndef get_config_from_file(path):\n\tconfig = load_config(path)\n\treturn config\n\n\ndef get_config_from_config(path):\n\tconfig = load_config(path)\n\treturn config\n\n\ndef get_config_from_file(path):\n\tconfig = load_config(path)\n\treturn config\n\n\ndef get_config_from_config_file(path):\n\tconfig = load_config(path)\n\treturn config\n\n\ndef get_config_from_file_from_config(path):\n\tconfig = load_config(path)\n\treturn config\n\n\ndef get_config_from_file_from_config_file(path):\n\t"
+ },
+ {
+  "prompt": "import os\nimport json\n\n\ndef load_config(path):\n",
+  "temperature": 0.8,
+  "text": "import os\nimport json\n\n\ndef load_config(path):\n\tdef run_config(filename):\n\t\tconfig_file = open(filename, 'r')\n\t\tjson_dict = json.load(config_file)\n\t\tfor each in json_dict:\n\t\t\teach[\"name\"] = each[\"name\"]\n\t\t\teach[\"description\"] = each[\"description\"]\n\t\t\teach[\"description\"].replace(\"# \", \"\")\n\t\t\teach[\"tags\"] = each[\"tags\"]\n\t\t\teach[\"description\"].replace(\"# \", \"\")\n\t\t\teach[\"tags\"].replace(\"$\", \"\")\n\t\t\teach[\"description\"].replace(\"# \", \"\")\n\t\t\teach[\"tags\"].replace(\"#\", \"\")\n\t\t\teach[\"description\"].replace(\"#\", \"\")\n\t\t\teach[\"tags\"] = each[\"tags\"]\n\t\t\teach[\"description\"].replace(\"$\", \"\")\n\t\t\teach[\"description\"].replace(\"#\", \"\")\n\t\t\teach"
+ },
+ {
+  "prompt": "class Stack:\n    def __init__(self):\n",
+  "temperature": 0.0,
+  "text": "class Stack:\n    def __init__(self):\n\tself.stack = []\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\tself.stack.append(self.stack)\n\t"
+ },
+ {
+  "prompt": "class Stack:\n    def __init__(self):\n",
+  "temperature": 0.8,
+  "text": "class Stack:\n    def __init__(self):\n\tself.stack = []\n    def add_stack(self, stack):\n\tself.stack.append(stack)\n\ndef generate_cycle_from_str(str_list):\n    cycle_list = []\n    for i in range(len(str_list)):\n        cycle_list.append(str_list[i])\n\n    return cycle_list\n\ndef print_stack(stack):\n    return '\\n'.join(stack)\n\n# Class to add source file and directory paths\nclass Source:\n    def __init__(self, path):\n        self.path = path\n        self.stack = []\n\n    def add_stack(self, stack):\n\tself.stack.append(stack)\n\n    def add_source(self, source):\n\tself.source = Source(source)\n\tself.source.add_stack(self)\n\tself.source.add_source(self"
+ },
+ {
+  "prompt": "The history of the printing press",
+  "temperature": 0.0,
+  "text": "The history of the printing press.\n- The printing press is a very important part of the printing press.\n- The printing press is a very important part of the printing press.\n- The printing press is a very important part of the printing press.\n- The printing press is a very important part of the printing press.\n- The printing press is a very important part of the printing press.\n- The printing press is a very important part of the printing press.\n- The printing press is a very important part of the printing press.\n- The printing press is a very important part of the printing press.\n- The printing press is a very important part of the printing press.\n- The printing press is a very important part of the printing press.\n- The printing press is a very important part of the printing press.\n- The printing press is a very important part of"
+ },
+ {
+  "prompt": "The history of the printing press",
+  "temperature": 0.8,
+  "text": "The history of the printing press in this manuscript, it is not necessary to read the manuscript because it is an alphabet and it has a number of color manuals and other prints that can be applied to other prints. Another print manuscript is Higgins, which is a more informative color. Higgins stands for the manuscript. It is an original print manuscript and is a useful tool.\nThe manuscript is an original print manuscript that provides the following bibliography:\nThe print manuscript is a number 2-4 of the manuscripts. The manuscript contains the main text which has the main text for the print manuscript. The manuscript has a number of color manuals and colors, but the manuscript is the objective of color manuals. This is also an objective. In particular, a print manuscript is"
+ }
+]

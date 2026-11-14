@@ -51,7 +51,7 @@ Deferred, with a trigger:
 | 08 | Training loop | `[x]` | `llmfs/train/trainer.py`; TinyStories 10M → coherent in 11.5 min; no warmup @3e-3 +1.84; sequential order +1.25 |
 | 09 | Efficiency | `[x]` | 5.16× (14.3k → 73.7k tok/s, MFU 63%); compile 2.1× alone; capstone 25.4k tok/s |
 | 10 | Scaling laws | `[x]` | optimum 4.2M @3e15 / 8.6M @1e16 = 22-28 tok/param (Chinchilla ±15%); QK-norm needed (v1 diverged) |
-| 11 | Pretraining run | `[~]` | workhorse done (1.554); resume bit-identical; capstone paused at step 10,500 (val 1.475 @10k) |
+| 11 | Pretraining run | `[x]` | workhorse 30M 1.554; capstone 92M / 1.80B tokens / ~20 GPU-h: val code 1.295, Eng 2.898; resume continuous across a 5-day pause |
 | 12 | Modern architecture | `[x]` | GPT-2→Llama 2.518→2.274; RoPE −0.230; MQA +0.03; window64 +0.24; NTK s=4 recovers 2.56→2.19 |
 | 13 | Mixture of Experts | `[x]` | MoE ≈ dense at 33M tokens (2.325 vs 2.320), 16×top-4 2.303; no aux → 4/8 experts dead, loss unchanged |
 | 14 | Attention variants | `[x]` | MLA r128 2.414 vs GQA-2 2.315 (MLA loses at this scale); window-128 0% needles beyond window at +0.11 loss |
@@ -180,6 +180,8 @@ stay visible across months.
 | 2026-11-07 | 23 | bursty 10 req/s, static vs continuous | p50 / p99 / TTFT p50 (s) | 0.777 / 1.953 / 0.377 vs 0.272 / 1.563 / 0.008 |
 | 2026-11-07 | 17 | SFT full / LoRA r1 / r4 / r16 / r64 / QLoRA r16 | completion val loss | 1.0328 / 1.0318 / 1.0278 / 1.0281 / 1.0328 / 1.0321 |
 | 2026-11-07 | 17 | peak training MB, full vs LoRA r16 | MB | 4,615 vs 4,104 |
+| 2026-11-14 | 11 | capstone 92M, 1.80B tokens, ~20.4 GPU-h | val code / English | 1.295 / 2.898 (max grad norm after warm-up 1.03) |
+| 2026-11-13 | 11 | capstone resume after 5-day pause, steps 10,500 / 10,620 / 10,700 | train loss before vs after | 1.5527=1.5527 / 1.8381 vs 1.8383 / 1.5945=1.5945 |
 
 ## Open questions
 

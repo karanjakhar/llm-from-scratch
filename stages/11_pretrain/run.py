@@ -173,8 +173,8 @@ def cmd_plot(a):
         c = r["curve"]
         tps = r["config"]["B"] * r["config"]["T"] * r["config"]["accum"]
         xs = [x[0] * tps for x in c]
-        ax[0].plot(xs, [x[1] for x in c], color=f"C{i}", alpha=0.3)
-        v = [(x[0] * tps, x[3]) for x in c if x[3]]
+        ax[0].plot([a for a in xs if a > 0], [x[1] for x, a in zip(c, xs) if a > 0], color=f"C{i}", alpha=0.3)
+        v = [(x[0] * tps, x[3]) for x in c if x[3] and x[0] > 0]      # step 0 has no place on a log axis
         ax[0].plot([t for t, _ in v], [d["code"] for _, d in v], "o-", color=f"C{i}", ms=3,
                    label=f"{name} ({r['params'] / 1e6:.0f}M): val code {v[-1][1]['code']}")
         ax[0].plot([t for t, _ in v], [d["en"] for _, d in v], "s--", color=f"C{i}", ms=3,

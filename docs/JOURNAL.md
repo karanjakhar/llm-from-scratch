@@ -1224,3 +1224,32 @@ concatenate), MBPP 0%. Pretraining val code 1.684 → 1.832, English 3.341 →
 **Lesson:** Format is cheap; forgetting accumulates per step. Measure both,
 and stop when the format loss flattens.
 **Where:** `results/16_sft/workhorse*.json`
+
+## Session 10 — 2026-11-13 · the capstone resumes after a pause
+
+### 2026-11-13 · Stage 11 · A real resume, five days later                           [result]
+**Expected:** The capstone, stopped at step 10,500 on 2026-11-08 at the
+owner's request, continues the same curve.
+**Found:** Resumed from `ckpt.pt` (step 10,500). Train loss / grad norm,
+before the pause vs after resuming: step 10,500 1.5527 / 0.2786 in both;
+10,540 1.5881 vs 1.5883; 10,620 1.8381 vs 1.8383; 10,700 1.5945 in both.
+The log had run 380 steps past the checkpoint before the stop; those lines
+were trimmed so they are not counted twice.
+**Why not bit-identical** (the Stage 11 resume test was): this run is
+compiled and bf16, and some GPU kernels sum in a run-dependent order.
+Differences stay at the 1e-4 level, far inside step-to-step noise.
+**Lesson:** Exact resume is a property of the state saved; bitwise equality
+is a property of the kernels. Test the first; expect only the second's
+noise level on a compiled GPU run.
+**Where:** `checkpoints/11_pretrain/capstone/log.jsonl`
+
+### 2026-11-14 · Stage 11 · The capstone finished without a single spike            [result]
+**Found:** 92,138,496 params, 1.80B tokens, ~20.4 GPU-hours across a pause.
+Val code 1.752 (step 3k) → 1.295 (27.5k); English 3.573 → 2.898. Workhorse:
+1.554 / 3.293. Max grad norm after warm-up 1.03. Per token seen the capstone
+trails the workhorse until ~120M tokens, then leads. Greedy now writes
+`config = json.load(open(path)); return config`, then loops.
+**Lesson:** The Stage 08-10 recipe (warmup, clipping, β₂ 0.95, QK-norm) held
+for 27,500 steps at 3× the workhorse's length. More scale bought fluency,
+not intent.
+**Where:** `results/11_pretrain/capstone*.json`, `docs/visuals/11_pretrain.png`
