@@ -1,0 +1,205 @@
+[
+ {
+  "model": "Stage 06 GPT 4L (5M)",
+  "params": 5323264,
+  "chat": false,
+  "val_code": 2.3556,
+  "val_en": 4.1183,
+  "bpb_code": 1.0871,
+  "humaneval_pass1": 0.0,
+  "mbpp_pass1": 0.0,
+  "humaneval_solved": [],
+  "mbpp_solved": []
+ },
+ {
+  "model": "Stage 12 Llama 6L (14M)",
+  "params": 12442560,
+  "chat": false,
+  "val_code": 2.2708,
+  "val_en": 4.1164,
+  "bpb_code": 1.048,
+  "humaneval_pass1": 0.0,
+  "mbpp_pass1": 0.0,
+  "humaneval_solved": [],
+  "mbpp_solved": []
+ },
+ {
+  "model": "Stage 13 MoE 8e top-2",
+  "params": 33694080,
+  "chat": false,
+  "val_code": 2.3245,
+  "val_en": 4.1194,
+  "bpb_code": 1.0728,
+  "humaneval_pass1": 0.0,
+  "mbpp_pass1": 0.0,
+  "humaneval_solved": [],
+  "mbpp_solved": []
+ },
+ {
+  "model": "workhorse base",
+  "params": 29941760,
+  "chat": false,
+  "val_code": 1.6839,
+  "val_en": 3.3407,
+  "bpb_code": 0.7771,
+  "humaneval_pass1": 0.0,
+  "mbpp_pass1": 0.0,
+  "humaneval_solved": [],
+  "mbpp_solved": [],
+  "humaneval_pass10": 0.0122,
+  "humaneval_pass1_t08": 0.0018,
+  "mbpp_pass10": 0.0,
+  "mbpp_pass1_t08": 0.0
+ },
+ {
+  "model": "workhorse SFT",
+  "params": 29941760,
+  "chat": true,
+  "val_code": 1.8321,
+  "val_en": 3.6459,
+  "bpb_code": 0.8455,
+  "humaneval_pass1": 0.0122,
+  "mbpp_pass1": 0.0,
+  "humaneval_solved": [
+   "HumanEval/23",
+   "HumanEval/28"
+  ],
+  "mbpp_solved": [],
+  "humaneval_pass10": 0.0244,
+  "humaneval_pass1_t08": 0.0043,
+  "mbpp_pass10": 0.004,
+  "mbpp_pass1_t08": 0.0004
+ },
+ {
+  "model": "workhorse DPO",
+  "params": 29941760,
+  "chat": true,
+  "val_code": 2.0127,
+  "val_en": 3.6967,
+  "bpb_code": 0.9289,
+  "humaneval_pass1": 0.0,
+  "mbpp_pass1": 0.0,
+  "humaneval_solved": [],
+  "mbpp_solved": [],
+  "humaneval_pass10": 0.0061,
+  "humaneval_pass1_t08": 0.0006,
+  "mbpp_pass10": 0.0,
+  "mbpp_pass1_t08": 0.0
+ },
+ {
+  "model": "workhorse GRPO",
+  "params": 29941760,
+  "chat": true,
+  "val_code": 1.8329,
+  "val_en": 3.6458,
+  "bpb_code": 0.8459,
+  "humaneval_pass1": 0.0244,
+  "mbpp_pass1": 0.002,
+  "humaneval_solved": [
+   "HumanEval/23",
+   "HumanEval/28",
+   "HumanEval/35",
+   "HumanEval/53"
+  ],
+  "mbpp_solved": [
+   "mbpp/336"
+  ],
+  "humaneval_pass10": 0.0183,
+  "humaneval_pass1_t08": 0.0067,
+  "mbpp_pass10": 0.0,
+  "mbpp_pass1_t08": 0.0
+ },
+ {
+  "model": "capstone base",
+  "params": 92138496,
+  "chat": false,
+  "val_code": 1.4233,
+  "val_en": 2.9497,
+  "bpb_code": 0.6569,
+  "humaneval_pass1": 0.0305,
+  "mbpp_pass1": 0.002,
+  "humaneval_solved": [
+   "HumanEval/23",
+   "HumanEval/28",
+   "HumanEval/29",
+   "HumanEval/35",
+   "HumanEval/53"
+  ],
+  "mbpp_solved": [
+   "mbpp/242"
+  ],
+  "humaneval_pass10": 0.0549,
+  "humaneval_pass1_t08": 0.0152,
+  "mbpp_pass10": 0.004,
+  "mbpp_pass1_t08": 0.0004
+ },
+ {
+  "model": "capstone SFT",
+  "params": 92138496,
+  "chat": true,
+  "val_code": 1.5819,
+  "val_en": 3.261,
+  "bpb_code": 0.7301,
+  "humaneval_pass1": 0.0122,
+  "mbpp_pass1": 0.004,
+  "humaneval_solved": [
+   "HumanEval/28",
+   "HumanEval/34"
+  ],
+  "mbpp_solved": [
+   "mbpp/127",
+   "mbpp/242"
+  ],
+  "humaneval_pass10": 0.0488,
+  "humaneval_pass1_t08": 0.011,
+  "mbpp_pass10": 0.004,
+  "mbpp_pass1_t08": 0.0004
+ },
+ {
+  "model": "capstone DPO",
+  "params": 92138496,
+  "chat": true,
+  "val_code": 1.6324,
+  "val_en": 3.2737,
+  "bpb_code": 0.7534,
+  "humaneval_pass1": 0.0122,
+  "mbpp_pass1": 0.004,
+  "humaneval_solved": [
+   "HumanEval/28",
+   "HumanEval/34"
+  ],
+  "mbpp_solved": [
+   "mbpp/127",
+   "mbpp/242"
+  ],
+  "humaneval_pass10": 0.0183,
+  "humaneval_pass1_t08": 0.003,
+  "mbpp_pass10": 0.006,
+  "mbpp_pass1_t08": 0.0008
+ },
+ {
+  "model": "capstone GRPO",
+  "params": 92138496,
+  "chat": true,
+  "val_code": 1.5824,
+  "val_en": 3.2603,
+  "bpb_code": 0.7303,
+  "humaneval_pass1": 0.0305,
+  "mbpp_pass1": 0.004,
+  "humaneval_solved": [
+   "HumanEval/23",
+   "HumanEval/28",
+   "HumanEval/29",
+   "HumanEval/35",
+   "HumanEval/53"
+  ],
+  "mbpp_solved": [
+   "mbpp/127",
+   "mbpp/242"
+  ],
+  "humaneval_pass10": 0.0488,
+  "humaneval_pass1_t08": 0.0128,
+  "mbpp_pass10": 0.006,
+  "mbpp_pass1_t08": 0.001
+ }
+]

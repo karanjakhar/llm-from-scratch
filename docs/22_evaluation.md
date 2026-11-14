@@ -186,7 +186,67 @@ raw prompt; chat models get it as a user turn.
 
 ### 8a. The table
 
-*(results go here)*
+Every checkpoint through one harness (§6 settings). Val loss on the same 256
+windows of 512 tokens; bits per byte for code (comparable across tokenizers,
+§1); greedy pass@1; pass@10 from 10 samples at τ = 0.8 with the unbiased
+estimator, for the two real models' checkpoints. Base models continue the
+raw prompt; SFT / DPO / GRPO models get it as a chat turn.
+
+| model | params | val code | val English | bpb code | HumanEval pass@1 | pass@10 | MBPP pass@1 | pass@10 |
+|---|---|---|---|---|---|---|---|---|
+| Stage 06 GPT, 4 layers | 5.3M | 2.356 | 4.118 | 1.087 | 0 | — | 0 | — |
+| Stage 12 Llama, 6 layers | 12.4M | 2.271 | 4.116 | 1.048 | 0 | — | 0 | — |
+| Stage 13 MoE, 8 experts top-2 | 33.7M (total) | 2.325 | 4.119 | 1.073 | 0 | — | 0 | — |
+| workhorse base | 29.9M | **1.684** | **3.341** | 0.777 | 0 | 1.22% | 0 | 0 |
+| workhorse SFT | | 1.832 | 3.646 | 0.846 | 1.22% | 2.44% | 0 | 0.4% |
+| workhorse DPO (β = 1) | | 2.013 | 3.697 | 0.929 | 0 | 0.61% | 0 | 0 |
+| workhorse GRPO | | 1.833 | 3.646 | 0.846 | **2.44%** | 1.83% | 0.2% | 0 |
+| capstone base | 92.1M | **1.423** | **2.950** | **0.657** | **3.05%** | **5.49%** | 0.2% | 0.4% |
+| capstone SFT | | 1.582 | 3.261 | 0.730 | 1.22% | 4.88% | 0.4% | 0.4% |
+| capstone DPO (β = 1) | | 1.632 | 3.274 | 0.753 | 1.22% | 1.83% | 0.4% | 0.6% |
+| capstone GRPO | | 1.582 | 3.260 | 0.730 | **3.05%** | 4.88% | 0.4% | 0.6% |
+
+Reading it:
+
+- **Loss orders the models exactly as size and data do**, and pass@1 is zero
+  for everything below the workhorse. The three small models differ by up to
+  0.085 nats of code loss and are identical on both benchmarks: loss sees
+  differences that tests cannot yet.
+- **The best HumanEval model is the capstone base model**, prompted as plain
+  code: 3.05% greedy, 5.49% pass@10. No post-training stage beat it on
+  HumanEval. SFT lowered greedy pass@1 to 1.22% while barely touching pass@10
+  (4.88%): the right answer was still among the samples, just not first.
+  GRPO brought greedy back to 3.05%.
+- **Every post-training stage raised the pretraining loss**: SFT by 0.15-0.16
+  nats of code, DPO by a further 0.05-0.18. DPO is the most expensive in loss
+  and the least useful in tests (Stage 19: it pushes log-probabilities of chosen
+  and rejected answers down together).
+- **The numbers are tiny and noisy.** One HumanEval problem is 0.61 points.
+  Stage 19 measured workhorse DPO at 1 of 164 with the same settings; here it
+  is 0 of 164. Greedy decoding in bf16 flips at near-ties, and the batch a
+  prompt is generated in changes the arithmetic slightly (Stage 15 saw the
+  same). Differences of one or two problems are not findings.
+- **pass@10 below pass@1 (workhorse GRPO: 1.83% vs 2.44%)** is not a bug: the
+  two come from different decoding. Greedy picks the single most likely
+  completion, which RL sharpened; τ = 0.8 samples spend most of their tries
+  elsewhere.
+
+**What got solved, and was it in the training data?** Every problem any
+checkpoint solved:
+
+| model | problems solved (HumanEval / MBPP) | any 13-gram in training? |
+|---|---|---|
+| capstone base | HumanEval 23, 28, 29, 35, 53; mbpp 242 | none |
+| capstone GRPO | HumanEval 23, 28, 29, 35, 53; mbpp 127, 242 | none |
+| capstone SFT, DPO | HumanEval 28, 34; mbpp 127, 242 | none |
+| workhorse GRPO | HumanEval 23, 28, 35, 53; mbpp 336 | none |
+| workhorse SFT | HumanEval 23, 28 | none |
+
+HumanEval 23 is `strlen`, 28 `concatenate`, 29 `filter_by_prefix`, 35
+`max_element`, 53 `add`: one-line bodies. **None of the solved problems has a
+single 13-token window of its reference solution in our 1.33B training
+tokens**, so the four heavily overlapping problems of §8b contributed
+nothing. The scores are small, and they are clean.
 
 ### 8b. Contamination
 

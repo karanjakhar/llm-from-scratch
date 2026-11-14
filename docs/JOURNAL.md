@@ -1308,3 +1308,10 @@ not intent.
 **Why:**       With 16 slots each decode step's time is mostly fixed overhead (Python scheduler, kernel launches), the same overhead-bound regime Stage 07 measured.
 **Lesson:**    Parameter count shows up in serving cost only once the per-step work outgrows the per-step overhead.
 **Where:**     `results/23_serving/bursty_capstone.json`, `docs/23_serving.md` §7b
+
+### 2026-11-14 · Stage 22 · The best HumanEval model is the untuned capstone, and it is clean   [result]
+**Expected:**  The post-trained capstone checkpoints at the top of the table.
+**Found:**     Capstone base, prompted as plain code: HumanEval 3.05% greedy, **5.49% pass@10**, the highest of 11 checkpoints. SFT 1.22% / 4.88%; DPO 1.22% / 1.83%; GRPO 3.05% / 4.88%. Workhorse base 0% / 1.22%, best workhorse GRPO 2.44%. The three small models (5-34M) score 0 on both benchmarks while their code losses differ by 0.085. Every problem any checkpoint solved (HumanEval 23, 28, 29, 34, 35, 53; mbpp 127, 242, 336) has zero 13-grams in the 1.33B training tokens. Workhorse DPO scored 0/164 here and 1/164 in Stage 19 with the same settings.
+**Why:**       Post-training raised the pretraining loss each time (SFT +0.16 code, DPO a further +0.05) and taught the chat format, which HumanEval's prompts do not need. The one-problem disagreement is bf16 greedy decoding flipping at a near-tie under a different batch composition.
+**Lesson:**    At this scale, one problem is 0.61 points and decoding noise moves single problems; read differences of one or two as ties. And measure the base model in its own best format before crediting post-training.
+**Where:**     `results/22_evaluation/table.json`, `docs/22_evaluation.md` §8a
