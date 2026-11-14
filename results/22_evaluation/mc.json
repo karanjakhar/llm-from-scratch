@@ -1,0 +1,76 @@
+{
+ "items": 352,
+ "chance": 0.25,
+ "scores": {
+  "Stage 06 GPT 4L (5M)": {
+   "acc_sum": 0.5028,
+   "acc_norm": 0.5625
+  },
+  "Stage 12 Llama 6L (14M)": {
+   "acc_sum": 0.483,
+   "acc_norm": 0.5483
+  },
+  "Stage 13 MoE 8e top-2": {
+   "acc_sum": 0.4602,
+   "acc_norm": 0.5
+  },
+  "workhorse base": {
+   "acc_sum": 0.5938,
+   "acc_norm": 0.6676
+  },
+  "workhorse SFT": {
+   "acc_sum": 0.6222,
+   "acc_norm": 0.6932
+  },
+  "workhorse DPO": {
+   "acc_sum": 0.6534,
+   "acc_norm": 0.6506
+  },
+  "workhorse GRPO": {
+   "acc_sum": 0.6222,
+   "acc_norm": 0.6818
+  },
+  "capstone base": {
+   "acc_sum": 0.7159,
+   "acc_norm": 0.767
+  },
+  "capstone SFT": {
+   "acc_sum": 0.7188,
+   "acc_norm": 0.7699
+  },
+  "capstone DPO": {
+   "acc_sum": 0.767,
+   "acc_norm": 0.7784
+  },
+  "capstone GRPO": {
+   "acc_sum": 0.7188,
+   "acc_norm": 0.767
+  }
+ },
+ "rank_sum": [
+  "capstone DPO",
+  "capstone SFT",
+  "capstone GRPO",
+  "capstone base",
+  "workhorse DPO",
+  "workhorse SFT",
+  "workhorse GRPO",
+  "workhorse base",
+  "Stage 06 GPT 4L (5M)",
+  "Stage 12 Llama 6L (14M)",
+  "Stage 13 MoE 8e top-2"
+ ],
+ "rank_norm": [
+  "capstone DPO",
+  "capstone SFT",
+  "capstone base",
+  "capstone GRPO",
+  "workhorse SFT",
+  "workhorse GRPO",
+  "workhorse base",
+  "workhorse DPO",
+  "Stage 06 GPT 4L (5M)",
+  "Stage 12 Llama 6L (14M)",
+  "Stage 13 MoE 8e top-2"
+ ]
+}

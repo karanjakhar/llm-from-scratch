@@ -1,0 +1,258 @@
+{
+ "pretrain": {
+  "params": 92138496,
+  "tokens": 1802240000,
+  "val_code": 1.2946,
+  "val_en": 2.8977,
+  "config": {
+   "n_layer": 12,
+   "n_head": 12,
+   "n_embd": 768,
+   "block_size": 1024,
+   "qk_norm": true
+  }
+ },
+ "sft": {
+  "train_pairs": 119178,
+  "before": {
+   "lm_val": {
+    "code": 1.4233,
+    "en": 2.9497
+   },
+   "humaneval_base": 0.0305,
+   "mbpp_base": 0.002
+  },
+  "after": {
+   "lm_val": {
+    "code": 1.5819,
+    "en": 3.261
+   },
+   "sft_val": 0.8858,
+   "humaneval": 0.0122,
+   "mbpp": 0.004
+  }
+ },
+ "dpo": {
+  "beta": 1.0,
+  "humaneval_pass1": 0.0122,
+  "mbpp_pass1": 0.004,
+  "final_mbpp_pref_acc": 0.8949,
+  "final_kl": 0.0272,
+  "final_rm": 25.3673
+ },
+ "reward_model": {
+  "csn_val_acc": 0.871,
+  "mbpp_acc": 0.8654
+ },
+ "grpo": {
+  "tasks": "easy",
+  "steps": 60,
+  "start": {
+   "step": 0,
+   "easy_heldout": 0.2733,
+   "mbpp_test": 0.004,
+   "humaneval": 0.0122,
+   "kl": null
+  },
+  "end": {
+   "step": 60,
+   "easy_heldout": 0.7333,
+   "mbpp_test": 0.004,
+   "humaneval": 0.0305,
+   "kl": 0.01781
+  }
+ },
+ "quant": [
+  {
+   "name": "bf16",
+   "mb": 175.74,
+   "val": {
+    "code": 1.4233,
+    "en": 2.9498
+   },
+   "tok_s": 451.1
+  },
+  {
+   "name": "int8 per-tensor",
+   "mb": 94.74,
+   "val": {
+    "code": 1.4254,
+    "en": 2.9523
+   },
+   "tok_s": 143.2
+  },
+  {
+   "name": "int8 per-channel",
+   "mb": 95.06,
+   "val": {
+    "code": 1.4233,
+    "en": 2.9501
+   },
+   "tok_s": 141.0
+  },
+  {
+   "name": "int4 per-tensor",
+   "mb": 54.24,
+   "val": {
+    "code": 4.6407,
+    "en": 5.4704
+   },
+   "tok_s": 111.5
+  },
+  {
+   "name": "int4 per-channel",
+   "mb": 54.56,
+   "val": {
+    "code": 1.4689,
+    "en": 3.0125
+   },
+   "tok_s": 108.3
+  },
+  {
+   "name": "int4 group-128",
+   "mb": 56.77,
+   "val": {
+    "code": 1.4487,
+    "en": 2.9864
+   },
+   "tok_s": 112.3
+  },
+  {
+   "name": "int4 group-32",
+   "mb": 64.37,
+   "val": {
+    "code": 1.4389,
+    "en": 2.9728
+   },
+   "tok_s": 110.0
+  },
+  {
+   "name": "int4 group-128 asym",
+   "mb": 56.77,
+   "val": {
+    "code": 1.4417,
+    "en": 2.975
+   },
+   "tok_s": 112.8
+  },
+  {
+   "name": "nf4 block-64",
+   "mb": 56.77,
+   "val": {
+    "code": 1.4367,
+    "en": 2.9679
+   },
+   "tok_s": 106.1
+  },
+  {
+   "name": "int3 group-32",
+   "mb": null,
+   "val": {
+    "code": 1.5329,
+    "en": 3.0999
+   },
+   "tok_s": 449.7
+  }
+ ],
+ "eval": [
+  {
+   "model": "capstone base",
+   "params": 92138496,
+   "chat": false,
+   "val_code": 1.4233,
+   "val_en": 2.9497,
+   "bpb_code": 0.6569,
+   "humaneval_pass1": 0.0305,
+   "mbpp_pass1": 0.002,
+   "humaneval_pass10": 0.0549,
+   "humaneval_pass1_t08": 0.0152,
+   "mbpp_pass10": 0.004,
+   "mbpp_pass1_t08": 0.0004
+  },
+  {
+   "model": "capstone SFT",
+   "params": 92138496,
+   "chat": true,
+   "val_code": 1.5819,
+   "val_en": 3.261,
+   "bpb_code": 0.7301,
+   "humaneval_pass1": 0.0122,
+   "mbpp_pass1": 0.004,
+   "humaneval_pass10": 0.0488,
+   "humaneval_pass1_t08": 0.011,
+   "mbpp_pass10": 0.004,
+   "mbpp_pass1_t08": 0.0004
+  },
+  {
+   "model": "capstone DPO",
+   "params": 92138496,
+   "chat": true,
+   "val_code": 1.6324,
+   "val_en": 3.2737,
+   "bpb_code": 0.7534,
+   "humaneval_pass1": 0.0122,
+   "mbpp_pass1": 0.004,
+   "humaneval_pass10": 0.0183,
+   "humaneval_pass1_t08": 0.003,
+   "mbpp_pass10": 0.006,
+   "mbpp_pass1_t08": 0.0008
+  },
+  {
+   "model": "capstone GRPO",
+   "params": 92138496,
+   "chat": true,
+   "val_code": 1.5824,
+   "val_en": 3.2603,
+   "bpb_code": 0.7303,
+   "humaneval_pass1": 0.0305,
+   "mbpp_pass1": 0.004,
+   "humaneval_pass10": 0.0488,
+   "humaneval_pass1_t08": 0.0128,
+   "mbpp_pass10": 0.006,
+   "mbpp_pass1_t08": 0.001
+  }
+ ],
+ "mc": {
+  "capstone base": {
+   "acc_sum": 0.7159,
+   "acc_norm": 0.767
+  },
+  "capstone SFT": {
+   "acc_sum": 0.7188,
+   "acc_norm": 0.7699
+  },
+  "capstone DPO": {
+   "acc_sum": 0.767,
+   "acc_norm": 0.7784
+  },
+  "capstone GRPO": {
+   "acc_sum": 0.7188,
+   "acc_norm": 0.767
+  }
+ },
+ "serve": {
+  "static": {
+   "tokens_per_s": 706.9,
+   "latency_p50": 0.911,
+   "latency_p99": 2.13,
+   "ttft_p50": 0.44
+  },
+  "continuous": {
+   "tokens_per_s": 720.3,
+   "latency_p50": 0.283,
+   "latency_p99": 1.502,
+   "ttft_p50": 0.008
+  }
+ },
+ "sources": {
+  "pretrain": "results/11_pretrain/capstone.json",
+  "sft": "results/16_sft/capstone.json",
+  "dpo": "results/19_dpo/capstone_beta*.json",
+  "reward_model": "results/18_reward/capstone.json",
+  "grpo": "results/20_grpo/capstone_easy.json",
+  "quant": "results/21_distill_quant/quant_capstone.json",
+  "eval": "results/22_evaluation/table.json",
+  "mc": "results/22_evaluation/mc.json",
+  "serve": "results/23_serving/bursty_capstone.json"
+ }
+}

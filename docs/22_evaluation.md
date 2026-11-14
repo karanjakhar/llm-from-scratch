@@ -288,10 +288,68 @@ the score is suspect.
 
 ### 8c. Length normalisation
 
-*(results go here)*
+352 MBPP test problems where the reference passes its tests and three
+distinct single mutations each fail them (Stage 18's mutator). Four options,
+so chance is 25%. Each option is scored by the log-probability the model
+gives it after the prompt: **summed** over its tokens, or **per token**.
+
+| model | summed | per token | change |
+|---|---|---|---|
+| Stage 06 GPT (5M) | 50.3% | 56.2% | +5.9 |
+| Stage 12 Llama (12M) | 48.3% | 54.8% | +6.5 |
+| Stage 13 MoE (34M total) | 46.0% | 50.0% | +4.0 |
+| workhorse base | 59.4% | 66.8% | +7.4 |
+| workhorse SFT | 62.2% | 69.3% | +7.1 |
+| workhorse DPO | **65.3%** | 65.1% | −0.2 |
+| workhorse GRPO | 62.2% | 68.2% | +6.0 |
+| capstone base | 71.6% | 76.7% | +5.1 |
+| capstone SFT | 71.9% | 77.0% | +5.1 |
+| capstone DPO | **76.7%** | **77.8%** | +1.1 |
+| capstone GRPO | 71.9% | 76.7% | +4.8 |
+
+Three things:
+
+- **Every model is far above chance, including the 5M one.** Picking the
+  working program out of four near-identical ones is much easier than
+  writing it: the models that score 0 on HumanEval get half of these right.
+  This is Stage 18's finding (a model that cannot write code can judge it)
+  without any reward-model training.
+- **Normalising helps by 4-7 points**, except for DPO. Mutations change
+  length by a token or two in either direction (§2). A sum charges for every
+  token, so a mutant that happens to be shorter gets a head start it did not
+  earn; dividing by length removes it. (We did not count how many mutants
+  are shorter; the size of the gain says it is a common case.)
+- **The ranking depends on the choice.** Summed, workhorse DPO is the best
+  workhorse checkpoint (65.3%); per token, it is the worst (65.1%, below
+  base's 66.8%). DPO was trained on exactly this kind of pair, and with a
+  summed objective (Stage 19's loss sums log-probabilities over the
+  answer), so it learned to win on summed scores. That is a benchmark result
+  that measures how the model was trained as much as what it knows; the
+  same thing happens when a leaderboard reports `acc` and a paper reports
+  `acc_norm`.
 
 ---
 
 ## 9. What we found
 
-*(written after the experiments)*
+| Question | Answer, measured |
+|---|---|
+| Does the harness measure itself? | No: 164/164 HumanEval references pass, ≥ 99% of MBPP's, stubs and the early-exit hack fail |
+| Best HumanEval model | The capstone **base** model as plain code: 3.05% greedy, 5.49% pass@10 |
+| What did post-training buy on HumanEval? | Nothing net: SFT 3.05 → 1.22%, GRPO back to 3.05%; DPO stayed at 1.22% |
+| Do models under 30M solve anything? | No: 0 on both benchmarks, though their code losses differ by 0.085 |
+| Contamination | 69 HumanEval problems share some 13-gram with training, none share half; every solved problem shares **none** |
+| Noise floor | One problem = 0.61 points; the same checkpoint scored 0 and 1 of 164 in two runs |
+| Choosing the working program of four | 46-78%, all far above 25% chance; the 5M model gets 56% |
+| Length normalisation | +4 to +7 points, and it reorders models: DPO is best summed, worst normalised among workhorse checkpoints |
+
+The habits from this stage:
+
+- **Test the harness on the answers before testing a model on the
+  questions.** The trailing-newline trap emptied every base-model completion
+  until one was read raw.
+- **Evaluate each model in its best format.** Comparing an SFT model in chat
+  mode against its base model in chat mode made SFT look like a gain; in
+  the base model's own format it was a loss.
+- **Below about ten problems, report counts, not percentages.** "3.05%" is
+  five one-line functions.

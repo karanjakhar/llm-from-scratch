@@ -1315,3 +1315,10 @@ not intent.
 **Why:**       Post-training raised the pretraining loss each time (SFT +0.16 code, DPO a further +0.05) and taught the chat format, which HumanEval's prompts do not need. The one-problem disagreement is bf16 greedy decoding flipping at a near-tie under a different batch composition.
 **Lesson:**    At this scale, one problem is 0.61 points and decoding noise moves single problems; read differences of one or two as ties. And measure the base model in its own best format before crediting post-training.
 **Where:**     `results/22_evaluation/table.json`, `docs/22_evaluation.md` §8a
+
+### 2026-11-14 · Stage 22 · Length normalisation reorders the checkpoints                [result]
+**Expected:**  Normalised and summed scoring to rank our models the same way, with small accuracy differences.
+**Found:**     352 MBPP items, reference vs 3 failing mutants (chance 25%). Per-token scoring beats summed by 4.0-7.4 points for 9 of 11 checkpoints (capstone base 71.6 → 76.7%; the 5M Stage 06 model 50.3 → 56.2%). The exceptions are the DPO models: workhorse DPO 65.3 → 65.1%, capstone DPO 76.7 → 77.8%. Summed, workhorse DPO is the best workhorse checkpoint; normalised, it is the worst.
+**Why:**       DPO trained on single-mutation pairs with a loss on *summed* log-probabilities, so it learned to win exactly the summed comparison. Normalisation takes away the part of that win that came from length.
+**Lesson:**    A multiple-choice score depends on the scoring rule, and a model trained on the benchmark's own format and rule looks better than it is. Report both.
+**Where:**     `results/22_evaluation/mc.json`, `docs/22_evaluation.md` §8c

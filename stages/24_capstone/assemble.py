@@ -49,11 +49,19 @@ def main():
                                                  "final_kl", "final_rm")}
         sources["dpo"] = "results/19_dpo/capstone_beta*.json"
 
-    grpo = load("20_grpo/capstone.json")
+    rm = load("18_reward/capstone.json")
+    if rm:
+        out["reward_model"] = dict(csn_val_acc=rm["csn_val_acc"], mbpp_acc=rm["mbpp_acc"])
+        sources["reward_model"] = "results/18_reward/capstone.json"
+
+    # the run script tags the easy-curriculum run "<tag>_easy" (stages/20_grpo/run.py)
+    grpo = load("20_grpo/capstone_easy.json")
     if grpo:
-        ev = [h for h in grpo["hist"] if "mbpp_test" in h]
-        out["grpo"] = dict(start=ev[0], end=ev[-1], steps=ev[-1]["step"])
-        sources["grpo"] = "results/20_grpo/capstone.json"
+        ev = [h for h in grpo["hist"] if "easy_heldout" in h]
+        keep = ("step", "easy_heldout", "mbpp_test", "humaneval", "kl")
+        out["grpo"] = dict(tasks="easy", steps=ev[-1]["step"],
+                           start={k: ev[0].get(k) for k in keep}, end={k: ev[-1].get(k) for k in keep})
+        sources["grpo"] = "results/20_grpo/capstone_easy.json"
 
     q = load("21_distill_quant/quant_capstone.json")
     if q:
@@ -65,11 +73,16 @@ def main():
         out["eval"] = [{k: v for k, v in r.items() if "solved" not in k} for r in tab if "capstone" in r["model"]]
         sources["eval"] = "results/22_evaluation/table.json"
 
+    mc = load("22_evaluation/mc.json")
+    if mc:
+        out["mc"] = {k: v for k, v in mc["scores"].items() if "capstone" in k}
+        sources["mc"] = "results/22_evaluation/mc.json"
+
     srv = load("23_serving/bursty_capstone.json")
     if srv:
         out["serve"] = {p: {k: srv[p][k] for k in ("tokens_per_s", "latency_p50", "latency_p99", "ttft_p50")}
                         for p in ("static", "continuous")}
-        sources["serve"] = "results/23_serving/bursty*.json"
+        sources["serve"] = "results/23_serving/bursty_capstone.json"
 
     out["sources"] = sources
     (R / "24_capstone").mkdir(parents=True, exist_ok=True)

@@ -141,5 +141,51 @@
   }
  },
  "humaneval_flagged": 69,
- "mbpp_flagged": 50
+ "mbpp_flagged": 50,
+ "solved_split": {
+  "Stage 06 GPT 4L (5M)": {
+   "solved_flagged": 0,
+   "solved_unflagged": 0
+  },
+  "Stage 12 Llama 6L (14M)": {
+   "solved_flagged": 0,
+   "solved_unflagged": 0
+  },
+  "Stage 13 MoE 8e top-2": {
+   "solved_flagged": 0,
+   "solved_unflagged": 0
+  },
+  "workhorse base": {
+   "solved_flagged": 0,
+   "solved_unflagged": 0
+  },
+  "workhorse SFT": {
+   "solved_flagged": 0,
+   "solved_unflagged": 2
+  },
+  "workhorse DPO": {
+   "solved_flagged": 0,
+   "solved_unflagged": 0
+  },
+  "workhorse GRPO": {
+   "solved_flagged": 0,
+   "solved_unflagged": 5
+  },
+  "capstone base": {
+   "solved_flagged": 0,
+   "solved_unflagged": 6
+  },
+  "capstone SFT": {
+   "solved_flagged": 0,
+   "solved_unflagged": 4
+  },
+  "capstone DPO": {
+   "solved_flagged": 0,
+   "solved_unflagged": 4
+  },
+  "capstone GRPO": {
+   "solved_flagged": 0,
+   "solved_unflagged": 7
+  }
+ }
 }
