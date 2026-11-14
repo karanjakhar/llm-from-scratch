@@ -200,6 +200,8 @@ the best speedup is **0.98×** (γ = 6), and τ = 1 runs at 0.50-0.75×. The §3
 formula with α = 0.89, c = 0.67, γ = 4 predicts 1.09×. Better agreement
 cannot make up for a draft that is almost as slow as the target.
 
+![The same sweep with the 92M capstone as target](visuals/15_speculative_capstone.png)
+
 Speculative decoding is a technique for large targets with cheap drafts. On
 our hardware at our sizes the precondition fails, and the measurement shows
 exactly how much: the acceptance rate was there, the cost ratio was not.

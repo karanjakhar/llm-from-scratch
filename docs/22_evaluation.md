@@ -328,6 +328,8 @@ Three things:
   same thing happens when a leaderboard reports `acc` and a paper reports
   `acc_norm`.
 
+![HumanEval problems solved per checkpoint; picking the working program, summed vs per-token](visuals/22_evaluation.png)
+
 ---
 
 ## 9. What we found

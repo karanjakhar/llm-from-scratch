@@ -3,6 +3,7 @@
     uv run python stages/22_evaluation/run.py table           # 8a
     uv run python stages/22_evaluation/run.py contamination   # 8b
     uv run python stages/22_evaluation/run.py mc              # 8c
+    uv run python stages/22_evaluation/run.py plot            # docs/visuals/22_evaluation.png
 """
 
 from __future__ import annotations
@@ -214,9 +215,46 @@ def cmd_mc(a):
     write_json("mc.json", dict(items=len(items), chance=0.25, scores=out, rank_sum=rank_sum, rank_norm=rank_norm))
 
 
+def cmd_plot(a):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    tab = json.loads((RESULTS / "table.json").read_text())
+    mc = json.loads((RESULTS / "mc.json").read_text())
+    fig, ax = plt.subplots(1, 2, figsize=(13, 5.2))
+    # (a) HumanEval as problem counts: at this scale a percentage hides how few problems it is
+    names = [r["model"] for r in tab][::-1]
+    g = [round(r["humaneval_pass1"] * 164) for r in tab][::-1]
+    p10 = [r.get("humaneval_pass10", 0) * 164 for r in tab][::-1]
+    y = np.arange(len(names))
+    ax[0].barh(y + 0.2, g, 0.38, color="C0", label="greedy pass@1 (problems solved)")
+    ax[0].barh(y - 0.2, p10, 0.38, color="C1", label="pass@10 × 164 (τ = 0.8)")
+    ax[0].set(yticks=y, yticklabels=names, xlabel="HumanEval problems (of 164)",
+              title="HumanEval: the untuned capstone is as good as anything after it")
+    ax[0].legend(loc="upper right", fontsize=8)          # the small models' rows are empty there
+    ax[0].grid(axis="x", alpha=0.3)
+    # (b) the same models under two scoring rules; a line joins each model's two scores
+    sc = mc["scores"]
+    names_b = list(sc)[::-1]
+    yb = np.arange(len(names_b))
+    for i, k in enumerate(names_b):
+        ax[1].plot([sc[k]["acc_sum"] * 100, sc[k]["acc_norm"] * 100], [i, i], color="gray", lw=1.5, zorder=1)
+    ax[1].scatter([sc[k]["acc_sum"] * 100 for k in names_b], yb, s=50, color="C3", label="summed log-prob", zorder=2)
+    ax[1].scatter([sc[k]["acc_norm"] * 100 for k in names_b], yb, s=50, color="C0", label="per-token log-prob", zorder=2)
+    ax[1].axvline(25, color="gray", ls=":", lw=1)
+    ax[1].text(25.5, len(names_b) - 0.7, "chance", fontsize=8, color="gray")
+    ax[1].set(yticks=yb, yticklabels=names_b, xlim=(20, 85), xlabel="% of 352 MBPP items: working program picked over 3 mutants",
+              title="Length normalisation: +4-7 points, except for DPO")
+    ax[1].legend(loc="lower left", fontsize=8)
+    ax[1].grid(axis="x", alpha=0.3)
+    fig.tight_layout()
+    fig.savefig(REPO / "docs" / "visuals" / "22_evaluation.png", dpi=130)
+    print("saved")
+
+
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
-    p.add_argument("cmd", choices=["table", "contamination", "mc"])
+    p.add_argument("cmd", choices=["table", "contamination", "mc", "plot"])
     p.add_argument("--pass10", action="store_true")
     p.add_argument("--redo", action="store_true")
     a = p.parse_args()
