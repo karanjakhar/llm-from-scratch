@@ -1288,3 +1288,23 @@ not intent.
 **Why:**       RL can only reinforce successes it samples. Starting at 27% instead of 13%, more groups have mixed outcomes, so more of each step's batch carries gradient; the gain compounds.
 **Lesson:**    The return on RL grows with the starting pass rate. Of every post-training stage on the capstone, only the one with a verifiable reward moved a pass rate a lot, and it moved most on the tasks it trained on.
 **Where:**     `results/20_grpo/capstone_easy.json`, `docs/20_reasoning_rlvr.md` §8d
+
+### 2026-11-14 · Stage 21 · Per-tensor int4 breaks the bigger model worse               [result]
+**Expected:**  The capstone's quantization table to look like the workhorse's.
+**Found:**     Same ranking. Fine-grained schemes hurt the 92M model less (NF4 +0.0134 vs +0.0156; int4 group-128 +0.0254 vs +0.0352; int8 per-channel +0.0000). Per-tensor int4 hurts it more: +3.2174 (loss 4.64) against +2.3935.
+**Why:**       One scale per matrix is set by the matrix's largest weight; a 768-wide matrix has more weights, so a more extreme maximum relative to the typical weight. Finer groups contain that effect.
+**Lesson:**    "Bigger models quantize better" holds for good schemes. A bad scheme gets worse with scale.
+**Where:**     `results/21_distill_quant/quant_capstone.json`, `docs/21_distill_quantize.md` §7b
+
+### 2026-11-14 · Stage 21 · The capstone plot overwrote the workhorse figure            [mistake]
+**Expected:**  `run.py plot --tag capstone` to make a capstone figure.
+**Found:**     It saves to the fixed path `docs/visuals/21_distill_quant.png`, replacing the committed workhorse figure. Restored with `git checkout`; the capstone numbers are a table in §7b instead.
+**Lesson:**    A `--tag` that changes the input but not the output path is a trap; check `git status docs/visuals` after any rerun.
+**Where:**     `stages/21_distill_quant/run.py` (`cmd_plot`)
+
+### 2026-11-14 · Stage 23 · A 3× bigger model serves at the same speed                  [result]
+**Expected:**  Lower throughput for the 92M capstone on the bursty trace.
+**Found:**     Continuous batching: 720 tok/s (workhorse 725), first token p50 0.008 s for both, median latency 0.283 vs 0.272 s. Static: 707 tok/s, TTFT p50 0.440 s; continuous is 55× better on first token. At batch 1 the capstone does show its size: 451 vs 725 tok/s (Stage 21).
+**Why:**       With 16 slots each decode step's time is mostly fixed overhead (Python scheduler, kernel launches), the same overhead-bound regime Stage 07 measured.
+**Lesson:**    Parameter count shows up in serving cost only once the per-step work outgrows the per-step overhead.
+**Where:**     `results/23_serving/bursty_capstone.json`, `docs/23_serving.md` §7b

@@ -196,6 +196,23 @@ memory.
 
 ![Throughput vs latency; latency distribution, static vs continuous](visuals/23_serving.png)
 
+**The same trace on the 92M capstone:**
+
+| | static | continuous | workhorse (30M), continuous |
+|---|---|---|---|
+| median latency | 0.911 s | **0.283 s** | 0.272 s |
+| p99 latency | 2.130 s | 1.502 s | 1.563 s |
+| median time to first token | 0.440 s | **0.008 s** (55×) | 0.008 s |
+| throughput | 707 tok/s | 720 tok/s | 725 tok/s |
+
+Three times the parameters and the serving numbers barely move: 720 against
+725 tokens/s, the same 8 ms first token. At 16 slots and these lengths,
+each decode step is dominated by fixed per-step costs (Python, kernel
+launches, the scheduler), not by the matmuls the parameters feed, as Stage
+07 found for the KV cache. The model would have to be much bigger, or the
+batch much larger, before its size showed up here. (At batch 1 it does:
+451 against 725 tokens/s, Stage 21.)
+
 ### 7c. Against Hugging Face `generate`
 
 The workhorse's weights exported into a Hugging Face `GPT2LMHeadModel`

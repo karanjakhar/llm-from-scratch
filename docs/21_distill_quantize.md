@@ -248,6 +248,29 @@ Reading it:
   PyTorch on every forward, then calls a normal matmul. The memory saving is
   real (57 → 22 MB), the speed needs a fused kernel we did not write.
 
+**The capstone (92M), same schemes:**
+
+| scheme | Δ val code, workhorse (30M) | Δ val code, capstone (92M) | capstone size |
+|---|---|---|---|
+| int8 per-channel | +0.0004 | **+0.0000** | 95.1 MB |
+| int8 per-tensor | +0.0021 | +0.0021 | 94.7 MB |
+| NF4, block 64 | +0.0156 | **+0.0134** | 56.8 MB |
+| int4 group-32 | +0.0204 | +0.0156 | 64.4 MB |
+| int4 group-128, asymmetric | +0.0240 | +0.0184 | 56.8 MB |
+| int4 group-128 | +0.0352 | +0.0254 | 56.8 MB |
+| int4 per-channel | +0.0586 | +0.0456 | 54.6 MB |
+| int3 group-32 (simulated) | +0.1326 | +0.1096 | — |
+| int4 per-tensor | +2.3935 | **+3.2174** | 54.2 MB |
+
+(bf16: val code 1.4233, 175.7 MB, 451 tokens/s.) The ranking is identical.
+Every fine-grained scheme hurts the bigger model a little less (NF4 +0.013
+against +0.016, int4 group-128 +0.025 against +0.035), which matches the
+usual observation that larger models quantize more gracefully. The one
+coarse scheme hurts it **more**: per-tensor int4 breaks the capstone worse
+(+3.22, loss 4.64) than the workhorse (+2.39). Bigger matrices hold more
+weights, so the single largest one, which sets the step for all of them,
+sits further from the typical weight.
+
 The size column stops at 21 MB, not 57 / 4 = 14: the 8,196 × 512 embedding
 table (8.4 MB in bf16) and the norms stay unquantized, and every group carries
 a 16-bit scale.
