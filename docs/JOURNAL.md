@@ -1322,3 +1322,10 @@ not intent.
 **Why:**       DPO trained on single-mutation pairs with a loss on *summed* log-probabilities, so it learned to win exactly the summed comparison. Normalisation takes away the part of that win that came from length.
 **Lesson:**    A multiple-choice score depends on the scoring rule, and a model trained on the benchmark's own format and rule looks better than it is. Report both.
 **Where:**     `results/22_evaluation/mc.json`, `docs/22_evaluation.md` §8c
+
+### 2026-11-14 · Stage 24 · The whole pipeline, and what it bought                      [result]
+**Expected:**  Each stage after pretraining to add something measurable to the capstone, ending in the project's predicted "low single digits" on HumanEval.
+**Found:**     HumanEval greedy problems solved: base 5 → SFT 2 → DPO 2 / GRPO 5. Pretraining val code (Stage 22 harness) 1.423 → 1.582 → 1.632 / 1.582. On its own curriculum GRPO went 27.3% → 73.3%; the reward model judges 86.5% of MBPP pairs right; NF4 costs +0.013 at a third of the size; continuous batching gives a 55× faster first token. The final number is 3.05% pass@1, 5.49% pass@10, with no solved problem contaminated.
+**Why:**       Pretraining made the model; post-training reshaped how it answers. Only the stage with a verifiable reward moved a pass rate, and only on tasks like its training tasks.
+**Lesson:**    At 92M parameters the base model is the product, and post-training is a set of trade-offs to measure, not a ladder that only goes up. The prediction in CLAUDE.md held: low single digits, objective and clean.
+**Where:**     `results/24_capstone/pipeline.json`, `docs/24_capstone.md` §1-2, `MODEL_CARD.md`, `docs/visuals/24_capstone.png`

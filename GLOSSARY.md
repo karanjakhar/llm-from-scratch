@@ -127,6 +127,10 @@ reward model and no RL loop. Stage 19.
 (survivors scaled by `1/(1-p)`), off at inference. Fights overfitting, so it
 only helps when data repeats. Modern pretraining runs use `p = 0`. Stage 05.
 
+**Elo** — A rating system from chess: each pairwise comparison moves both
+players' ratings by an amount that depends on how surprising the result was.
+Chatbot Arena ranks models this way from human votes. Stage 22.
+
 **Embedding** — A lookup table mapping each token id to a learned vector.
 Mathematically a one-hot vector times a matrix. Stage 03.
 
@@ -276,6 +280,10 @@ fingerprints agree is an unbiased estimate of their Jaccard similarity. Stage 02
 small latent vector per token and rebuilds each head's keys and values from
 it, plus a small shared RoPE key. Stage 14.
 
+**Model card** — A short document published with a model: what it is, how it
+was trained, how it scores, and what it should not be used for. Ours is
+`MODEL_CARD.md`. Stage 24.
+
 **MoE (Mixture of Experts)** — Replacing one FFN with many, and routing each
 token to a few, so total parameters grow without per-token FLOPs growing.
 Stage 13.
@@ -346,6 +354,10 @@ information has this property, so it cannot tell `a = b` from `b = a`. Stage 03.
 
 **Perplexity** — `exp(cross-entropy loss)`. Intuitively, how many tokens the
 model is effectively choosing between at each step. Lower is better.
+
+**Position bias** — An LLM judge's tendency to prefer whichever answer it is
+shown first (or second), regardless of quality. Controlled by judging each
+pair in both orders. Stage 22.
 
 **Post-norm** — Normalising *after* the residual add: `Norm(x + f(x))`. The
 2017 transformer and BERT. Puts a norm on the residual path itself, which makes

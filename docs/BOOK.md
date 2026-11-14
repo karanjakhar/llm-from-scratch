@@ -91,7 +91,7 @@ in book voice) · `final`
 | 10 | The training loop | 08 | `docs/08_training_loop.md` | draft |
 | 11 | Making it fast on 8 GB | 09 | `docs/09_efficiency.md` | draft |
 | 12 | How big, how long: scaling laws | 10 | `docs/10_scaling_laws.md` | draft |
-| 13 | The real pretraining run | 11 | | not started |
+| 13 | The real pretraining run | 11 | `docs/11_pretraining.md` | draft |
 | 14 | Modern architecture: from GPT-2 to Llama | 12 | `docs/12_modern_arch.md` | draft |
 | 15 | Mixture of Experts | 13 | `docs/13_moe.md` | draft |
 | 16 | Other kinds of attention, longer context | 14 | `docs/14_attention_variants.md` | draft |
@@ -102,9 +102,9 @@ in book voice) · `final`
 | 21 | RLHF, DPO and GRPO | 19 | `docs/19_rlhf_dpo.md` | draft |
 | 22 | Rewards you can verify: unit tests | 20 | `docs/20_reasoning_rlvr.md` | draft |
 | 23 | Smaller and faster: distillation and quantization | 21 | `docs/21_distill_quantize.md` | draft |
-| 24 | Measuring what matters | 22 | | not started |
+| 24 | Measuring what matters | 22 | `docs/22_evaluation.md` | draft |
 | 25 | Serving it | 23 | `docs/23_serving.md` | draft |
-| 26 | The whole pipeline on one page | 24 | | not started |
+| 26 | The whole pipeline on one page | 24 | `docs/24_capstone.md`, `MODEL_CARD.md` | draft |
 | A | Appendix: glossary | — | `GLOSSARY.md` | draft |
 | B | Appendix: every result in one table | — | `PROGRESS.md` results log | draft |
 | C | Appendix: reproducing everything | — | `README.md`, `pyproject.toml`, manifests | outline |
@@ -150,11 +150,15 @@ HTML) and, for print, will need static versions.
 | MoE | 15 | dense vs MoE curves; balance over training; utilisation heatmaps with/without aux loss | `visuals/13_moe.png` | yes (PNG) |
 | MLA and needles | 16 | cache bytes vs loss for GQA and MLA; needle retrieval grid | `visuals/14_attention_variants.png` | yes (PNG) |
 | Speculative decoding | 17 | speedup and acceptance vs γ at three temperatures | `visuals/15_speculative_workhorse.png` | yes (PNG) |
+| Speculative decoding, 92M target | 17 | the same sweep with the capstone as target: high acceptance, no speedup | `visuals/15_speculative_capstone.png` | yes (PNG) |
 | Reward model | 20 | reward histograms; accuracy under label noise; calibration | `visuals/18_reward.png` | yes (PNG) |
 | DPO | 21 | implicit reward margins; RM score vs KL by β; pair accuracy | `visuals/19_dpo.png` | yes (PNG) |
 | GRPO | 22 | held-out pass@1, training pass rate, response length: outcome vs format | `visuals/20_grpo.png` | yes (PNG) |
 | Distillation and quantization | 23 | scratch vs distilled student; loss increase per quantization scheme | `visuals/21_distill_quant.png` | yes (PNG) |
+| Pretraining | 13 | workhorse and capstone loss vs tokens; resume continuity and the lost-Adam control | `visuals/11_pretrain.png` | yes (PNG) |
+| Evaluation | 24 | HumanEval problems solved per checkpoint; multiple-choice accuracy summed vs per-token | `visuals/22_evaluation.png` | yes (PNG) |
 | Serving | 25 | throughput vs latency by slots; latency CDF static vs continuous | `visuals/23_serving.png` | yes (PNG) |
+| The capstone pipeline | 26 | loss rise and HumanEval problems for base, SFT, DPO, GRPO | `visuals/24_capstone.png` | yes (PNG) |
 | One-hot × table = row | 5 | a lookup as a matrix product with a one-hot vector | `visuals/onehot_lookup.png` | yes (PNG) |
 | RoPE rotation | 5 | a fast and a slow pair rotating with position | `visuals/rope_rotation.png` | yes (PNG) |
 | Packing with eot | 4 | documents end to end, separated by <\|endoftext\|>, cut into windows | `visuals/packing_eot.png` | yes (PNG) |

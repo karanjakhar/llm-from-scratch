@@ -18,14 +18,99 @@ result files without recomputing anything.
 
 ## 1. The pipeline, with its numbers
 
-*(filled in from results/24_capstone/pipeline.json once the capstone chain
-finishes)*
+The model: GPT-2 layout (12 layers, width 768, 12 heads, learned positions,
+LayerNorm, GELU, tied embeddings) plus QK-norm, **92,138,496 parameters**,
+our 8,196-row tokenizer, context 1,024.
+
+```
+                     val code   HumanEval      MBPP     what this step was measured on
+pretrain (11)          1.295*     3.05%        0.2%     1.80B tokens, ~20 GPU-hours, max grad-norm 1.03
+  └─ SFT (16)          1.582      1.22%        0.4%     119k docstring → function pairs, 3,000 steps
+       ├─ DPO (19)     1.632      1.22%        0.4%     pair accuracy 0.563 → 0.895, KL 0.027
+       └─ GRPO (20)    1.582      3.05%        0.4%     easy held-out 27.3% → 73.3% in 60 steps
+reward model (18)                                        86.5% on test-verified MBPP pairs
+quantize (21)          NF4 +0.013, int8 +0.000, int4 per-tensor +3.22;  176 → 57 MB
+serve (23)             720 tok/s; first token p50 0.44 s (static) → 0.008 s (continuous)
+```
+
+\* 1.295 is Stage 11's validation set (all windows, 1,024 tokens). Every
+other loss in this stage comes from Stage 22's harness (256 windows of 512
+tokens), where the same base model scores **1.423**. Shorter windows give
+each prediction less context, so the loss is higher; compare numbers only
+within one column's source.
+
+HumanEval and MBPP are greedy pass@1 from the Stage 22 harness. Base models
+continue the raw prompt; the SFT, DPO and GRPO models get it as a chat turn.
+
+What each step did, in one line each:
+
+| step | what it bought | what it cost |
+|---|---|---|
+| pretraining | everything the model knows: val code 1.295; on the Stage 22 harness 0.66 bits per byte (workhorse 0.78) | 20 GPU-hours |
+| SFT | the chat format and a stop token (completion loss 0.998 → 0.886, flat after step 250) | +0.16 code loss, +0.31 English; HumanEval 5 → 2 problems |
+| reward model | a judge: 86.5% on MBPP pairs (workhorse 85.2%) | — |
+| DPO | ranking: pair accuracy 0.895 | +0.05 code loss; no change in what it solves |
+| GRPO | the only post-training step that moved a pass rate: 27% → 73% on its curriculum, HumanEval back to 5 problems | 17 minutes |
+| quantization | 3.1× smaller at NF4 for +0.013 nats | slower without a fused kernel (106 vs 451 tok/s at batch 1) |
+| serving | 55× faster first token under bursty load at the same throughput | — |
+
+The **best checkpoint depends on the question**. For HumanEval, the base
+model and the GRPO model tie at 5 problems (3.05%), and the base model has the
+best pass@10 (5.49%). For telling a working program from a broken one, DPO is
+best (77.8% normalised). For the curriculum it trained on, GRPO (73.3%).
+
+![What each post-training step did to the pretraining loss and to HumanEval](visuals/24_capstone.png)
 
 ---
 
 ## 2. What the model can and cannot do
 
-*(filled in after the evaluation)*
+**It can** write Python that looks like Python: imports, functions,
+classes, docstrings, consistent naming. It solves one-line problems when
+the docstring nearly says the answer:
+
+```python
+def filter_by_prefix(strings: List[str], prefix: str) -> List[str]:
+    """ Filter an input list of strings only for ones that start with a given prefix.
+    ...                                                   # HumanEval/29: the base
+    """                                                   # model's greedy completion
+    return [s for s in strings if s.startswith(prefix)]
+```
+
+The five HumanEval problems it solves are `strlen`, `concatenate`,
+`filter_by_prefix`, `max_element` and `add`. Four are one line (`return
+len(string)`, `return x + y`); `max_element` takes four, with a redundant
+special case before `return max(l)`. None of them has a single 13-token
+window in the training data (Stage 22 §8b).
+It also picks the working program out of four near-identical ones 77% of
+the time: it can judge code it cannot write.
+
+**It cannot** write a function that needs two ideas in a row. On
+HumanEval/0 ("is any pair of numbers closer than `threshold`?") it writes
+`if len(numbers) == 2: return True`, then `== 3`, `== 4`, and on to the
+token limit: the shape of a case analysis with nothing inside it. Greedy
+decoding of `def fibonacci(n):`:
+
+```python
+def fibonacci(n):
+	return n * (n - 1)
+
+def fibonacci_n(n):
+	return n * (n - 1)
+```
+
+and so on, for 200 tokens. Greedy decoding falls into repetition loops on
+every prompt we tried, in English too ("The printing press is a very
+important part of the printing press." eight times). Sampling at τ = 0.8
+avoids the loop and produces fluent, wrong code. It has no facts about the
+world beyond what code comments carry, no multi-step reasoning, and no
+instruction following outside the docstring → function format SFT taught.
+It has had no safety training and will continue any prompt.
+
+These are the expectations CLAUDE.md set before the first line of code:
+"HumanEval pass@1 will be low single digits." It is 3.05%. What the
+project produced is not a useful model; it is a model of which every part
+was built, tested against a reference, broken on purpose, and measured.
 
 ---
 

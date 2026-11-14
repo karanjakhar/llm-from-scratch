@@ -5,20 +5,21 @@ A new AI session reads `CLAUDE.md` then this file and knows exactly where to pic
 
 ## Current position
 
-**PAUSED 2026-11-08 at the owner's request.** Stages 00-10, 12-21, 23
-complete. Stage 11 capstone pretraining stopped cleanly at **step 10,500 of
-27,500** (checkpoint `checkpoints/11_pretrain/capstone/ckpt.pt`; val code
-1.475 at step 10,000; ~3 s/step, ~14 h left).
+**All 25 stages complete (2026-11-14).** The capstone (92M, 1.80B tokens)
+went through the whole chain: SFT → reward model → DPO → GRPO → quantize →
+serve → evaluate. Stage 24 is assembled in `results/24_capstone/pipeline.json`,
+written up in `docs/24_capstone.md`, and summarised in `MODEL_CARD.md`.
 
-**To resume everything** (capstone, then its post-training/eval chain, then
-the Stage 24 assembly), from the repo root:
+Headline: capstone base HumanEval 3.05% pass@1 (5/164), 5.49% pass@10; no
+post-training stage beat the base model on HumanEval (GRPO tied it); every
+solved problem has zero 13-gram overlap with training.
 
-    nohup bash stages/24_capstone/run_pipeline.sh > capstone_pipeline.log 2>&1 &
+What is left is optional: the open questions below, the book's revision
+pass (`docs/BOOK.md`: chapters are `draft`), and pushing (owner's call).
 
-The first command resumes pretraining from the checkpoint (bit-identical
-resume, Stage 11 §8b). Remaining after the pipeline: write Stage 11 §8c,
-Stage 22 §8a/§8c, Stage 24 §1-2, fill `MODEL_CARD.md`, README status, mark
-11/22/24 done.
+To rerun the capstone chain from the pretrained checkpoint:
+
+    nohup bash stages/24_capstone/run_post.sh > capstone_post.log 2>&1 &
 
 Ready to use:
 - Tokenizer: `data/tokenizers/split_8192.json` (8,196 embedding rows, eot 8192)
@@ -62,9 +63,9 @@ Deferred, with a trigger:
 | 19 | DPO / RLHF | `[x]` | pair acc 0.50→0.87 (β=1); β≤0.1 over-optimises (RM 9.56→7.8, chosen logp −53); pass@1 unchanged |
 | 20 | Reasoning / GRPO | `[x]` | MBPP: 0/576 rollouts pass, no signal; easy curriculum 13.3%→38.0% held-out, HumanEval 1.2→2.4%; format reward worse |
 | 21 | Distill & quantize | `[x]` | distilled 2.438 vs scratch 2.518 (same tokens); int8 +0.0004, NF4 +0.016, int4 per-tensor +2.39 vs group +0.035 |
-| 22 | Evaluation | `[ ]` | |
+| 22 | Evaluation | `[x]` | 11 checkpoints, one harness; capstone base best (HumanEval 3.05% / pass@10 5.49%); solved problems 0 13-gram overlap; length norm +4-7 pts, reorders DPO |
 | 23 | Serving | `[x]` | continuous batching: TTFT 377→8 ms, p50 0.78→0.27 s; 1→32 slots 295→1,304 tok/s; 21% of cache used |
-| 24 | Capstone | `[ ]` | |
+| 24 | Capstone | `[x]` | 92M through SFT/RM/DPO/GRPO/quant/serve; SFT −3 HumanEval problems, GRPO +3; GRPO curriculum 27→73%; `MODEL_CARD.md` |
 
 ## Results log
 
@@ -182,6 +183,21 @@ stay visible across months.
 | 2026-11-07 | 17 | peak training MB, full vs LoRA r16 | MB | 4,615 vs 4,104 |
 | 2026-11-14 | 11 | capstone 92M, 1.80B tokens, ~20.4 GPU-h | val code / English | 1.295 / 2.898 (max grad norm after warm-up 1.03) |
 | 2026-11-13 | 11 | capstone resume after 5-day pause, steps 10,500 / 10,620 / 10,700 | train loss before vs after | 1.5527=1.5527 / 1.8381 vs 1.8383 / 1.5945=1.5945 |
+| 2026-11-14 | 15 | capstone target, workhorse draft: greedy acceptance γ1 / γ4 / γ8 ; best speedup | fraction ; × | 0.972 / 0.891 / 0.791 ; 0.98 (draft costs 0.671 of target) |
+| 2026-11-14 | 16 | capstone SFT: completion val loss before / step 250 / after | nats | 0.998 / 0.888 / 0.886 |
+| 2026-11-14 | 16 | capstone forgetting, code / English | Δ nats | +0.159 / +0.311 |
+| 2026-11-14 | 16 | capstone HumanEval: base as code vs SFT as chat | pass@1 | 0.0305 vs 0.0122 |
+| 2026-11-14 | 18 | capstone RM: held-out CSN / MBPP verified | accuracy | 0.871 / 0.865 (workhorse 0.826 / 0.852) |
+| 2026-11-14 | 19 | capstone DPO β=1: pair acc ; RM own samples ; KL | | 0.563→0.895 ; 20.41→25.37 ; 0.027; pass@1 unchanged |
+| 2026-11-14 | 20 | capstone GRPO easy held-out, steps 0/15/30/45/60 | pass@1 | 0.273 / 0.380 / 0.420 / 0.533 / 0.733 |
+| 2026-11-14 | 20 | capstone GRPO: HumanEval / MBPP | pass@1 | 0.0305 / 0.004 (SFT 0.0122 / 0.004) |
+| 2026-11-14 | 21 | capstone quant: int8-ch / NF4-64 / int4-g128 / int4-ch / int4-tensor | Δ val code | +0.0000 / +0.0134 / +0.0254 / +0.0456 / +3.2174 |
+| 2026-11-14 | 23 | capstone bursty: static vs continuous | tok/s ; TTFT p50 (s) | 707 vs 720 ; 0.440 vs 0.008 |
+| 2026-11-14 | 22 | HumanEval greedy / pass@10: workhorse base, SFT, DPO, GRPO | fraction | 0/.012, .012/.024, 0/.006, .024/.018 |
+| 2026-11-14 | 22 | HumanEval greedy / pass@10: capstone base, SFT, DPO, GRPO | fraction | .0305/.0549, .0122/.0488, .0122/.0183, .0305/.0488 |
+| 2026-11-14 | 22 | 5M / 12M / 34M-MoE models, HumanEval and MBPP | pass@1 | 0 / 0 / 0 |
+| 2026-11-14 | 22 | MC (352 items, 4 options): summed vs per-token, capstone base / DPO, workhorse base / DPO | accuracy | .716/.767, .767/.778, .594/.668, .653/.651 |
+| 2026-11-14 | 22 | solved problems with any training 13-gram | count | 0 of 9 distinct |
 
 ## Open questions
 
@@ -242,10 +258,40 @@ Things noticed but not yet understood. Carried forward until answered.
   at the workhorse's 590M tokens? (Stages 13-14)
 - DPO on mutation pairs improved ranking (0.50 → 0.87) but never pass@1.
   Can pairwise preference move generation at all at this scale? (Stage 19)
+  **Still open after the capstone:** 0.895 pair accuracy, identical solved
+  set; 3× the parameters changed nothing here.
+- GRPO on the capstone was still climbing at step 60 (53% → 73% between
+  steps 45 and 60). Where does it saturate, and does more of it ever reach
+  HumanEval beyond the five one-liners? (Stage 20)
+- Would a shorter SFT (250 steps, where the loss flattened) keep the base
+  model's 5 HumanEval problems? (Stage 16 §8d)
 - SFT taught one prompt format: prose tasks 0%, code-shaped 7.5% (Stage 20).
   Would a mixed-format SFT set lift MBPP from 0%?
 
 ## Session log
+
+### 2026-11-13/14 — Session 10
+- Resumed the paused capstone (step 10,500, bit-identical continuation) and
+  finished it: 1.80B tokens, val code 1.295, English 2.898, max grad norm 1.03.
+- Capstone chain: Stage 15 sweep (acceptance up to 0.97, no speedup), SFT,
+  RM, DPO, GRPO, quant, serving, the Stage 22 table, MC and contamination.
+- **SFT OOM'd on the 92M model at B = 16** and the unguarded chain ran on.
+  Added `GPT.grad_checkpointing` (no parameter renaming), `--act-ckpt` in
+  stages 16/18/19/20, `train_sft(micro=…)`, two tests, and
+  `stages/24_capstone/run_post.sh` with `set -e`.
+- Findings: SFT cost the capstone 3 HumanEval problems; GRPO won them back
+  and took its curriculum 27% → 73%; DPO never changed a solved problem;
+  length normalisation reorders DPO; nothing solved is contaminated.
+- Stage 21's capstone plot overwrote the workhorse figure; restored.
+- Stages 22 and 24 written, `MODEL_CARD.md` filled, README status, two new
+  figures (`22_evaluation.png`, `24_capstone.png`), BOOK rows. All stages done.
+- Not pushed (owner pushes on request).
+
+### 2026-11-06/08 — Session 9
+- Stages 06-21 and 23 built, tested and measured on the workhorse (see the
+  status table and results log); Stage 10 needed QK-norm after the first
+  sweep diverged; workhorse pretrained (30M, val code 1.554 on Stage 11's
+  set); capstone started and paused at the owner's request at step 10,500.
 
 ### 2026-11-06 — Session 8
 - **Stage 05 complete.** `docs/05_transformer_block.md`; `stages/05_block/`

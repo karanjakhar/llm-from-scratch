@@ -60,7 +60,14 @@ happened, mistakes included. See `docs/BOOK.md`.
 
 ## Status
 
-Early. See `PROGRESS.md` for the live state.
+All 25 stages (00-24) are complete, each with a doc, tested code and
+measured results. The end point is a 92M-parameter Python model pretrained
+on 1.8B tokens on one 8 GB laptop GPU, then fine-tuned (SFT), aligned (DPO),
+trained with unit-test rewards (GRPO), quantized and served. It solves 5 of
+164 HumanEval problems (3.05% pass@1, 5.49% pass@10), as the project said
+it would: low single digits, and clean of contamination. See
+`MODEL_CARD.md` for every number, `docs/24_capstone.md` for what was learned,
+and `PROGRESS.md` for the full results log.
 
 ## Running the stages
 
@@ -85,7 +92,7 @@ uv run python stages/08_training/run.py tinystories    # 10M smoke test, ~12 min
 uv run python stages/09_efficiency/bench.py stack      # the speed table
 uv run python stages/11_pretrain/run.py workhorse      # ~30M base model, ~2.5 h, resumable
 uv run python stages/11_pretrain/run.py capstone       # ~92M base model, ~20 h, resumable
-uv run python stages/16_sft/run.py --base checkpoints/11_pretrain/capstone/final.pt --tag capstone
+bash stages/24_capstone/run_post.sh                      # the capstone's post-training + eval chain, ~7 h
 uv run python stages/22_evaluation/run.py table        # HumanEval / MBPP / loss for every checkpoint
 ```
 
