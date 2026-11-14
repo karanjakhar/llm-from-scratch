@@ -254,6 +254,24 @@ The pattern is the alignment-vs-divergence trade-off of §1, with a twist.
 
 ![DPO margins, reward vs drift by β, pair accuracy](visuals/19_dpo.png)
 
+### 7c. The capstone, β = 1
+
+The best setting from the sweep, run once on the 92M capstone (its own SFT
+model as policy and reference, its own reward model as judge):
+
+| | MBPP pair accuracy | RM score, own samples | KL to SFT | HumanEval | MBPP |
+|---|---|---|---|---|---|
+| capstone SFT (start) | 0.563 | 20.41 | 0 | 1.22% | 0.4% |
+| **capstone DPO** | **0.895** | **25.37** | 0.027 | 1.22% | 0.4% |
+| workhorse DPO, for scale | 0.873 | 11.13 (its own RM) | 0.020 | 0.6% | 0.0% |
+
+The bigger model learns the ranking a little better (0.895 against 0.873),
+its reward model likes its samples more after DPO (+4.96), and it stays as
+close to the SFT model as the workhorse did. And the tests do not move at
+all: the same two HumanEval problems and the same two MBPP problems are
+solved before and after. The reward scores are not comparable across the
+two models: each reward model has its own scale.
+
 ---
 
 ## 8. What we found
@@ -264,6 +282,7 @@ The pattern is the alignment-vs-divergence trade-off of §1, with a twist.
 | Do chosen log-probs rise? | No: −53 nats by step 600; rejected fall faster |
 | Over-optimisation point | β ≤ 0.1: KL 0.16-0.19 and the reward model scores samples lower than SFT's |
 | Best β | 1.0: accuracy 0.873, RM 11.13 (SFT 9.56), KL 0.02 |
+| On the 92M capstone (β = 1) | Pair accuracy 0.563 → 0.895, RM 20.4 → 25.4, KL 0.027; same problems solved, pass@1 unchanged |
 | Win rate vs SFT, by tests | No win: HumanEval 1.2% → 0-0.6%; MBPP 0% both |
 
 One habit from this stage: **track the chosen log-probability, not just the

@@ -1274,3 +1274,10 @@ not intent.
 **Why:**       Not established. Most single-mutation bugs (`return None`, flipped comparisons) are visible to a small model; the gain shows up in-distribution more than on MBPP.
 **Lesson:**    A bigger judge is mostly a more confident judge here. Scale bought +1.3 points on the transfer task.
 **Where:**     `results/18_reward/capstone.json`, `docs/18_reward_model.md` §8d
+
+### 2026-11-14 · Stage 19 · Capstone DPO: better ranking, identical solutions          [result]
+**Expected:**  The β = 1 result to repeat on the 92M model: preference learned, pass@1 not moved.
+**Found:**     MBPP pair accuracy 0.563 → 0.895 (workhorse 0.873); the capstone reward model's score of the policy's samples 20.41 → 25.37; KL to SFT 0.027. HumanEval 1.22% and MBPP 0.4% before and after, with exactly the same problems solved (`solved_dpo_only` = `solved_sft_only` = 0).
+**Why:**       As in §7b: single-mutation pairs teach discrimination between two given programs, not generation of a correct one.
+**Lesson:**    Three times the parameters did not turn a ranking signal into a generation gain. The gap is the kind of data, not the size of the model.
+**Where:**     `results/19_dpo/capstone_beta1.0.json`, `docs/19_rlhf_dpo.md` §7c
