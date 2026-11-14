@@ -192,6 +192,14 @@ per-step overhead (Stage 07 §8a), so the draft is not nearly as cheap as its
   0.031: verification scores five tokens in one pass, plain decoding scores
   one, and the different bf16 rounding flips a near-tie (journal).
 
+**A bigger pair, worse ratio.** With the 92M capstone as target and the 30M
+workhorse as draft (`run.py sweep --tag capstone`), greedy acceptance rises
+to 0.97 (γ = 1) and 0.89 (γ = 4), and every output is token-identical to plain
+greedy decoding. But a 30M draft step costs **0.67** of a 92M target step, so
+the best speedup is **0.98×** (γ = 6), and τ = 1 runs at 0.50-0.75×. The §3
+formula with α = 0.89, c = 0.67, γ = 4 predicts 1.09×. Better agreement
+cannot make up for a draft that is almost as slow as the target.
+
 Speculative decoding is a technique for large targets with cheap drafts. On
 our hardware at our sizes the precondition fails, and the measurement shows
 exactly how much: the acceptance rate was there, the cost ratio was not.
@@ -210,3 +218,4 @@ exactly how much: the acceptance rate was there, the cost ratio was not.
 | Why so small? | Draft step costs 0.43 of a target step; both are overhead-bound |
 | Sampling at τ=1 | acceptance 0.26-0.67, always slower |
 | bf16 exactness | 1 of 4 prompts flips at a near-tie (top-2 gap 0.031) |
+| 92M target, 30M draft | acceptance 0.89 @γ4, identical outputs, best speedup 0.98× (draft costs 0.67) |

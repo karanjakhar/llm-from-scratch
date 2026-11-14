@@ -1,0 +1,177 @@
+{
+ "rows": [
+  {
+   "temperature": 0.0,
+   "gamma": 1,
+   "acceptance": 0.972,
+   "tokens_per_target_call": 1.96,
+   "speedup": 0.75,
+   "baseline_tok_s": 430.7,
+   "spec_tok_s": 322.2,
+   "identical_to_greedy": true
+  },
+  {
+   "temperature": 0.0,
+   "gamma": 2,
+   "acceptance": 0.93,
+   "tokens_per_target_call": 2.83,
+   "speedup": 0.79,
+   "baseline_tok_s": 430.7,
+   "spec_tok_s": 340.4,
+   "identical_to_greedy": true
+  },
+  {
+   "temperature": 0.0,
+   "gamma": 3,
+   "acceptance": 0.919,
+   "tokens_per_target_call": 3.7,
+   "speedup": 0.89,
+   "baseline_tok_s": 430.7,
+   "spec_tok_s": 381.2,
+   "identical_to_greedy": true
+  },
+  {
+   "temperature": 0.0,
+   "gamma": 4,
+   "acceptance": 0.891,
+   "tokens_per_target_call": 4.48,
+   "speedup": 0.97,
+   "baseline_tok_s": 430.7,
+   "spec_tok_s": 419.4,
+   "identical_to_greedy": true
+  },
+  {
+   "temperature": 0.0,
+   "gamma": 6,
+   "acceptance": 0.857,
+   "tokens_per_target_call": 6.0,
+   "speedup": 0.98,
+   "baseline_tok_s": 430.7,
+   "spec_tok_s": 420.2,
+   "identical_to_greedy": true
+  },
+  {
+   "temperature": 0.0,
+   "gamma": 8,
+   "acceptance": 0.791,
+   "tokens_per_target_call": 7.16,
+   "speedup": 0.95,
+   "baseline_tok_s": 430.7,
+   "spec_tok_s": 410.7,
+   "identical_to_greedy": true
+  },
+  {
+   "temperature": 0.7,
+   "gamma": 1,
+   "acceptance": 0.883,
+   "tokens_per_target_call": 1.88,
+   "speedup": 0.72,
+   "baseline_tok_s": 420.7,
+   "spec_tok_s": 303.3
+  },
+  {
+   "temperature": 0.7,
+   "gamma": 2,
+   "acceptance": 0.817,
+   "tokens_per_target_call": 2.61,
+   "speedup": 0.8,
+   "baseline_tok_s": 420.7,
+   "spec_tok_s": 336.1
+  },
+  {
+   "temperature": 0.7,
+   "gamma": 3,
+   "acceptance": 0.754,
+   "tokens_per_target_call": 3.23,
+   "speedup": 0.79,
+   "baseline_tok_s": 420.7,
+   "spec_tok_s": 332.2
+  },
+  {
+   "temperature": 0.7,
+   "gamma": 4,
+   "acceptance": 0.692,
+   "tokens_per_target_call": 3.7,
+   "speedup": 0.8,
+   "baseline_tok_s": 420.7,
+   "spec_tok_s": 335.1
+  },
+  {
+   "temperature": 0.7,
+   "gamma": 6,
+   "acceptance": 0.627,
+   "tokens_per_target_call": 4.61,
+   "speedup": 0.68,
+   "baseline_tok_s": 420.7,
+   "spec_tok_s": 287.2
+  },
+  {
+   "temperature": 0.7,
+   "gamma": 8,
+   "acceptance": 0.449,
+   "tokens_per_target_call": 4.52,
+   "speedup": 0.56,
+   "baseline_tok_s": 420.7,
+   "spec_tok_s": 237.7
+  },
+  {
+   "temperature": 1.0,
+   "gamma": 1,
+   "acceptance": 0.723,
+   "tokens_per_target_call": 1.72,
+   "speedup": 0.68,
+   "baseline_tok_s": 441.4,
+   "spec_tok_s": 298.0
+  },
+  {
+   "temperature": 1.0,
+   "gamma": 2,
+   "acceptance": 0.624,
+   "tokens_per_target_call": 2.24,
+   "speedup": 0.69,
+   "baseline_tok_s": 441.4,
+   "spec_tok_s": 303.5
+  },
+  {
+   "temperature": 1.0,
+   "gamma": 3,
+   "acceptance": 0.564,
+   "tokens_per_target_call": 2.68,
+   "speedup": 0.66,
+   "baseline_tok_s": 441.4,
+   "spec_tok_s": 289.9
+  },
+  {
+   "temperature": 1.0,
+   "gamma": 4,
+   "acceptance": 0.498,
+   "tokens_per_target_call": 2.97,
+   "speedup": 0.64,
+   "baseline_tok_s": 441.4,
+   "spec_tok_s": 283.9
+  },
+  {
+   "temperature": 1.0,
+   "gamma": 6,
+   "acceptance": 0.411,
+   "tokens_per_target_call": 3.41,
+   "speedup": 0.58,
+   "baseline_tok_s": 441.4,
+   "spec_tok_s": 257.7
+  },
+  {
+   "temperature": 1.0,
+   "gamma": 8,
+   "acceptance": 0.33,
+   "tokens_per_target_call": 3.57,
+   "speedup": 0.5,
+   "baseline_tok_s": 441.4,
+   "spec_tok_s": 220.5
+  }
+ ],
+ "target": "checkpoints/11_pretrain/capstone/final.pt",
+ "draft": "checkpoints/11_pretrain/workhorse/final.pt",
+ "draft_step_cost_ratio": 0.671,
+ "target_params": 92138496,
+ "draft_params": 29941760
+}
