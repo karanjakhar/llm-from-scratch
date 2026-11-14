@@ -71,3 +71,48 @@ def test_split_function_keeps_free_functions_only():
     assert split_function('def m(self):\n    """x"""\n    return 1\n') is None
     assert split_function('def nodoc(a):\n    return a\n') is None
     assert split_function('def onlydoc(a):\n    """x"""\n') is None
+
+
+def test_micro_batch_accumulation_matches_full_batch(tok):
+    """Splitting a batch into micro-batches (used for the 92M capstone) must give
+    the same gradient: each chunk is weighted by its share of target tokens."""
+    if not torch.cuda.is_available():
+        pytest.skip("train_sft runs on cuda")
+    import copy
+
+    from sft import train_sft
+
+    from llmfs.model.gpt import GPT, GPTConfig
+    torch.manual_seed(0)
+    m = GPT(GPTConfig(vocab_size=8196, block_size=64, n_layer=2, n_head=2, n_embd=32)).cuda()
+    # different reply lengths, so chunks hold different numbers of targets
+    ex = [dict(zip(("ids", "labels"), render(tok, f"q{i}", "x" * (1 + 7 * i)))) for i in range(4)]
+    grads = []
+    for micro in (None, 1):
+        mm = copy.deepcopy(m)
+        mm.configure_optimizer = lambda lr, weight_decay: torch.optim.SGD(mm.parameters(), lr=0.0)
+        train_sft(mm, ex, ex[:1], tok, steps=1, B=4, warmup=1, eval_every=10, log=lambda *_: None, micro=micro)
+        grads.append(torch.cat([p.grad.flatten() for p in mm.parameters() if p.grad is not None]))
+    rel = ((grads[0] - grads[1]).norm() / grads[0].norm()).item()
+    assert rel < 1e-2, rel
+    print("relative gradient difference", rel)
+
+
+def test_grad_checkpointing_same_loss_and_grads():
+    """GPT.grad_checkpointing (added to post-train the 92M capstone on 8 GB)
+    recomputes activations; it must not change the loss, the gradients, or the
+    parameter names that checkpoints are saved under."""
+    from llmfs.model.gpt import GPT, GPTConfig
+    torch.manual_seed(0)
+    m = GPT(GPTConfig(vocab_size=50, block_size=32, n_layer=2, n_head=2, n_embd=16, dropout=0.0))
+    x, y = torch.randint(0, 50, (2, 12)), torch.randint(0, 50, (2, 12))
+    out = []
+    for on in (False, True):
+        m.zero_grad()
+        m.grad_checkpointing = on
+        _, loss = m(x, y)
+        loss.backward()
+        out.append((loss.item(), [p.grad.clone() for p in m.parameters()]))
+    assert out[0][0] == out[1][0]
+    assert all(torch.allclose(a, b, atol=1e-6) for a, b in zip(out[0][1], out[1][1]))
+    assert not any(".block." in k for k in m.state_dict())

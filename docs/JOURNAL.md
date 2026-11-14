@@ -1253,3 +1253,10 @@ trails the workhorse until ~120M tokens, then leads. Greedy now writes
 for 27,500 steps at 3× the workhorse's length. More scale bought fluency,
 not intent.
 **Where:** `results/11_pretrain/capstone*.json`, `docs/visuals/11_pretrain.png`
+
+### 2026-11-14 · Stage 16 · Three times the parameters, and SFT at B = 16 no longer fits   [mistake]
+**Expected:**  The capstone chain (SFT → RM → DPO → GRPO → …) to run unattended on the 92M model with the settings that worked for the 30M workhorse.
+**Found:**     SFT measured the base model (completion val loss 0.998, base-mode HumanEval 3.05%), ran step 0, and died at step 1 with `CUDA out of memory` (6.64 GiB allocated of 7.61). The chain script had no `set -e`, so the reward-model step started anyway with no SFT checkpoint to load. A probe of one forward + backward + AdamW step on the 92M model: B = 16 × 512 tokens, 16 × 640 and 32 × 450 all OOM; with activation checkpointing they peak at 2.38, 2.67 and 3.31 GiB.
+**Why:**       Activations scale with layers × width × batch × length. The capstone has 12 layers at width 768 against the workhorse's 8 at 512, so each sequence stores about 2.25× more, and the batch sizes were chosen on the workhorse. Pretraining avoided this only because Stage 11 used B = 8 × 8 accumulation.
+**Lesson:**    A batch size is a property of a (model, GPU) pair, not of a script. And a chain of scripts needs `set -e`: a failed step that lets the next one start produces errors far from the cause.
+**Where:**     `llmfs/model/gpt.py` (`grad_checkpointing`, no change to parameter names), `--act-ckpt` in stages 16/18/19/20, `train_sft(micro=…)`, `stages/16_sft/test_sft.py` (checkpointing gives identical loss; accumulated gradient within 0.26% of full batch, bf16 noise), `stages/24_capstone/run_post.sh`

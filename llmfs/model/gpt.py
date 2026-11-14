@@ -12,6 +12,7 @@ import math
 from dataclasses import asdict, dataclass
 
 import torch
+import torch.utils.checkpoint
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -168,6 +169,11 @@ class GPT(nn.Module):
         if cfg.tie:
             self.lm_head.weight = self.transformer.wte.weight
         self.apply(self._init)
+        # Activation checkpointing (Stage 09): recompute each block's activations
+        # in backward instead of storing them. A runtime switch, not a config
+        # field, and it changes no parameter names, so checkpoints are unaffected.
+        # Post-training the 92M capstone needs it on 8 GB (journal, Session 10).
+        self.grad_checkpointing = False
         if cfg.scaled_init:
             std = 0.02 / math.sqrt(2 * cfg.n_layer)
             for m in self.modules():
@@ -189,7 +195,7 @@ class GPT(nn.Module):
         pos = torch.arange(p0, p0 + T, device=idx.device)
         x = tr.wte(idx) + tr.wpe(pos)                            # (B, T, C)
         for block in tr.h:
-            x = block(x, cache)
+            x = self._block(block, x, cache)
         if cache is not None:
             cache.pos += T
         x = tr.ln_f(x)
@@ -207,8 +213,13 @@ class GPT(nn.Module):
         tr = self.transformer
         x = tr.wte(idx) + tr.wpe(torch.arange(T, device=idx.device))
         for block in tr.h:
-            x = block(x)
+            x = self._block(block, x)
         return tr.ln_f(x)
+
+    def _block(self, block, x, cache=None):
+        if self.grad_checkpointing and cache is None and torch.is_grad_enabled():
+            return torch.utils.checkpoint.checkpoint(block, x, use_reentrant=False)
+        return block(x, cache)
 
     def make_cache(self, B, max_len, device, dtype):
         return KVCache(self.cfg, B, max_len, device, dtype)

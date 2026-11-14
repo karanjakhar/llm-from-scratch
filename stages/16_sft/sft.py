@@ -111,7 +111,11 @@ def collate(examples: list[dict], pad_id: int, device="cuda", include_prompt_los
 # ---------------------------------------------------------------------------
 
 def train_sft(model, train_ex, val_ex, tok, steps=2000, B=16, lr=1e-4, warmup=50,
-              include_prompt_loss=False, eval_every=250, seed=0, log=print):
+              include_prompt_loss=False, eval_every=250, seed=0, log=print, micro=None):
+    """micro: split each batch of B into chunks of this size and accumulate
+    gradients (added for the 92M capstone, where B=16 at 512 tokens runs out
+    of 8 GB). Each chunk's mean loss is weighted by its share of the batch's
+    target tokens, so the summed gradient equals the full batch's exactly."""
     import math
     pad = tok.special_tokens["<|pad|>"]
     opt = model.configure_optimizer(lr, weight_decay=0.0)
@@ -125,10 +129,23 @@ def train_sft(model, train_ex, val_ex, tok, steps=2000, B=16, lr=1e-4, warmup=50
             g["lr"] = cur
         batch = rng.sample(train_ex, B)
         x, y = collate(batch, pad, include_prompt_loss=include_prompt_loss)
-        with torch.autocast("cuda", dtype=torch.bfloat16):
-            _, loss = model(x, y)
         opt.zero_grad(set_to_none=True)
-        loss.backward()
+        if micro is None or micro >= B:
+            with torch.autocast("cuda", dtype=torch.bfloat16):
+                _, loss = model(x, y)
+            loss.backward()
+        else:
+            n_tok = (y != IGNORE).sum()                       # targets in the whole batch
+            loss = torch.zeros((), device=x.device)
+            for i in range(0, B, micro):
+                xm, ym = x[i:i + micro], y[i:i + micro]       # (micro, T)
+                w = (ym != IGNORE).sum() / n_tok              # this chunk's share of targets
+                if w == 0:
+                    continue
+                with torch.autocast("cuda", dtype=torch.bfloat16):
+                    _, lm = model(xm, ym)                     # mean over this chunk's targets
+                (lm * w).backward()
+                loss = loss + lm.detach() * w
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
         opt.step()
         if step % eval_every == 0 or step == steps - 1:

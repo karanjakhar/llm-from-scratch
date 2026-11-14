@@ -48,6 +48,7 @@ def code_scores(model, tok, chat):
 def main(a):
     tok = Tokenizer.load(str(TOK))
     model, _ = load_model(a.base, device="cuda")
+    model.grad_checkpointing = a.act_ckpt
     val_lm = make_val({"code": str(REPO / "data/bins/split_8192/val_code.bin"),
                        "en": str(REPO / "data/bins/split_8192/val_en.bin")}, 512, 256)
     t0 = time.time()
@@ -60,7 +61,7 @@ def main(a):
                              base_mode=code_scores(model, tok, None),
                              chat_mode=code_scores(model, tok, chat_fn(tok)))
         print("before", {k: v for k, v in res["before"].items()}, flush=True)
-    hist = train_sft(model, train_ex, val_ex, tok, steps=a.steps, B=16, lr=a.lr,
+    hist = train_sft(model, train_ex, val_ex, tok, steps=a.steps, B=16, micro=a.micro, lr=a.lr,
                      include_prompt_loss=a.prompt_loss)
     res["hist"] = hist
     res["after"] = dict(lm_val=lm_eval(model, val_lm), sft_val=sft_val_loss(model, val_ex, tok),
@@ -86,7 +87,9 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--base", required=True)
     p.add_argument("--tag", required=True)
+    p.add_argument("--act-ckpt", action="store_true", help="activation checkpointing (needed for the 92M capstone on 8 GB)")
     p.add_argument("--steps", type=int, default=3000)
     p.add_argument("--lr", type=float, default=1e-4)
     p.add_argument("--prompt-loss", action="store_true")
+    p.add_argument("--micro", type=int, default=None, help="micro-batch size (gradient accumulation)")
     main(p.parse_args())

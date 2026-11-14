@@ -101,6 +101,7 @@ def sample_stats(policy, ref, rm, tok, prompts, n_new=200):
 def main(a):
     tok = Tokenizer.load(str(TOK))
     policy, _ = load_model(a.sft, device="cuda")
+    policy.grad_checkpointing = a.act_ckpt
     global MAX_LEN
     MAX_LEN = min(512, policy.cfg.block_size)
     ref = copy.deepcopy(policy).eval()
@@ -205,6 +206,7 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--sft", default="")
     p.add_argument("--tag", required=True)
+    p.add_argument("--act-ckpt", action="store_true", help="activation checkpointing (needed for the 92M capstone on 8 GB)")
     p.add_argument("--beta", type=float, default=0.1)
     p.add_argument("--steps", type=int, default=1000)
     p.add_argument("--lr", type=float, default=5e-6)

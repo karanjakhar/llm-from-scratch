@@ -57,6 +57,7 @@ def main(a):
     mb = mbpp_pairs(("test", "validation"))
     print(f"pairs: train {len(train)} csn-val {len(held)} mbpp-verified {len(mb)}", flush=True)
     backbone, _ = load_model(a.sft, device="cuda")
+    backbone.grad_checkpointing = a.act_ckpt
     rm = RewardModel(backbone).cuda()
     before = dict(csn_val=score(rm, tok, held)["accuracy"], mbpp=score(rm, tok, mb)["accuracy"])
     hist = train_rm(rm, tok, train, steps=a.steps, flip=a.flip,
@@ -117,6 +118,7 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--sft", default="")
     p.add_argument("--tag", required=True)
+    p.add_argument("--act-ckpt", action="store_true", help="activation checkpointing (needed for the 92M capstone on 8 GB)")
     p.add_argument("--steps", type=int, default=2000)
     p.add_argument("--flip", type=float, default=0.0)
     p.add_argument("--plot", action="store_true")

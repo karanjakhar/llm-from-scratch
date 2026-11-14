@@ -125,6 +125,7 @@ def easy_eval(model, tok, chat):
 def main(a):
     tok = Tokenizer.load(str(TOK))
     policy, _ = load_model(a.sft, device="cuda")
+    policy.grad_checkpointing = a.act_ckpt
     ref = copy.deepcopy(policy).eval()
     for p in ref.parameters():
         p.requires_grad_(False)
@@ -235,6 +236,7 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--sft", default="")
     p.add_argument("--tag", required=True)
+    p.add_argument("--act-ckpt", action="store_true", help="activation checkpointing (needed for the 92M capstone on 8 GB)")
     p.add_argument("--steps", type=int, default=200)
     p.add_argument("--G", type=int, default=8)
     p.add_argument("--prompts", type=int, default=4)
