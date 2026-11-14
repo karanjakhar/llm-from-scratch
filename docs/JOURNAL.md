@@ -1260,3 +1260,10 @@ not intent.
 **Why:**       Activations scale with layers × width × batch × length. The capstone has 12 layers at width 768 against the workhorse's 8 at 512, so each sequence stores about 2.25× more, and the batch sizes were chosen on the workhorse. Pretraining avoided this only because Stage 11 used B = 8 × 8 accumulation.
 **Lesson:**    A batch size is a property of a (model, GPU) pair, not of a script. And a chain of scripts needs `set -e`: a failed step that lets the next one start produces errors far from the cause.
 **Where:**     `llmfs/model/gpt.py` (`grad_checkpointing`, no change to parameter names), `--act-ckpt` in stages 16/18/19/20, `train_sft(micro=…)`, `stages/16_sft/test_sft.py` (checkpointing gives identical loss; accumulated gradient within 0.26% of full batch, bf16 noise), `stages/24_capstone/run_post.sh`
+
+### 2026-11-14 · Stage 16 · SFT cost the capstone HumanEval problems                  [surprise]
+**Expected:**  SFT to raise the 92M capstone's HumanEval pass@1, as it did the workhorse's (0 → 1.2%).
+**Found:**     Completion val loss 0.998 → 0.886 (0.888 already at step 250); forgetting +0.159 code, +0.311 English. But HumanEval: base model prompted as plain code **3.05%** (5/164: HumanEval/23, 28, 29, 35, 53); SFT model prompted as chat **1.22%** (2/164: 28, 34). MBPP 0.2% → 0.4%.
+**Why:**       HumanEval's prompt is already a file to continue (signature + docstring), the base model's native task. The workhorse's base-mode number at the time was zero because of the trailing-newline trap, which made SFT look like pure gain. The capstone's pretraining is good enough to solve a few problems unaided, and the SFT run's forgetting is paid on the same code the problems need.
+**Lesson:**    Compare a fine-tuned model to the base model *in the base model's best format*, not in the chat format it was never trained on. "Before SFT, in chat mode: 0%" was a straw man.
+**Where:**     `results/16_sft/capstone.json`, `docs/16_sft.md` §8d

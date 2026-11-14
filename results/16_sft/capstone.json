@@ -1,0 +1,212 @@
+{
+ "base": "checkpoints/11_pretrain/capstone/final.pt",
+ "train_pairs": 119178,
+ "val_pairs": 1000,
+ "prompt_loss": false,
+ "before": {
+  "lm_val": {
+   "code": 1.4233,
+   "en": 2.9497
+  },
+  "sft_val": 0.9982,
+  "base_mode": {
+   "humaneval_pass1": 0.0305,
+   "mbpp_pass1": 0.002,
+   "humaneval_solved": [
+    "HumanEval/23",
+    "HumanEval/28",
+    "HumanEval/29",
+    "HumanEval/35",
+    "HumanEval/53"
+   ],
+   "mbpp_solved": [
+    "mbpp/242"
+   ],
+   "humaneval_failures": {
+    "AssertionError": 89,
+    "SyntaxError": 34,
+    "TypeError": 9,
+    "IndentationError": 7,
+    "AttributeError": 7,
+    "NameError": 6,
+    "RecursionError": 4,
+    "ValueError": 2
+   },
+   "examples": [
+    {
+     "task_id": "HumanEval/0",
+     "passed": false,
+     "completion": "\n    if len(numbers) == 0:\n        return False\n    if len(numbers) > 1:\n        return False\n    if len(numbers) == 2:\n        return True\n    if len(numbers) == 3:\n        return True\n    if len(numbers) == 4:\n        return True\n    if len(numbers) == 5:\n        return True\n    if len(numbers) == 6:\n        return True\n    if len(numbers) == 7:\n        return True\n    if len(numbers) == 8:\n        return True\n    if len(numbers) == 9:\n        return True\n    if len(numbers) == 10:\n        return True\n    if len(numbers) == 11:\n        return True\n    if len(numbers) == 12:\n        return Tr"
+    },
+    {
+     "task_id": "HumanEval/1",
+     "passed": false,
+     "completion": "\n    return [p for p in paren_string.split(' ') if p]\n\n"
+    },
+    {
+     "task_id": "HumanEval/2",
+     "passed": false,
+     "completion": "\n    return truncate_number(number)\n"
+    }
+   ]
+  },
+  "chat_mode": {
+   "humaneval_pass1": 0.0,
+   "mbpp_pass1": 0.0,
+   "humaneval_solved": [],
+   "mbpp_solved": [],
+   "humaneval_failures": {
+    "SyntaxError": 80,
+    "NameError": 43,
+    "AssertionError": 18,
+    "IndentationError": 18,
+    "ImportError": 3,
+    "TypeError": 2
+   },
+   "examples": [
+    {
+     "task_id": "HumanEval/0",
+     "passed": false,
+     "completion": "from typing import List\n\nfrom . import User\nfrom . import UserAssistant\nfrom . import UserAssistantAssistant\nfrom . import UserAssistantAssistantAssistant\nfrom . import UserAssistantAssistantAssistant\nfrom . import UserAssistantAssistantAssistant\nfrom . import UserAssistantAssistantAssistant\nfrom . import UserAssistantAssistantAssistant\nfrom . import UserAssistantAssistantAssistant\nfrom . import UserAssistantAssistantAssistant\nfrom . import UserAssistantAssistantAssistant\nfrom . import UserAssistantAssistantAssistant\nfrom . import UserAssistantAssistantAssistant\nfrom . import UserAssistantAssi"
+    },
+    {
+     "task_id": "HumanEval/1",
+     "passed": false,
+     "completion": "ASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\nASIS\n"
+    },
+    {
+     "task_id": "HumanEval/2",
+     "passed": false,
+     "completion": "CThostFtdcsertion\nCThostFtdcsertion\nCThostFtdcsertionassistant\nCThostFtdcsertionassistantassistantassistant\nCThostFtdcsertionassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassistantassista"
+    }
+   ]
+  }
+ },
+ "hist": [
+  {
+   "step": 0,
+   "loss": 1.1457,
+   "val_completion_loss": 0.9707
+  },
+  {
+   "step": 250,
+   "loss": 1.0003,
+   "val_completion_loss": 0.8876
+  },
+  {
+   "step": 500,
+   "loss": 0.6729,
+   "val_completion_loss": 0.8956
+  },
+  {
+   "step": 750,
+   "loss": 1.1182,
+   "val_completion_loss": 0.9029
+  },
+  {
+   "step": 1000,
+   "loss": 0.8373,
+   "val_completion_loss": 0.8993
+  },
+  {
+   "step": 1250,
+   "loss": 1.0486,
+   "val_completion_loss": 0.9015
+  },
+  {
+   "step": 1500,
+   "loss": 0.8205,
+   "val_completion_loss": 0.8996
+  },
+  {
+   "step": 1750,
+   "loss": 0.8524,
+   "val_completion_loss": 0.8946
+  },
+  {
+   "step": 2000,
+   "loss": 0.9267,
+   "val_completion_loss": 0.8935
+  },
+  {
+   "step": 2250,
+   "loss": 0.6961,
+   "val_completion_loss": 0.8885
+  },
+  {
+   "step": 2500,
+   "loss": 0.7304,
+   "val_completion_loss": 0.8898
+  },
+  {
+   "step": 2750,
+   "loss": 0.8217,
+   "val_completion_loss": 0.8862
+  },
+  {
+   "step": 2999,
+   "loss": 0.967,
+   "val_completion_loss": 0.8858
+  }
+ ],
+ "after": {
+  "lm_val": {
+   "code": 1.5819,
+   "en": 3.261
+  },
+  "sft_val": 0.8858,
+  "chat_mode": {
+   "humaneval_pass1": 0.0122,
+   "mbpp_pass1": 0.004,
+   "humaneval_solved": [
+    "HumanEval/28",
+    "HumanEval/34"
+   ],
+   "mbpp_solved": [
+    "mbpp/127",
+    "mbpp/242"
+   ],
+   "humaneval_failures": {
+    "AssertionError": 85,
+    "SyntaxError": 27,
+    "TypeError": 14,
+    "NameError": 12,
+    "AttributeError": 9,
+    "ValueError": 6,
+    "IndentationError": 6,
+    "RecursionError": 2
+   },
+   "examples": [
+    {
+     "task_id": "HumanEval/0",
+     "passed": false,
+     "completion": "from typing import List\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n    if len(numbers) == 0:\n        return False\n    if len(numbers) > 1:\n        return True\n    for i in range(len(numbers) - 1):\n        if numbers[i] < threshold:\n            return True\n    return False\n"
+    },
+    {
+     "task_id": "HumanEval/1",
+     "passed": false,
+     "completion": "from typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(()())', '(()())']\n    \"\"\"\n    return [\n        '(')\n        for i, p in enumerate(paren_string.split(','))\n        if p"
+    },
+    {
+     "task_id": "HumanEval/2",
+     "passed": false,
+     "completion": "\ndef truncate_number(number: float) -> float:\n    \"\"\" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \"\"\"\n    if number < 0:\n        return 0\n    if number > 1:\n        return 1\n    if number < 0:\n        return -number\n    return number\n"
+    }
+   ]
+  }
+ },
+ "side_by_side": [
+  {
+   "task": "HumanEval/0",
+   "sft": "from typing import List\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n    if len(numbers) == 0:\n        return False\n    if len(numbers) > 1:\n        return True\n    for i in range(len(numbers) - 1):\n        if numbers[i] < threshold:\n            return True\n    return False\n<|im_end|>"
+  },
+  {
+   "task": "HumanEval/1",
+   "sft": "from typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(()())', '(()())']\n    \"\"\"\n    return [\n        '(')\n        for i, p in enumerate(paren_string.split(','))\n        if p is not None and p.strip() == ']':\n            return [p.strip() for p in p.split(',')]\n    ]\n<|im_end|>"
+  },
+  {
+   "task": "HumanEval/2",
+   "sft": "\ndef truncate_number(number: float) -> float:\n    \"\"\" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \"\"\"\n    if number < 0:\n        return 0\n    if number > 1:\n        return 1\n    if number < 0:\n        return -number\n    return number\n<|im_end|>"
+  }
+ ]
+}

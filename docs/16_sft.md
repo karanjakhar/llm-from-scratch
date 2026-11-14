@@ -251,6 +251,34 @@ Loss masking matters most where prompts are long and unlike the answers
 (chat, retrieval-augmented prompts); for docstring → function, the two are
 nearly the same task.
 
+### 8d. The capstone (92M)
+
+Same data, steps and learning rate, on the Stage 11 capstone (activation
+checkpointing on: B = 16 does not fit in 8 GB otherwise, journal Session 10):
+
+| | 30M workhorse | 92M capstone |
+|---|---|---|
+| completion val loss, before → after | 1.168 → 1.033 | 0.998 → **0.886** |
+| step at which it flattened | 250 | 250 (0.888) |
+| HumanEval, base model prompted as plain code (Stage 22 harness) | see Stage 22 | **3.05%** (5/164) |
+| HumanEval, after SFT, prompted as chat | 1.2% (2/164) | **1.22%** (2/164) |
+| MBPP, after SFT | 0.0% | 0.4% (2/500) |
+| forgetting, code / English | +0.148 / +0.305 | +0.159 / +0.311 |
+
+The bigger model starts lower and ends lower on the completion loss, and the
+same 250-step story repeats: 0.971 at step 0, 0.888 at step 250, 0.886 at
+step 3,000. Forgetting is almost identical in size.
+
+The surprise is the HumanEval row. **SFT made the capstone worse at
+HumanEval**: the base model, given the prompt as a file to continue, solves 5
+problems; the SFT model, given the same prompt as a chat turn, solves 2, and
+only one of them (`HumanEval/28`, `concatenate`) is in both sets. HumanEval's
+prompts are already "signature + docstring, now write the body": exactly
+what a base model continues well. SFT bought the chat format, a habit of
+stopping, and 0.16 nats of forgetting; for a benchmark that needs none of
+those, the trade was a loss. A bigger model gains more from pretraining
+alone, so it has more to lose.
+
 ---
 
 ## 9. What we found
@@ -261,6 +289,7 @@ nearly the same task.
 | Does it teach coding? | Barely: HumanEval 0 → 1.2% (2 problems), MBPP 0% |
 | Forgetting | +0.148 code, +0.305 English pretraining loss, mostly after the format was learned |
 | Prompt in the loss | A tie here: 1.0295 vs 1.0328, same problems solved |
+| On the 92M capstone | Same shape: flat after 250 steps, +0.16 / +0.31 forgetting, and HumanEval 3.05% (base, as code) → 1.22% (SFT, as chat) |
 | How much data? | The format took ~4,000 examples (250 steps × 16); the rest cost forgetting |
 
 One habit from this stage: **stop SFT when the completion loss flattens.**
