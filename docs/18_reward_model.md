@@ -255,6 +255,23 @@ while the easy `return None` bug barely moves (100% → 97%).
 
 ![Reward distributions, label noise, calibration](visuals/18_reward.png)
 
+### 8d. The capstone as a judge
+
+Same recipe on the 92M capstone's SFT model (activation checkpointing on):
+
+| | 30M workhorse | 92M capstone |
+|---|---|---|
+| before training (random head) | 50.7% / 56.8% | 44.1% / 44.7% |
+| CodeSearchNet held-out | 82.6% | **87.1%** |
+| MBPP verified | 85.2% | **86.5%** |
+| pairs with confidence 0.9-1.0 | 808 of 1,218, 94.8% right | 977 of 1,218, 93.3% right |
+
+Three times the parameters buys +4.5 points on held-out pairs from the
+training distribution and only +1.3 on MBPP. The capstone is also more
+confident: 80% of its MBPP judgements land in the top bin, against 66% for
+the workhorse, at slightly lower accuracy there. Most of what "this code is
+broken" takes at this level, the 30M model already had.
+
 ---
 
 ## 9. What we found
@@ -265,6 +282,7 @@ while the easy `return None` bug barely moves (100% → 97%).
 | Which bugs are easy? | `return None` 100%; comparisons 76%; `and`/`or` 65% |
 | Calibrated? | Mostly; over-confident at the top (98.7% → 95%) |
 | Are absolute rewards meaningful? | No: chosen and rejected overlap across prompts; only within-prompt differences are |
+| Does a 3× bigger backbone judge better? | Slightly: 87.1% vs 82.6% held-out, 86.5% vs 85.2% on MBPP |
 | 20% / 40% flipped labels | 76.6% / 71.6% on MBPP; subtle bugs degrade first |
 
 One habit from this stage: **check what the reward model can see.** The

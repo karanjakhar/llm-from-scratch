@@ -1267,3 +1267,10 @@ not intent.
 **Why:**       HumanEval's prompt is already a file to continue (signature + docstring), the base model's native task. The workhorse's base-mode number at the time was zero because of the trailing-newline trap, which made SFT look like pure gain. The capstone's pretraining is good enough to solve a few problems unaided, and the SFT run's forgetting is paid on the same code the problems need.
 **Lesson:**    Compare a fine-tuned model to the base model *in the base model's best format*, not in the chat format it was never trained on. "Before SFT, in chat mode: 0%" was a straw man.
 **Where:**     `results/16_sft/capstone.json`, `docs/16_sft.md` §8d
+
+### 2026-11-14 · Stage 18 · A 3× bigger reward model is 1.3 points better on MBPP      [result]
+**Expected:**  The 92M capstone to judge code clearly better than the 30M workhorse.
+**Found:**     Held-out CodeSearchNet pairs 82.6% → 87.1%; MBPP verified pairs 85.2% → 86.5%. The capstone puts 977 of 1,218 MBPP pairs in the 0.9-1.0 confidence bin (93.3% right) against 808 (94.8% right) for the workhorse.
+**Why:**       Not established. Most single-mutation bugs (`return None`, flipped comparisons) are visible to a small model; the gain shows up in-distribution more than on MBPP.
+**Lesson:**    A bigger judge is mostly a more confident judge here. Scale bought +1.3 points on the transfer task.
+**Where:**     `results/18_reward/capstone.json`, `docs/18_reward_model.md` §8d
