@@ -203,7 +203,9 @@ chapters (unwritten ones greyed), and the figures copied beside it. It is read
 straight from the docs listed in §3, so updating a doc and its status row is
 all a new chapter needs. `docs/book_intro.md` is the opening "About this
 draft" note. The page is served at https://karanjakhar.dev/book/ from the
-owner's personal-site repo (`public/book/`, deployed with that site).
+owner's personal-site repo (`public/book/`). Pushing that repo does **not**
+publish it: after committing, run `npm run deploy` there (Node 22+; it builds
+the site and runs `wrangler deploy`).
 
 No PDF or EPUB yet. A book toolchain (Quarto) was considered for those and not
 installed (journal, 2026-10-31).
