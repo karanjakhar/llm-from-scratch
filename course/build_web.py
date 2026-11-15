@@ -110,7 +110,7 @@ def build(out_dir: Path, site_url: str) -> None:
     for key, val in {"TOC": "\n".join(toc), "BODY": book_links("\n".join(body)), "DRAFTED": str(ready),
                      "TOTAL": str(len(rows)), "URL": site_url}.items():
         page = page.replace("{{" + key + "}}", val)
-    assert "{{" not in page, "unfilled template slot"
+    assert "{{" not in page, "unfilled template slot (or a {{PLACEHOLDER}} left in a lesson)"
 
     if out_dir.exists():
         old = out_dir / "index.html"

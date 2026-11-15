@@ -281,8 +281,22 @@ Things noticed but not yet understood. Carried forward until answered.
   `course/modules/01_tokenizer.md`, `course/STARTER_README.md`.
 - Verified on a generated starter: 0 → 5 → 58 of 58 tests as functions are
   written; a clean Py 3.12 venv with the notebook's pip list passes too.
-- Not yet: modules 0 and 2-11, the starter repo on GitHub and checkpoints on
-  the Hugging Face Hub (both need the owner's go), the /course deploy.
+- Then all 12 core modules: `course/exercises.py` (58 exercises),
+  `course/modules/00-11_*.md`, `course/colab/*.ipynb` (Drive-backed),
+  `course/verify_starter.py`. Evaluation (10) now precedes SFT (11). New
+  tests: `course/module00/test_budget.py` (5), `llmfs/train/test_resume.py`
+  (2); suite 302 passed. The starter ships `split_8192.json`.
+- Verified: every module blank-fails and solution-passes; each of the 58
+  exercises blanked alone fails a test. Every experiment rerun on a learner-
+  sized subset (2 code shards: 275M code tokens, 1.0M val code tokens) and
+  its numbers put in the lessons beside the book's.
+- Fixed in lessons before publishing: six wrong claims (journal), Stage 05
+  `grads` needs `--B 8` (default 32 OOMs at 24L fp32), eval `table` needs
+  `--redo`, Stage 08's `overfit`/`tinystories` use torch AdamW not the
+  learner's.
+- Not yet: a pass through the notebooks on real Colab; the starter repo on
+  GitHub, checkpoints on the HF Hub, the /course deploy (all need the
+  owner's go).
 
 ### 2026-11-14 — Session 11
 - Published: pushed the 41 commits to GitHub and rebuilt the web edition at

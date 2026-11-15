@@ -38,7 +38,7 @@ url = "https://download.pytorch.org/whl/cu128"
 explicit = true
 
 [tool.pytest.ini_options]
-testpaths = ["stages", "llmfs"]
+testpaths = ["stages", "llmfs", "course/module00"]
 python_files = ["test_*.py"]
 
 [tool.ruff]

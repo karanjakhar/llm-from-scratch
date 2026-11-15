@@ -66,23 +66,38 @@ then the solution in this repo (linked per function).
 
 ## 4. The core path
 
-Times are for a learner, not for the compute alone. "Colab" means it runs on
-a free T4 in the time shown.
+Every module was checked end to end on a generated starter
+(`course/verify_starter.py`): with only that module blank, the checker lists
+every exercise and fails; with the solution restored, it passes. Each of the
+58 exercises was also blanked on its own, and every one fails at least one
+test, so none is ungraded.
 
-| # | Module | Stage | Learner implements | Experiment | Colab |
+| # | Module | Stage | Learner implements | Tests | Experiment |
 |---|---|---|---|---|---|
-| 0 | Setup and the memory budget | 00 | the 16-bytes-per-parameter estimate | measure it on your GPU | yes |
-| 1 | Tokenizer | 01 | `get_stats`, `merge`, BPE `train`, `encode`, `decode`, the regex variant | compression vs vocab size; regex ablation | yes, CPU |
-| 2 | Data | 02 | repo-level split, exact and near dedup, packing documents with an end-of-text token | the leakage measurement | yes, 1 shard |
-| 3 | Embeddings and position | 03 | token + learned position, sinusoidal, RoPE | position ablation | yes |
-| 4 | Attention | 04 | scaled dot-product, causal mask, multi-head | √d ablation, attention maps | yes |
-| 5 | The transformer block | 05 | LayerNorm, RMSNorm, GELU MLP, pre-norm block | depth and residual ablation | yes |
-| 6 | GPT | 06 | the full model; load OpenAI GPT-2 weights | match Hugging Face to 1e-4 | yes |
-| 7 | Generation | 07 | temperature, top-k, top-p, KV cache | cache speedup; sampling knobs | yes |
-| 8 | Training loop | 08 | AdamW, warmup + cosine schedule, clipping, the loop | 10M TinyStories smoke test | yes, ~1 h |
-| 9 | Pretraining | 11 | (configures, does not re-implement) | train a small code model, or download ours | small run yes; 30M optional |
-| 10 | Instruction tuning | 16 | prompt masking, the SFT loss | SFT the workhorse; measure forgetting | yes |
-| 11 | Evaluation | 22 | pass@k estimator, test execution, contamination check | score your model on HumanEval | yes |
+| 0 | Setup and the memory budget | 00 | parameter count, 16-bytes rule, what fits, a measurement | 5 (new, `course/module00/`) | `verify_env.py` |
+| 1 | Tokenizer | 01 | BPE stats, merge, train, encode, decode; the regex variant | 58 | compression vs vocab size; regex ablation |
+| 2 | Data | 02 | hash split, exact dedup, MinHash, shuffled sampler, mixed loader | 34 | leakage on 2 shards, before and after near-dedup; build the token files |
+| 3 | Embeddings and position | 03 | token lookup, learned, sinusoidal, RoPE (both layouts) | 22 | position ablation |
+| 4 | Attention | 04 | causal mask, scaled dot-product, multi-head | 12 | √d saturation; √d training ablation |
+| 5 | The transformer block | 05 | LayerNorm, RMSNorm, GELU, SiLU, MLP, SwiGLU | 23 | gradients at init; no-residual ablation |
+| 6 | GPT | 06 | attention, block, forward, scaled init, GPT-2 loader, hand count | 20 | match Hugging Face's GPT-2; no-shift ablation |
+| 7 | Generation | 07 | temperature, top-k, top-p, repetition penalty, sampling, KV cache | 16 | cache speedup |
+| 8 | Training loop | 08 | SGD, AdamW, schedule, clipping | 10 | optimizer race; overfit one batch; TinyStories |
+| 9 | Pretraining | 11 | the checkpoint `save` | 2 (new, `llmfs/train/test_resume.py`) | resume test; the 30M workhorse, or download it |
+| 10 | Evaluation | 22 | truncation, pass@k, test execution | 10 | HumanEval and MBPP for your checkpoints |
+| 11 | Instruction tuning | 16 | chat template, loss mask, padding | 7 | SFT the workhorse; measure the forgetting |
+
+Evaluation comes before instruction tuning on purpose. Module 11's
+experiment scores the fine-tuned model with the harness module 10 builds, and
+the book's own finding reads best in that order: build the ruler, measure the
+base model, then measure what fine-tuning changed.
+
+Learners train on a smaller data set than the book: two of the twelve code
+shards and up to 100,000 English documents (module 2). Experiments that do
+not touch that data (modules 0, 1, 4's saturation, 7, 8's overfit, 9's
+resume test, 6's GPT-2 match) were rerun while writing the course and
+reproduce the book's numbers. For those that do, each lesson states what the
+smaller data changed, measured on the same subset.
 
 **Electives**, each standalone after module 9: efficiency (09), scaling laws
 (10), modern architecture (12), MoE (13), attention variants (14), speculative
@@ -104,9 +119,15 @@ one command.
 which later modules import; that is accepted: the course runs on the honour
 system, and a learner on module 6 has already written module 4.
 
-**Colab.** One notebook per module that clones the starter repo, installs
-the dependencies with `pip` (Colab ships its own PyTorch), and runs the check
-and experiment cells. Learners with a local GPU use `uv` as the book does.
+**Colab.** One notebook per module (`course/make_notebooks.py`). It mounts
+the learner's Google Drive and clones the starter repo there once, so code
+and the module 2 data survive Colab's resets; installs the dependencies with
+`pip` (Colab ships its own PyTorch); then runs the check and the experiment.
+Learners with a local GPU use `uv` as the book does.
+
+**The tokenizer** ships inside the starter (`data/tokenizers/split_8192.json`,
+271 KB), so no learner spends an hour retraining it and every checkpoint
+stays compatible.
 
 **Checkpoints** (workhorse 30M base, workhorse SFT, capstone 92M base) are
 published to the Hugging Face Hub so modules 10-11 and the electives can start
@@ -116,19 +137,28 @@ without the 2-20 hour pretraining runs.
 
 ## 6. Open work and risks
 
-- **Colab's T4 has no bf16.** The trainer uses bf16 autocast. On a T4 that
-  either falls back to fp32 (about 2-4× slower) or needs an fp16 path with a
-  loss scaler. To measure in module 8 before writing its times down; adding
-  fp16 to `llmfs/train/trainer.py` is likely needed.
-- **Module 2 data size.** The full corpus is 4.9 GB of downloads and needs
-  near-dedup over 12 shards; the module uses 1 shard, so its leakage numbers
-  will differ from the book's. State the expected range, not the book's value.
+- **Nothing has run on Colab yet.** The notebooks' install list was checked
+  in a clean Python 3.12 environment without PyTorch, and every number in the
+  lessons comes from the book's RTX 4060 Laptop. Before publishing, one pass
+  through the notebooks on a real Colab T4 is needed.
+- **Colab's T4 has no bf16.** The training scripts use bf16 autocast, which
+  a T4 can only emulate, so training there runs near fp32 speed: expect the
+  GPU modules to take several times the stated minutes. An fp16 path with a
+  loss scaler in `llmfs/train/trainer.py` would recover most of it; not built.
+- **Reading data from Drive.** Training reads the token files with random
+  access through Drive's network filesystem, which may be slow. If the Colab
+  pass shows it is, the notebooks should copy `data/bins/` to the local disk
+  at the start of each session.
+- **The checkpoints are not published.** `course/get_checkpoints.py` stops
+  with a message until the Hugging Face repo exists and its revision is
+  pinned. Until then, module 9's workhorse has to be trained (2 h 18 min on
+  the book's GPU).
 - **Test granularity.** Some tests exercise several functions at once, so one
-  blank can fail many tests. `check.py` maps tests to functions so the report
-  says which function to fix.
-- **Publishing needs the owner.** Creating the `llm-from-scratch-course` repo
-  and uploading checkpoints to the Hugging Face Hub are outward-facing and use
-  the owner's accounts; each is confirmed before it happens.
+  blank can fail many tests. `check.py` lists the blank functions first and
+  says which one to start with.
+- **Publishing needs the owner.** Creating the `llm-from-scratch-course` repo,
+  uploading checkpoints to the Hugging Face Hub, and deploying /course are
+  outward-facing and use the owner's accounts; each is confirmed first.
 
 ---
 
@@ -137,10 +167,10 @@ without the 2-20 hour pretraining runs.
 | Piece | Status |
 |---|---|
 | This plan | draft |
-| Starter generator + `check.py` | built, verified on module 1 |
-| Module 1 lesson page + notebook | draft |
-| Modules 0, 2-11 | not started |
-| Electives | not started |
-| /course pages on the site | built (`course/build_web.py`), not deployed |
-| Starter repo on GitHub | not started (owner confirms) |
-| Checkpoints on the Hub | not started (owner confirms) |
+| Starter generator, `check.py`, `verify_starter.py` | built; all 12 modules verified |
+| Lessons and notebooks, modules 0-11 | draft |
+| Electives | not started (the book chapters and repo code stand in) |
+| /course page on the site | built (`course/build_web.py`), not deployed |
+| A pass through the notebooks on Colab | not done |
+| Starter repo on GitHub | not created (owner confirms) |
+| Checkpoints on the Hub | not uploaded (owner confirms) |

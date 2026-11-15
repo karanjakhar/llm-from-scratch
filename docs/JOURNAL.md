@@ -1366,3 +1366,28 @@ not intent.
 **Found:**     At vocab 1024, section 1 prints 2.257 bytes/token and section 3 prints 2.275. Section 1 measures the whole held-out 10% (111,540 characters); section 3 measures a 100k-character slice so it can time tiktoken on the same text. The first draft of the lesson's question 3 compared our 2.26 (section 1) with GPT-2's 3.11 (section 3) as if on the same text.
 **Lesson:**    When a script prints the same metric twice, say in the lesson which one to compare, and compare only numbers measured on the same text.
 **Where:**     `course/modules/01_tokenizer.md` §5, §7
+
+### 2026-11-15 · Course · The verifier's first pass checked nothing                  [mistake]
+**Expected:**  `course/verify_starter.py` to show, for each module, its exercises blank and failing, then passing with the solution.
+**Found:**     Module 0 passed both checks; modules 1-11 reported "0 of N blank, exit 0" and looked like broken blanking. The script built the starter once, and module 0's step restored every other module's files to the solution, so every later module was checked already solved.
+**Why:**       State shared across loop iterations: a test harness that mutates its fixture must rebuild it per case.
+**Lesson:**    When a check passes everything after the first case, suspect the check. A fresh starter per module fixed it: all 12 modules blank-fail and solution-pass. A second, stricter pass blanked each of the 58 exercises alone; every one fails at least one test.
+**Where:**     `course/verify_starter.py`
+
+### 2026-11-15 · Course · Two experiments do not run the code their module teaches    [trap]
+**Expected:**  Stage 08's `overfit` and `tinystories` runs to exercise the learner's hand-written AdamW.
+**Found:**     Only `run.py optimizers` uses `stages/08_training/optim.py`. `overfit`, `tinystories` and `ablate` train through `llmfs` with PyTorch's fused AdamW (`GPT.configure_optimizer`). Separately, `stages/22_evaluation/run.py table` reuses any row already in the committed `results/22_evaluation/table.json`, so a learner's run would reprint the book's numbers and evaluate nothing unless given `--redo`.
+**Lesson:**    Before telling a learner "this run checks your code", trace the import. Module 8 now leads with `optimizers` and says plainly that the later runs use the library's loop; module 10 requires `--redo`.
+**Where:**     `course/modules/08_training.md` §5, `course/modules/10_evaluation.md` §5
+
+### 2026-11-15 · Stage 02 · Two shards reproduce the book's leakage exactly; dedup finds less   [result]
+**Found:**     `run.py leakage --shards 2` (the book's setting) gives the book's numbers to the digit: file split 43.9% rare lines / 48.6% files leaked, repo split 34.4% / 43.3%. Near-dedup over the same 2 shards (69 s on 2 pinned cores) drops 16.7% of train and 29.2% of val files (book, 12 shards: 28.2% / 39.5%) and leaves the repo split at 17.2% / 20.1% (book: 8.1% / 13.8%).
+**Why:**       Dedup can only find a copy whose original is also in the data; two shards hold fewer of the originals.
+**Lesson:**    A learner-sized subset reproduces measurements that look inside the subset exactly, and understates ones that depend on the whole corpus. Say which is which.
+**Where:**     `course/modules/02_data.md` §5-6
+
+### 2026-11-15 · Course · Six lesson claims were wrong on the first draft               [mistake]
+**Found:**     Checked against the journal, results and code before publishing: (1) the "8 GB" card's 7,797 MB was blamed on decimal gigabytes, but 8 decimal GB is 7,629 MiB; the journal says ~390 MB is reserved before PyTorch. (2) The empty HumanEval completions were described as a truncation bug; the cause was the prompt's trailing newline token making the model start a new function. (3) The capstone's resume after the 5-day pause was "identical to four decimals"; one of three checked steps differed by 0.0002. (4) Two shards were called "a third" of the book's code; measured, they are about a fifth (275M of 1,330M tokens). (5) Adam with L2 decay (6.70) was called worse than barely training; it is just above the 6.86 frequency floor. (6) A KV-cache break was described from expectation; run on a copy, it fails with a cache-overflow shape error, which the lesson now quotes.
+**Why:**       Written from memory of the project rather than from the entries.
+**Lesson:**    The same as the preface's: check every number and mechanism against its source, and run every "try this and see" before telling a learner what they will see.
+**Where:**     `course/modules/00_setup.md`, `07_generation.md`, `08_training.md`, `09_pretraining.md`, `10_evaluation.md`
