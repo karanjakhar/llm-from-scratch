@@ -139,8 +139,9 @@ without the 2-20 hour pretraining runs.
 
 - **Nothing has run on Colab yet.** The notebooks' install list was checked
   in a clean Python 3.12 environment without PyTorch, and every number in the
-  lessons comes from the book's RTX 4060 Laptop. Before publishing, one pass
-  through the notebooks on a real Colab T4 is needed.
+  lessons comes from the book's RTX 4060 Laptop. The owner chose to publish
+  first (2026-11-15) and treat the Colab pass as the first fix-up round;
+  until it happens, the notebooks are untested where learners will run them.
 - **Colab's T4 has no bf16.** The training scripts use bf16 autocast, which
   a T4 can only emulate, so training there runs near fp32 speed: expect the
   GPU modules to take several times the stated minutes. An fp16 path with a
@@ -149,16 +150,22 @@ without the 2-20 hour pretraining runs.
   access through Drive's network filesystem, which may be slow. If the Colab
   pass shows it is, the notebooks should copy `data/bins/` to the local disk
   at the start of each session.
-- **The checkpoints are not published.** `course/get_checkpoints.py` stops
-  with a message until the Hugging Face repo exists and its revision is
-  pinned. Until then, module 9's workhorse has to be trained (2 h 18 min on
+- **The checkpoints are not published.** The upload failed: the local
+  Hugging Face token is read-only (403 on repo create). The Hub model card is
+  `course/HUB_README.md`. `course/get_checkpoints.py` stops with a message until
+  the repo exists and its revision is pinned. Until then, module 9's workhorse has to be trained (2 h 18 min on
   the book's GPU).
 - **Test granularity.** Some tests exercise several functions at once, so one
   blank can fail many tests. `check.py` lists the blank functions first and
   says which one to start with.
-- **Publishing needs the owner.** Creating the `llm-from-scratch-course` repo,
-  uploading checkpoints to the Hugging Face Hub, and deploying /course are
-  outward-facing and use the owner's accounts; each is confirmed first.
+- **The starter is a snapshot.** It was generated once from this repo
+  (starter commit `be3993f`). A fix to a stage, lesson or notebook here
+  reaches learners only after `course/make_starter.py` is rerun and the
+  starter repo is updated, and the /course page only after `build_web.py`
+  plus `npm run deploy` in the site repo.
+- **No licence.** Neither this repository nor the starter has a LICENSE
+  file, so learners have no stated right to reuse the code. The owner's
+  decision.
 
 ---
 
@@ -166,11 +173,11 @@ without the 2-20 hour pretraining runs.
 
 | Piece | Status |
 |---|---|
-| This plan | draft |
+| This plan | published with the course |
 | Starter generator, `check.py`, `verify_starter.py` | built; all 12 modules verified |
 | Lessons and notebooks, modules 0-11 | draft |
 | Electives | not started (the book chapters and repo code stand in) |
-| /course page on the site | built (`course/build_web.py`), not deployed |
-| A pass through the notebooks on Colab | not done |
-| Starter repo on GitHub | not created (owner confirms) |
-| Checkpoints on the Hub | not uploaded (owner confirms) |
+| /course page on the site | live at karanjakhar.dev/course (2026-11-15, site commit `dd8db75`) |
+| A pass through the notebooks on Colab | not done; deferred by the owner |
+| Starter repo on GitHub | public: github.com/karanjakhar/llm-from-scratch-course (`be3993f`) |
+| Checkpoints on the Hub | not uploaded: needs a write token |

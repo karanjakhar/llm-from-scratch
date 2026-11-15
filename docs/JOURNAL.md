@@ -1391,3 +1391,21 @@ not intent.
 **Why:**       Written from memory of the project rather than from the entries.
 **Lesson:**    The same as the preface's: check every number and mechanism against its source, and run every "try this and see" before telling a learner what they will see.
 **Where:**     `course/modules/00_setup.md`, `07_generation.md`, `08_training.md`, `09_pretraining.md`, `10_evaluation.md`
+
+### 2026-11-15 · Course · Published before the Colab pass                         [decision]
+**Decided:**   The owner chose to publish the course now ("assume it works") rather than run the notebooks on Colab first. Starter repo public at github.com/karanjakhar/llm-from-scratch-course (303 files, 58 functions blanked, 8.8 MB); /course live on karanjakhar.dev.
+**Why:**       Everything except Colab itself was verified locally: each module blank-fails and solution-passes, and every experiment was rerun on the learner-sized data. The remaining risks (T4 without bf16, Drive I/O) are about speed, and the first learner reports will find them as fast as a test pass would.
+**Cost:**      The stated times are for an RTX 4060 Laptop; on a T4 they are unmeasured. `docs/COURSE.md` §6 says so.
+**Where:**     `docs/COURSE.md` §6-7
+
+### 2026-11-15 · Course · The Hugging Face token could read but not write          [trap]
+**Expected:**  `HfApi().create_repo("karanjakhar/llm-from-scratch")` to create the checkpoint repo, since `whoami()` returned the owner's account.
+**Found:**     403 Forbidden: "You don't have the rights to create a model under the namespace". `whoami` succeeds with a read-only token, so it proves who you are, not what you may do.
+**Lesson:**    Check a token's role (`whoami()["auth"]`), not just that it authenticates, before planning an upload. The checkpoints wait for a write token.
+**Where:**     `course/get_checkpoints.py`
+
+### 2026-11-15 · Course · Deploying the site would have shipped the owner's unfinished edits   [trap]
+**Expected:**  `npm run deploy` in the site repo to publish the new /course page.
+**Found:**     The site's working tree held the owner's uncommitted mobile-layout edits (`src/layouts/Base.astro`, `public/book/index.html`, made that morning). Wrangler deploys the working tree, so those would have gone live with the course.
+**Lesson:**    Deploy from what is committed. Committed only `public/course/`, deployed from a clean `git worktree` of that commit (1 file uploaded, 88 unchanged), and left the owner's edits untouched.
+**Where:**     `../personal_website`, commit `dd8db75`
