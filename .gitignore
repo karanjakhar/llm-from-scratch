@@ -29,3 +29,4 @@ runs/
 
 # book web build output (uv run book/build_web.py)
 /book/_site/
+course/_build/

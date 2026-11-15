@@ -270,6 +270,20 @@ Things noticed but not yet understood. Carried forward until answered.
 
 ## Session log
 
+### 2026-11-15 — Session 12
+- Owner decided to turn the project into a course (site + starter repo,
+  implement-and-tests-grade, Colab baseline, 12 core modules + electives).
+  Plan: `docs/COURSE.md`.
+- Built the course machinery and module 1 as a pilot: `course/exercises.py`
+  (what to blank), `course/make_starter.py` (blanks via `ast`, no stage file
+  edited), `course/check.py` (grader), `course/make_notebooks.py` (Colab),
+  `course/build_web.py` (the /course page, reusing the book's template),
+  `course/modules/01_tokenizer.md`, `course/STARTER_README.md`.
+- Verified on a generated starter: 0 → 5 → 58 of 58 tests as functions are
+  written; a clean Py 3.12 venv with the notebook's pip list passes too.
+- Not yet: modules 0 and 2-11, the starter repo on GitHub and checkpoints on
+  the Hugging Face Hub (both need the owner's go), the /course deploy.
+
 ### 2026-11-14 — Session 11
 - Published: pushed the 41 commits to GitHub and rebuilt the web edition at
   karanjakhar.dev/book (site repo commit `3c8c9c5`).

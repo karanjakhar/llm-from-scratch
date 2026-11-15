@@ -1346,3 +1346,23 @@ not intent.
 **Why:**       They were written from a summary of the project, not from the entries themselves. Each one was a plausible rounding of the real story.
 **Lesson:**    Same as Stage 06's "a number quoted from memory was wrong": every number and every example in a book draft gets checked against its source before it is published, including the ones in the preface.
 **Where:**     `docs/preface.md`, `docs/appendix_reproduce.md`
+
+## Session 12 — 2026-11-15 · the course: plan and a pilot module
+
+### 2026-11-15 · Course · The project becomes a course too                          [decision]
+**Expected:**  —
+**Found:**     The owner chose: lessons on karanjakhar.dev/course plus a generated starter repo; learners implement blanked functions and this project's own tests grade them; a free Colab T4 as the baseline, with our checkpoints published so learners can skip the 2-20 h pretraining runs; 12 core modules (stages 00-08, 11, 16, 22) and 13 electives.
+**Why:**       Writing the function is how a learner without the build history gets the understanding this project got from building it. The ~295 tests already state each stage's acceptance criteria, so grading costs nothing new and cannot drift from the book.
+**Lesson:**    A project built with tests as acceptance criteria is most of a course already; the work is choosing what to blank and writing the "why" around it.
+**Where:**     `docs/COURSE.md`, `course/`
+
+### 2026-11-15 · Course · Blanking from the syntax tree, not from markers            [result]
+**Found:**     `course/make_starter.py` blanks 8 functions in `stages/01_tokenizer/bpe.py` by replacing each body after its docstring, found through `ast`, so no stage file changed. Simulated learner states on the generated starter: all blank, 0 of 58 tests pass and the report says to start with `get_stats`; with `get_stats` and `merge` written, 5 pass; with all eight, 58 pass. A clean Python 3.12 environment with only the notebook's pip list (no PyTorch) passes all 58 and reproduces 1.878 bytes/token at vocab 512.
+**Lesson:**    Generate the exercise from the solution, so a bug fixed in the solution reaches the exercise with one command instead of a second copy to keep in step.
+**Where:**     `course/make_starter.py`, `course/check.py`, `course/colab/01_tokenizer.ipynb`
+
+### 2026-11-15 · Stage 01 · The experiment prints two different "our compression" numbers   [trap]
+**Expected:**  One held-out compression number per vocabulary size in `stages/01_tokenizer/run.py`'s output.
+**Found:**     At vocab 1024, section 1 prints 2.257 bytes/token and section 3 prints 2.275. Section 1 measures the whole held-out 10% (111,540 characters); section 3 measures a 100k-character slice so it can time tiktoken on the same text. The first draft of the lesson's question 3 compared our 2.26 (section 1) with GPT-2's 3.11 (section 3) as if on the same text.
+**Lesson:**    When a script prints the same metric twice, say in the lesson which one to compare, and compare only numbers measured on the same text.
+**Where:**     `course/modules/01_tokenizer.md` §5, §7
