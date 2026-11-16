@@ -9,17 +9,17 @@
   },
   "sources": {
    "code": [
-    "/mnt/extra_ssd/kj/building_llm_model_from_scratch/data/bins/split_8192/train_code.bin",
+    "data/bins/split_8192/train_code.bin",
     0.85
    ],
    "en": [
-    "/mnt/extra_ssd/kj/building_llm_model_from_scratch/data/bins/split_8192/train_en.bin",
+    "data/bins/split_8192/train_en.bin",
     0.15
    ]
   },
   "val": {
-   "code": "/mnt/extra_ssd/kj/building_llm_model_from_scratch/data/bins/split_8192/val_code.bin",
-   "en": "/mnt/extra_ssd/kj/building_llm_model_from_scratch/data/bins/split_8192/val_en.bin"
+   "code": "data/bins/split_8192/val_code.bin",
+   "en": "data/bins/split_8192/val_en.bin"
   },
   "sampler": "shuffled",
   "B": 16,
@@ -41,7 +41,7 @@
   "dtype": "bf16",
   "compile": true,
   "checkpointing": false,
-  "out_dir": "/mnt/extra_ssd/kj/building_llm_model_from_scratch/checkpoints/11_pretrain/workhorse",
+  "out_dir": "checkpoints/11_pretrain/workhorse",
   "ckpt_every": 1000,
   "resume": true,
   "name": "workhorse",

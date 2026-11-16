@@ -171,7 +171,7 @@ saving memory and time.
 ## 4. Environment
 
 ```bash
-cd /mnt/extra_ssd/kj/building_llm_model_from_scratch
+cd llm-from-scratch                              # wherever you cloned the repo
 uv sync                                          # creates .venv from pyproject.toml
 uv run python stages/00_setup/verify_env.py      # checks CUDA, prints memory budget
 ```

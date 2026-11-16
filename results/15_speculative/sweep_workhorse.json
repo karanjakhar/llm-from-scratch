@@ -170,7 +170,7 @@
   }
  ],
  "target": "checkpoints/11_pretrain/workhorse/final.pt",
- "draft": "/mnt/extra_ssd/kj/building_llm_model_from_scratch/checkpoints/06_gpt/tied_12000.pt",
+ "draft": "checkpoints/06_gpt/tied_12000.pt",
  "draft_step_cost_ratio": 0.432,
  "target_params": 29941760,
  "draft_params": 5323264

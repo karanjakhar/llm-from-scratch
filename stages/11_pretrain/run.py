@@ -62,7 +62,10 @@ PROMPTS = ["def fibonacci(n):\n", "import os\nimport json\n\n\ndef load_config(p
 
 def write_json(name, obj):
     RESULTS.mkdir(parents=True, exist_ok=True)
-    (RESULTS / name).write_text(json.dumps(obj, indent=1))
+    # Paths relative to the repo: results are committed, and an absolute path would publish
+    # where this machine keeps the project (and mean nothing on anyone else's).
+    text = json.dumps(obj, indent=1).replace(json.dumps(str(REPO) + "/")[1:-1], "")
+    (RESULTS / name).write_text(text)
 
 
 def sampler_hook(tok, every, store):

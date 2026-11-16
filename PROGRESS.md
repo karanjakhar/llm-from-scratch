@@ -299,6 +299,9 @@ Things noticed but not yet understood. Carried forward until answered.
   into `book/template.html`; book rebuilt without its 5 dead links; the
   site's nav has Book and Course; the LLM project page links the course and
   says 92M, not ~125M.
+- 2026-11-16 privacy scan: removed 13 local paths from committed files
+  (results configs now saved repo-relative); repo-local git email set to
+  the owner's Gmail in all three repos.
 - Noted: the repo has no LICENSE file (owner's call).
 
 ### 2026-11-15 — Session 12

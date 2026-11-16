@@ -51,7 +51,7 @@ speed.
 ## Hardware constraints — plan around these
 
 - **RTX 4060 Laptop, 8 GB VRAM.** This is the binding constraint on everything.
-- ~98 GB free disk on `/mnt/extra_ssd`.
+- ~98 GB free disk on the data SSD the repo lives on.
 - Python 3.12, PyTorch 2.11 + CUDA 12.8, managed by `uv`. **Always run code
   with `uv run ...`** — never bare `python3`. The system `python3` is 3.10 with
   no torch. A conda env that sessions 1-2 relied on disappeared between
