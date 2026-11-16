@@ -137,11 +137,9 @@ without the 2-20 hour pretraining runs.
 
 ## 6. Open work and risks
 
-- **Nothing has run on Colab yet.** The notebooks' install list was checked
-  in a clean Python 3.12 environment without PyTorch, and every number in the
-  lessons comes from the book's RTX 4060 Laptop. The owner chose to publish
-  first (2026-11-15) and treat the Colab pass as the first fix-up round;
-  until it happens, the notebooks are untested where learners will run them.
+- **Colab pass: marked done by the owner (2026-11-16).** No Colab timings
+  were recorded, so every time and number in the lessons is still from the
+  book's RTX 4060 Laptop.
 - **Colab's T4 has no bf16.** The training scripts use bf16 autocast, which
   a T4 can only emulate, so training there runs near fp32 speed: expect the
   GPU modules to take several times the stated minutes. An fp16 path with a
@@ -162,9 +160,8 @@ without the 2-20 hour pretraining runs.
   reaches learners only after `course/make_starter.py` is rerun and the
   starter repo is updated, and the /course page only after `build_web.py`
   plus `npm run deploy` in the site repo.
-- **No licence.** Neither this repository nor the starter has a LICENSE
-  file, so learners have no stated right to reuse the code. The owner's
-  decision.
+- **Licence: MIT** (owner's decision, 2026-11-16), in both repositories and
+  on the Hub card.
 
 ---
 
@@ -177,6 +174,6 @@ without the 2-20 hour pretraining runs.
 | Lessons and notebooks, modules 0-11 | draft |
 | Electives | not started (the book chapters and repo code stand in) |
 | /course page on the site | live at karanjakhar.dev/course (2026-11-15, site commit `dd8db75`) |
-| A pass through the notebooks on Colab | not done; deferred by the owner |
+| A pass through the notebooks on Colab | done (owner, 2026-11-16) |
 | Starter repo on GitHub | public: github.com/karanjakhar/llm-from-scratch-course (`be3993f`) |
 | Checkpoints on the Hub | public, pinned at `e09d40e` (2026-11-16); download verified by SHA-256 |

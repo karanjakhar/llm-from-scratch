@@ -70,3 +70,7 @@ library here, which later modules import and which contains finished versions
 of earlier modules' code. Nothing stops you from copying. The tests can only
 tell you your code works; whether you understand it is between you and the
 "Break it" step.
+
+## License
+
+MIT, see [LICENSE](LICENSE). Your solutions are yours.

@@ -1,4 +1,5 @@
 ---
+license: mit
 tags:
 - from-scratch
 - education

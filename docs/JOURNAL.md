@@ -1414,3 +1414,9 @@ not intent.
 **Found:**     With a write token (`whoami()["auth"]["accessToken"]["role"] == "write"`), one Hub commit uploaded the workhorse base (119.8 MB), workhorse SFT (119.8 MB) and capstone base (368.6 MB) to huggingface.co/karanjakhar/llm-from-scratch: commit `e09d40e7588cc7a106cbafa668bdf750990a8bab`. `course/get_checkpoints.py --capstone`, run in the generated starter, downloaded all three; each file's SHA-256 equals the original's.
 **Lesson:**    Pin the download to the commit hash and check it with a fresh download, not the upload's progress bar.
 **Where:**     `course/get_checkpoints.py`, `course/HUB_README.md`
+
+### 2026-11-16 · Course · MIT licence; Colab pass closed by the owner             [decision]
+**Decided:**   MIT licence for this repository, the starter and the Hub checkpoints (`LICENSE`, `license: mit` on the card). The owner marked the Colab pass done.
+**Why:**       Without a licence, a public repo grants learners no right to reuse the code, which defeats a course. MIT is the least restrictive common choice.
+**Cost:**      No Colab timings were recorded in this project; the lessons' times are from the RTX 4060 Laptop, and `docs/COURSE.md` §6 keeps the T4 bf16 and Drive I/O notes for anyone who hits them.
+**Where:**     `LICENSE`, `README.md`, `course/STARTER_README.md`, `course/HUB_README.md`, `docs/COURSE.md` §6-7

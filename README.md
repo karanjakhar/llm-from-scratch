@@ -105,3 +105,9 @@ the capstone path) to run them on the capstone.
 
 Always go through `uv run`. The environment is defined by `pyproject.toml` +
 `uv.lock`, not by whatever happens to be installed on the machine.
+
+## License
+
+MIT, see [LICENSE](LICENSE). The code, docs and course material are free to
+use, change and share, including in your own courses, with the copyright
+notice kept.
