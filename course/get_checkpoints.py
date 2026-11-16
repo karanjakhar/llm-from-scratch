@@ -7,8 +7,9 @@ docs/COURSE.md §5. Files land exactly where the stage scripts look for them
 (checkpoints/...), so a module that says "the workhorse checkpoint" works the
 same whether you trained it or downloaded it.
 
-The Hub repository is created when the course is published; until then this
-script stops with a message instead of guessing.
+The download is pinned to one Hub commit (REVISION), so a later upload can
+never change what a learner gets. The files are the book's own checkpoints:
+their SHA-256 matched the originals after a fresh download (2026-11-16).
 """
 
 from __future__ import annotations
@@ -20,7 +21,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 HUB_REPO = "karanjakhar/llm-from-scratch"        # model repo on huggingface.co
-REVISION = None                                  # pinned to a commit hash once published
+REVISION = "e09d40e7588cc7a106cbafa668bdf750990a8bab"   # the Hub commit of 2026-11-16
 
 FILES = {   # path in the Hub repo -> path in this repo
     "workhorse/final.pt": "checkpoints/11_pretrain/workhorse/final.pt",       # 30M base, 120 MB

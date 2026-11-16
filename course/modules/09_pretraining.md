@@ -99,8 +99,11 @@ On Colab, or to save the time, download the book's trained workhorse:
 python course/get_checkpoints.py
 ```
 
-(The download is enabled once the checkpoints are published; the script
-says so if they are not yet.)
+About 240 MB from [huggingface.co/karanjakhar/llm-from-scratch](https://huggingface.co/karanjakhar/llm-from-scratch):
+the book's workhorse base and its module 11 SFT model, placed where the
+stage scripts look for them. Add `--capstone` for the 92M model (369 MB).
+Module 9's test still grades your `save`; the download only replaces the
+2-hour run.
 
 ## 6. Break it
 

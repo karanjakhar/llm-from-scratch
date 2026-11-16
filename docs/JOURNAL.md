@@ -1409,3 +1409,8 @@ not intent.
 **Found:**     The site's working tree held the owner's uncommitted mobile-layout edits (`src/layouts/Base.astro`, `public/book/index.html`, made that morning). Wrangler deploys the working tree, so those would have gone live with the course.
 **Lesson:**    Deploy from what is committed. Committed only `public/course/`, deployed from a clean `git worktree` of that commit (1 file uploaded, 88 unchanged), and left the owner's edits untouched.
 **Where:**     `../personal_website`, commit `dd8db75`
+
+### 2026-11-16 · Course · Checkpoints published and pinned                         [result]
+**Found:**     With a write token (`whoami()["auth"]["accessToken"]["role"] == "write"`), one Hub commit uploaded the workhorse base (119.8 MB), workhorse SFT (119.8 MB) and capstone base (368.6 MB) to huggingface.co/karanjakhar/llm-from-scratch: commit `e09d40e7588cc7a106cbafa668bdf750990a8bab`. `course/get_checkpoints.py --capstone`, run in the generated starter, downloaded all three; each file's SHA-256 equals the original's.
+**Lesson:**    Pin the download to the commit hash and check it with a fresh download, not the upload's progress bar.
+**Where:**     `course/get_checkpoints.py`, `course/HUB_README.md`

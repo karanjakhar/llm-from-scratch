@@ -279,6 +279,10 @@ Things noticed but not yet understood. Carried forward until answered.
 - Checkpoint upload to the HF Hub failed: the local token is read-only (403).
   Model card drafted; needs a write token, then pin `REVISION` in
   `course/get_checkpoints.py`.
+- 2026-11-16: with the owner's new write token, uploaded the three
+  checkpoints (Hub commit `e09d40e`), pinned it in `get_checkpoints.py`,
+  verified a fresh download by SHA-256, updated module 9's lesson, the
+  starter repo and /course.
 - Noted: the repo has no LICENSE file (owner's call).
 
 ### 2026-11-15 — Session 12

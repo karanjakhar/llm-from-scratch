@@ -150,11 +150,10 @@ without the 2-20 hour pretraining runs.
   access through Drive's network filesystem, which may be slow. If the Colab
   pass shows it is, the notebooks should copy `data/bins/` to the local disk
   at the start of each session.
-- **The checkpoints are not published.** The upload failed: the local
-  Hugging Face token is read-only (403 on repo create). The Hub model card is
-  `course/HUB_README.md`. `course/get_checkpoints.py` stops with a message until
-  the repo exists and its revision is pinned. Until then, module 9's workhorse has to be trained (2 h 18 min on
-  the book's GPU).
+- **Checkpoints are pinned.** Published 2026-11-16 at
+  huggingface.co/karanjakhar/llm-from-scratch, Hub commit `e09d40e`
+  (card: `course/HUB_README.md`). `course/get_checkpoints.py` pins that
+  commit; a re-upload needs a new pin, or learners keep the old files.
 - **Test granularity.** Some tests exercise several functions at once, so one
   blank can fail many tests. `check.py` lists the blank functions first and
   says which one to start with.
@@ -180,4 +179,4 @@ without the 2-20 hour pretraining runs.
 | /course page on the site | live at karanjakhar.dev/course (2026-11-15, site commit `dd8db75`) |
 | A pass through the notebooks on Colab | not done; deferred by the owner |
 | Starter repo on GitHub | public: github.com/karanjakhar/llm-from-scratch-course (`be3993f`) |
-| Checkpoints on the Hub | not uploaded: needs a write token |
+| Checkpoints on the Hub | public, pinned at `e09d40e` (2026-11-16); download verified by SHA-256 |
