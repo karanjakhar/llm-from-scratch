@@ -14,8 +14,15 @@ Headline: capstone base HumanEval 3.05% pass@1 (5/164), 5.49% pass@10; no
 post-training stage beat the base model on HumanEval (GRPO tied it); every
 solved problem has zero 13-gram overlap with training.
 
+**Published (2026-11-16):** the book at karanjakhar.dev/book, the course at
+karanjakhar.dev/course (12 core modules, `docs/COURSE.md`), its starter
+repo github.com/karanjakhar/llm-from-scratch-course, and the checkpoints at
+huggingface.co/karanjakhar/llm-from-scratch (pinned in
+`course/get_checkpoints.py`). MIT licence. A change here reaches learners
+only after regenerating the starter and redeploying the site (COURSE.md §6).
+
 What is left is optional: the open questions below, the book's revision
-pass (`docs/BOOK.md`: chapters are `draft`), and pushing (owner's call).
+pass (`docs/BOOK.md`: chapters are `draft`), and the course's electives.
 
 To rerun the capstone chain from the pretrained checkpoint:
 
@@ -285,6 +292,9 @@ Things noticed but not yet understood. Carried forward until answered.
   starter repo and /course.
 - 2026-11-16: MIT licence added (this repo, starter, Hub card). Owner marked
   the Colab pass done.
+- 2026-11-16 pre-final audit: published starter equals a fresh build; 302
+  tests pass; fixed web-page links to gitignored files (book + course);
+  README now points to the book, course, starter and checkpoints.
 - Noted: the repo has no LICENSE file (owner's call).
 
 ### 2026-11-15 — Session 12

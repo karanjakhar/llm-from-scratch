@@ -14,11 +14,15 @@ import argparse
 import html
 import re
 import shutil
+import subprocess
 from pathlib import Path
 
 from markdown_it import MarkdownIt
 
 ROOT = Path(__file__).resolve().parent.parent
+# What is on GitHub: links in the rendered text point only at these.
+TRACKED = frozenset(subprocess.run(["git", "ls-files"], cwd=ROOT, capture_output=True, text=True,
+                                   check=True).stdout.splitlines())
 TEMPLATE = Path(__file__).resolve().parent / "template.html"
 INTRO = "docs/book_intro.md"
 GITHUB = "https://github.com/karanjakhar/llm-from-scratch/blob/main/"
@@ -83,10 +87,11 @@ def render(path: str, prefix: str) -> tuple[str, int]:
                 c.attrSet("src", "visuals/" + Path(src).name)
     out = md.renderer.render(tokens, md.options, {})
 
-    # `stages/04_attention/run.py` in the text becomes a link to that file.
+    # `stages/04_attention/run.py` in the text becomes a link to that file. Only files git
+    # tracks: data/ and checkpoints/ exist locally but are gitignored, so a link to them 404s.
     def link_path(m: re.Match) -> str:
-        p = html.unescape(m.group(1)).split(" ")[0]
-        if "/" in p and (ROOT / p).exists():
+        p = html.unescape(m.group(1)).split(" ")[0].rstrip("/")
+        if "/" in p and (p in TRACKED or any(t.startswith(p + "/") for t in TRACKED)):
             return f'<a href="{GITHUB}{p}">{m.group(0)}</a>'
         return m.group(0)
     out = re.sub(r"<code>([^<]+)</code>", link_path, out)

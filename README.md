@@ -10,6 +10,12 @@ The goal is **understanding**, not a leaderboard score. Each stage answers
 "why does this exist and what breaks without it?" before it answers "how do I
 code it?"
 
+**Read it or do it.** The book: [karanjakhar.dev/book](https://karanjakhar.dev/book/).
+The hands-on course, where you write the code and the tests grade it:
+[karanjakhar.dev/course](https://karanjakhar.dev/course/), with its starter
+repository [llm-from-scratch-course](https://github.com/karanjakhar/llm-from-scratch-course)
+and the trained checkpoints on [Hugging Face](https://huggingface.co/karanjakhar/llm-from-scratch).
+
 ## How this repo is organized
 
 | Path | What lives there |
@@ -20,6 +26,7 @@ code it?"
 | `GLOSSARY.md` | Every term defined once, in plain language. |
 | `docs/JOURNAL.md` | Lab notebook: every surprise, mistake and result, dated, with numbers. |
 | `docs/BOOK.md` | Plan for the book this project becomes: chapters, style, figures. |
+| `docs/COURSE.md`, `course/` | The course: plan, lessons, starter generator, grader, Colab notebooks. |
 | `docs/visuals/` | Interactive figures (open the HTML in a browser). |
 | `docs/NN_*.md` | The lesson for stage NN: theory, math, intuition, pitfalls. |
 | `stages/NN_*/` | Runnable code + experiments for stage NN. Self-contained. |

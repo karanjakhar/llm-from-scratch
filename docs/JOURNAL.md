@@ -1420,3 +1420,9 @@ not intent.
 **Why:**       Without a licence, a public repo grants learners no right to reuse the code, which defeats a course. MIT is the least restrictive common choice.
 **Cost:**      No Colab timings were recorded in this project; the lessons' times are from the RTX 4060 Laptop, and `docs/COURSE.md` §6 keeps the T4 bf16 and Drive I/O notes for anyone who hits them.
 **Where:**     `LICENSE`, `README.md`, `course/STARTER_README.md`, `course/HUB_README.md`, `docs/COURSE.md` §6-7
+
+### 2026-11-16 · Book · The web pages linked to files that are not on GitHub      [mistake]
+**Expected:**  Every `path/like/this` the web build turns into a GitHub link to resolve.
+**Found:**     A link check of the live pages found 404s: the book linked 4 files under `data/` (`data/tokenizers/split_8192.json`, the bins and their manifest) and the course linked `checkpoints/16_sft/workhorse.pt`. `book/build_web.py` linked any path that existed on the local disk, and gitignored files exist locally.
+**Lesson:**    "Exists here" is not "exists for the reader". Links now require the path to be in `git ls-files` (a file, or a directory holding tracked files): book 121 → 115 links, course 39, none dead.
+**Where:**     `book/build_web.py` `link_path`
