@@ -74,8 +74,9 @@ def template() -> str:
             f"the tests check it.</p>",
         "{{DRAFTED}} of {{TOTAL}} parts drafted · {{WORDS}} words":
             "{{DRAFTED}} of {{TOTAL}} core modules ready",
-        "</style>": "details{margin:.6em 0;padding:.5em .8em;border:1px solid var(--line, #ddd);border-radius:6px}"
-                    "summary{cursor:pointer;font-weight:600}\n</style>",
+        # Scoped to main: the contents rail is a <details> too (the book's phone layout).
+        "</style>": "main details{margin:.6em 0;padding:.5em .8em;border:1px solid var(--line, #ddd);border-radius:6px}"
+                    "main summary{cursor:pointer;font-weight:600}\n</style>",
     }
     for a, b in swaps.items():
         assert a in page, f"book template changed; update course/build_web.py: {a[:50]}"

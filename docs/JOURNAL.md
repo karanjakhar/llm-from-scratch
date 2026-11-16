@@ -1426,3 +1426,9 @@ not intent.
 **Found:**     A link check of the live pages found 404s: the book linked 4 files under `data/` (`data/tokenizers/split_8192.json`, the bins and their manifest) and the course linked `checkpoints/16_sft/workhorse.pt`. `book/build_web.py` linked any path that existed on the local disk, and gitignored files exist locally.
 **Lesson:**    "Exists here" is not "exists for the reader". Links now require the path to be in `git ls-files` (a file, or a directory holding tracked files): book 121 → 115 links, course 39, none dead.
 **Where:**     `book/build_web.py` `link_path`
+
+### 2026-11-16 · Book · Hand edits to the built page would have been erased by the next build   [trap]
+**Expected:**  The site's `public/book/index.html` to be pure build output of `book/build_web.py`.
+**Found:**     The owner had improved the page's phone layout by editing the built file directly: a collapsible contents rail and a floating "Contents" button. The template did not have them, so the next rebuild (needed to drop 5 dead links) would have erased them silently. The first version of the link fix also unlinked directory paths such as `results/`, because it stripped the trailing slash before testing for one.
+**Lesson:**    Generated files get edited when the generator is out of reach; move such edits into the source before rebuilding. The edits now live in `book/template.html`. The rebuilt page differs from the hand-edited one in exactly 5 lines, the removed dead links. The course page inherits the phone layout; its `details` style is scoped to `main` so the contents rail is not boxed.
+**Where:**     `book/template.html`, `book/build_web.py`, `course/build_web.py`

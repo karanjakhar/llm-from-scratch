@@ -115,6 +115,28 @@ figcaption { font: .82rem/1.45 var(--sans); color: var(--muted); margin-top: 8px
   nav { position: static; max-height: none; }
   .chapter { padding: 32px 20px 40px; }
 }
+/* Phones and tablets: contents collapse behind a toggle; a floating link jumps back to them. */
+.toc > summary { display: none; }
+.to-toc { display: none; }
+@media (max-width: 900px) {
+  .toc { margin-top: 16px; border: 1px solid var(--rule); border-radius: 6px; background: var(--sheet); }
+  .toc > summary { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px;
+    font: 700 .9rem var(--sans); cursor: pointer; list-style: none; }
+  .toc > summary::-webkit-details-marker { display: none; }
+  .toc > summary::after { content: "+"; font: 600 1.1rem var(--mono); color: var(--muted); }
+  .toc[open] > summary::after { content: "\2212"; }
+  .toc > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 6px; }
+  .toc ol { margin: 0; padding: 0 6px 8px; }
+  nav li a, nav li.pending { padding: 9px 8px; }
+  .to-toc { display: block; position: fixed; z-index: 10; right: max(16px, env(safe-area-inset-right, 0px));
+    bottom: max(16px, env(safe-area-inset-bottom, 0px)); padding: 10px 14px; border-radius: 999px;
+    font: 700 .8rem var(--sans); text-decoration: none; color: var(--sheet); background: var(--ink);
+    box-shadow: 0 4px 14px rgb(0 0 0 / .18); opacity: 0; pointer-events: none; transition: opacity .2s; }
+  .to-toc.show { opacity: 1; pointer-events: auto; }
+  pre { margin-inline: -8px; padding: 14px 12px; font-size: .8rem; }
+  .ch-head h1 { overflow-wrap: anywhere; }
+}
+@media (max-width: 900px) and (prefers-reduced-motion: reduce) { .to-toc { transition: none; } }
 </style>
 </head>
 <body>
@@ -127,10 +149,14 @@ figcaption { font: .82rem/1.45 var(--sans); color: var(--muted); margin-top: 8px
       <div class="progress" id="bar" aria-hidden="true"></div>
       <p class="count">{{DRAFTED}} of {{TOTAL}} parts drafted · {{WORDS}} words</p>
     </div>
+    <details class="toc" id="toc" open>
+    <summary>Contents</summary>
     <ol>
 {{TOC}}
     </ol>
+    </details>
   </nav>
+  <a class="to-toc" href="#toc" aria-label="Back to contents">Contents</a>
   <main id="main">
 {{BODY}}
   </main>
@@ -147,6 +173,21 @@ figcaption { font: .82rem/1.45 var(--sans); color: var(--muted); margin-top: 8px
     bar.appendChild(tick);
   });
   if (window.hljs) document.querySelectorAll("pre code").forEach(el => hljs.highlightElement(el));
+</script>
+<script>
+  // Contents: open on wide screens, collapsed on phones; close after picking a chapter there.
+  (() => {
+    const toc = document.getElementById("toc"), btn = document.querySelector(".to-toc");
+    if (!toc || !btn) return;
+    const narrow = matchMedia("(max-width: 900px)");
+    const sync = () => { toc.open = !narrow.matches; };
+    sync(); narrow.addEventListener("change", sync);
+    toc.addEventListener("click", (e) => { if (narrow.matches && e.target.closest("ol a")) toc.open = false; });
+    btn.addEventListener("click", (e) => { e.preventDefault(); toc.open = true; toc.scrollIntoView({ block: "start" }); });
+    const main = document.getElementById("main");
+    const show = () => btn.classList.toggle("show", main.getBoundingClientRect().top < 0);
+    addEventListener("scroll", show, { passive: true }); show();
+  })();
 </script>
 </body>
 </html>

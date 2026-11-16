@@ -295,6 +295,10 @@ Things noticed but not yet understood. Carried forward until answered.
 - 2026-11-16 pre-final audit: published starter equals a fresh build; 302
   tests pass; fixed web-page links to gitignored files (book + course);
   README now points to the book, course, starter and checkpoints.
+- 2026-11-16: the owner's hand-made phone layout for the book page moved
+  into `book/template.html`; book rebuilt without its 5 dead links; the
+  site's nav has Book and Course; the LLM project page links the course and
+  says 92M, not ~125M.
 - Noted: the repo has no LICENSE file (owner's call).
 
 ### 2026-11-15 — Session 12
